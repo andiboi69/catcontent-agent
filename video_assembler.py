@@ -5,11 +5,36 @@ No boring hook frames — start with action immediately.
 """
 
 import os
+import sys
 import subprocess
 import random
 import imageio_ffmpeg
 
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
+
+
+def _find_font():
+    """Find a usable font path across Windows and Linux."""
+    candidates = [
+        # Windows
+        "C:/Windows/Fonts/arialbd.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/Impact.ttf",
+        # Linux (Ubuntu/Debian)
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+    ]
+    for font in candidates:
+        if os.path.exists(font):
+            # FFmpeg drawtext uses colon as separator — escape Windows paths
+            path = font.replace("\\", "/").replace(":", "\\\\:")
+            return path
+    return None
+
+
+FONT_PATH = _find_font()
 
 # Clip settings
 TARGET_FPS = 30
@@ -120,6 +145,7 @@ def generate_hook_clip(footage_path, output_path, hook_text=None):
         "eq=brightness=-0.1:saturation=1.2",
         # Large centered hook text
         f"drawtext=text='{safe_text}'"
+        f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
         f":fontsize=56:fontcolor=yellow:borderw=4:bordercolor=black"
         f":x=(w-text_w)/2:y=(h-text_h)/2",
     ]
@@ -182,6 +208,7 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         # Main text — large, white, clean
         filters.append(
             f"drawtext=text='{safe_text}'"
+            f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
             f":fontsize=52:fontcolor=white:borderw=3:bordercolor=black"
             f":x=(w-text_w)/2:y=85"
         )
@@ -219,6 +246,7 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
             filters_simple.append(f"drawbox=x=0:y=50:w=iw:h=160:color=black@0.7:t=fill")
             filters_simple.append(
                 f"drawtext=text='{safe_text}'"
+                f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
                 f":fontsize=58:fontcolor=white:borderw=4:bordercolor=black"
                 f":x=(w-text_w)/2:y=80"
             )

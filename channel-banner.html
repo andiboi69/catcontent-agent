@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purrfect Facts — Channel Banner</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Fredoka:wght@400;600&family=Gabarito:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    gap: 24px;
+    font-family: 'Fredoka', sans-serif;
+    padding: 40px;
+  }
+
+  .hint {
+    color: #fff6;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    max-width: 800px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* YouTube banner = 2560x1440, safe area centered 1546x423 */
+  .banner {
+    width: 2560px;
+    height: 1440px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 20% 40%, #ff9a5644 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, #e8454522 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, #2d1b08 0%, #1a1005 100%);
+    flex-shrink: 0;
+    transform-origin: top center;
+    transform: scale(0.45);
+    margin: -396px 0;
+  }
+
+  /* Grain overlay */
+  .banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Safe zone guide (invisible, for reference) */
+  .safe-zone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1546px;
+    height: 423px;
+    z-index: 50;
+    /* border: 1px dashed #ff000033; */ /* uncomment to see safe zone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+  }
+
+  /* ====== LEFT CAT ====== */
+  .cat-left {
+    position: absolute;
+    left: 160px;
+    bottom: 340px;
+    z-index: 10;
+    transform: rotate(-5deg);
+  }
+
+  .cat-silhouette {
+    position: relative;
+    width: 280px;
+    height: 300px;
+  }
+
+  /* Sitting cat built with CSS */
+  .cat-body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 180px;
+    background: radial-gradient(ellipse at 50% 30%, #4a2c0a, #2d1b08);
+    border-radius: 50% 50% 40% 40%;
+  }
+
+  .cat-head-small {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 120px;
+    background: radial-gradient(ellipse at 50% 40%, #4a2c0a, #2d1b08);
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  .cat-ear-s {
+    position: absolute;
+    top: -20px;
+    width: 50px;
+    height: 60px;
+    background: #2d1b08;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  .cat-ear-s.l { left: 12px; transform: rotate(-8deg); }
+  .cat-ear-s.r { right: 12px; transform: rotate(8deg); }
+  .cat-ear-s::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 34px;
+    background: #ff8fab;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  .cat-eye-s {
+    position: absolute;
+    top: 42px;
+    width: 36px;
+    height: 36px;
+    background: #fffbe6;
+    border-radius: 50%;
+    box-shadow: inset 0 0 8px #0003;
+  }
+  .cat-eye-s.l { left: 22px; }
+  .cat-eye-s.r { right: 22px; }
+  .cat-eye-s::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 40% 40%, #7ed957, #1a5c0f);
+    border-radius: 50%;
+  }
+  .cat-eye-s::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 20px;
+    background: #0a0a0a;
+    border-radius: 50%;
+  }
+
+  .cat-nose-s {
+    position: absolute;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 10px;
+    background: #ff8fab;
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+    border-radius: 0;
+  }
+
+  .cat-tail {
+    position: absolute;
+    bottom: 20px;
+    right: -50px;
+    width: 100px;
+    height: 60px;
+    border: 8px solid #2d1b08;
+    border-color: transparent transparent #2d1b08 transparent;
+    border-radius: 0 0 50px 50px;
+    transform: rotate(-20deg);
+  }
+
+  /* ====== RIGHT CAT (mirrored, different color) ====== */
+  .cat-right {
+    position: absolute;
+    right: 160px;
+    bottom: 340px;
+    z-index: 10;
+    transform: rotate(5deg) scaleX(-1);
+  }
+
+  .cat-right .cat-body {
+    background: radial-gradient(ellipse at 50% 30%, #d4874a, #b86530);
+  }
+  .cat-right .cat-head-small {
+    background: radial-gradient(ellipse at 50% 40%, #d4874a, #b86530);
+  }
+  .cat-right .cat-ear-s {
+    background: #b86530;
+  }
+  .cat-right .cat-tail {
+    border-color: transparent transparent #b86530 transparent;
+  }
+
+  /* ====== CENTER TEXT ====== */
+  .center-content {
+    text-align: center;
+    z-index: 20;
+    position: relative;
+  }
+
+  .title-main {
+    font-family: 'Lilita One', cursive;
+    font-size: 120px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    line-height: 1;
+    text-shadow:
+      0 6px 0 #c43e00,
+      0 10px 0 #9e3200,
+      0 14px 40px #0008;
+    -webkit-text-stroke: 3px #c43e00;
+    paint-order: stroke fill;
+  }
+
+  .title-sub {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 52px;
+    color: #ffde59;
+    letter-spacing: 20px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    text-shadow: 0 3px 12px #0004;
+  }
+
+  .tagline {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    color: #ffffffaa;
+    margin-top: 20px;
+    letter-spacing: 2px;
+  }
+
+  /* ====== DECORATIVE ELEMENTS ====== */
+
+  /* Paw trail across the top */
+  .paw-trail {
+    position: absolute;
+    z-index: 8;
+    opacity: 0.12;
+    font-size: 60px;
+  }
+  .pt1 { top: 380px; left: 480px; transform: rotate(-25deg); }
+  .pt2 { top: 340px; left: 620px; transform: rotate(-15deg); }
+  .pt3 { top: 310px; left: 780px; transform: rotate(-5deg); }
+  .pt4 { top: 310px; right: 780px; transform: rotate(5deg); }
+  .pt5 { top: 340px; right: 620px; transform: rotate(15deg); }
+  .pt6 { top: 380px; right: 480px; transform: rotate(25deg); }
+
+  /* Bottom paw trail */
+  .pt7 { bottom: 380px; left: 520px; transform: rotate(25deg); font-size: 48px; }
+  .pt8 { bottom: 360px; left: 680px; transform: rotate(15deg); font-size: 48px; }
+  .pt9 { bottom: 360px; right: 680px; transform: rotate(-15deg); font-size: 48px; }
+  .pt10 { bottom: 380px; right: 520px; transform: rotate(-25deg); font-size: 48px; }
+
+  /* Sparkle accents */
+  .sparkle {
+    position: absolute;
+    z-index: 15;
+    color: #ffde59;
+    animation: twinkle 2.5s ease-in-out infinite;
+  }
+  .sp1 { top: 440px; left: 380px; font-size: 40px; animation-delay: 0s; }
+  .sp2 { top: 480px; right: 360px; font-size: 32px; animation-delay: 0.8s; }
+  .sp3 { bottom: 440px; left: 440px; font-size: 28px; animation-delay: 1.5s; }
+  .sp4 { bottom: 460px; right: 420px; font-size: 36px; animation-delay: 0.4s; }
+  .sp5 { top: 520px; left: 700px; font-size: 24px; animation-delay: 1.1s; }
+  .sp6 { top: 520px; right: 700px; font-size: 24px; animation-delay: 1.8s; }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.7); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* Gradient glow behind text */
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 300px;
+    background: radial-gradient(ellipse, #ff6b3522 0%, transparent 70%);
+    z-index: 6;
+  }
+
+  /* Horizontal accent lines */
+  .accent-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffde5933, transparent);
+    z-index: 8;
+  }
+  .accent-line.top { top: 420px; width: 1200px; }
+  .accent-line.bottom { bottom: 420px; width: 1200px; }
+
+  /* Subscribe pill */
+  .subscribe-pill {
+    position: absolute;
+    bottom: 454px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff4444;
+    color: #fff;
+    font-family: 'Gabarito', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10px 36px;
+    border-radius: 30px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    z-index: 25;
+    box-shadow: 0 4px 20px #ff444466;
+  }
+
+  /* Daily shorts badge */
+  .daily-badge {
+    position: absolute;
+    top: 444px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 25;
+  }
+  .daily-badge span {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 20px;
+    color: #ffde59;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .daily-badge .dot {
+    width: 6px;
+    height: 6px;
+    background: #ffde59;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<div class="hint">
+  YouTube banner size: 2560x1440px. The center content is in the safe zone (visible on all devices).<br>
+  Screenshot or use a browser extension to save as PNG.
+</div>
+
+<div class="banner">
+  <!-- Glow -->
+  <div class="glow"></div>
+
+  <!-- Accent lines -->
+  <div class="accent-line top"></div>
+  <div class="accent-line bottom"></div>
+
+  <!-- Daily badge -->
+  <div class="daily-badge">
+    <div class="dot"></div>
+    <span>New Shorts Daily</span>
+    <div class="dot"></div>
+  </div>
+
+  <!-- Paw trail -->
+  <div class="paw-trail pt1">🐾</div>
+  <div class="paw-trail pt2">🐾</div>
+  <div class="paw-trail pt3">🐾</div>
+  <div class="paw-trail pt4">🐾</div>
+  <div class="paw-trail pt5">🐾</div>
+  <div class="paw-trail pt6">🐾</div>
+  <div class="paw-trail pt7">🐾</div>
+  <div class="paw-trail pt8">🐾</div>
+  <div class="paw-trail pt9">🐾</div>
+  <div class="paw-trail pt10">🐾</div>
+
+  <!-- Sparkles -->
+  <div class="sparkle sp1">✦</div>
+  <div class="sparkle sp2">✦</div>
+  <div class="sparkle sp3">✦</div>
+  <div class="sparkle sp4">✦</div>
+  <div class="sparkle sp5">✦</div>
+  <div class="sparkle sp6">✦</div>
+
+  <!-- Left cat -->
+  <div class="cat-left">
+    <div class="cat-silhouette">
+      <div class="cat-head-small">
+        <div class="cat-ear-s l"></div>
+        <div class="cat-ear-s r"></div>
+        <div class="cat-eye-s l"></div>
+        <div class="cat-eye-s r"></div>
+        <div class="cat-nose-s"></div>
+      </div>
+      <div class="cat-body"></div>
+      <div class="cat-tail"></div>
+    </div>
+  </div>
+
+  <!-- Right cat (orange) -->
+  <div class="cat-right">
+    <div class="cat-silhouette">
+      <div class="cat-head-small">
+        <div class="cat-ear-s l"></div>
+        <div class="cat-ear-s r"></div>
+        <div class="cat-eye-s l"></div>
+        <div class="cat-eye-s r"></div>
+        <div class="cat-nose-s"></div>
+      </div>
+      <div class="cat-body"></div>
+      <div class="cat-tail"></div>
+    </div>
+  </div>
+
+  <!-- Safe zone content -->
+  <div class="safe-zone">
+    <div class="center-content">
+      <div class="title-main">Purrfect</div>
+      <div class="title-sub">Facts</div>
+      <div class="tagline">Mind-blowing cat facts you didn't know</div>
+    </div>
+  </div>
+
+  <!-- Subscribe pill -->
+  <div class="subscribe-pill">Subscribe</div>
+</div>
+
+</body>
+</html>

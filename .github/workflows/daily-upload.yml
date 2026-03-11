@@ -1,0 +1,51 @@
+name: Daily Cat Video Upload
+
+on:
+  schedule:
+    # 8:00 AM and 6:00 PM Manila time (UTC+8)
+    - cron: '0 0 * * *'   # 12:00 AM UTC = 8:00 AM PHT
+    - cron: '0 10 * * *'  # 10:00 AM UTC = 6:00 PM PHT
+  workflow_dispatch:  # Manual trigger button
+
+jobs:
+  generate-and-upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write secrets to files
+        run: |
+          echo '${{ secrets.CLIENT_SECRET_JSON }}' > client_secret.json
+          echo '${{ secrets.YOUTUBE_TOKEN_JSON }}' > youtube_token.json
+
+      - name: Create .env file
+        run: |
+          echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" > .env
+          echo "PEXELS_API_KEY=${{ secrets.PEXELS_API_KEY }}" >> .env
+          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
+
+      - name: Generate and upload video
+        run: python agent.py generate --upload --privacy public
+
+      - name: Save updated token and history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add used_footage.json used_scripts.json youtube_token.json -f
+          git diff --cached --quiet || git commit -m "Update history and token [skip ci]"
+          git push

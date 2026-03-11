@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purrfect Facts — Channel Logo</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Fredoka:wght@600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a2e;
+    gap: 40px;
+    font-family: 'Fredoka', sans-serif;
+  }
+
+  .hint {
+    color: #fff8;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .logo-wrap {
+    width: 800px;
+    height: 800px;
+    position: relative;
+    /* checkerboard to show circular crop */
+  }
+
+  .logo {
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    /* Main gradient — warm sunset orange */
+    background:
+      radial-gradient(circle at 35% 30%, #ffde59 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, #ff6b35 0%, transparent 50%),
+      linear-gradient(135deg, #ff9a56 0%, #ff6b35 40%, #e84545 100%);
+    box-shadow:
+      0 0 0 8px #ff9a5633,
+      0 20px 60px #0008;
+    cursor: default;
+  }
+
+  /* Subtle noise texture */
+  .logo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* ====== CAT FACE ====== */
+  .cat {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    width: 520px;
+    height: 480px;
+  }
+
+  /* --- Ears --- */
+  .ear {
+    position: absolute;
+    top: -60px;
+    width: 140px;
+    height: 160px;
+    background: #2d1b08;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    z-index: 1;
+  }
+  .ear::after {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 100px;
+    background: #ff8fab;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  .ear.left {
+    left: 60px;
+    transform: rotate(-12deg);
+  }
+  .ear.right {
+    right: 60px;
+    transform: rotate(12deg);
+  }
+
+  /* --- Head --- */
+  .head {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 420px;
+    height: 380px;
+    background: radial-gradient(ellipse at 50% 40%, #4a2c0a, #2d1b08 70%);
+    border-radius: 50% 50% 45% 45%;
+    z-index: 2;
+  }
+
+  /* Forehead stripes */
+  .stripe {
+    position: absolute;
+    background: #1a1005;
+    border-radius: 2px;
+    z-index: 3;
+  }
+  .stripe.m {
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 50px;
+  }
+  .stripe.ml {
+    top: 40px;
+    left: 42%;
+    width: 4px;
+    height: 40px;
+    transform: rotate(20deg);
+  }
+  .stripe.mr {
+    top: 40px;
+    right: 42%;
+    width: 4px;
+    height: 40px;
+    transform: rotate(-20deg);
+  }
+
+  /* --- Eyes --- */
+  .eye {
+    position: absolute;
+    top: 130px;
+    width: 110px;
+    height: 110px;
+    background: #fffbe6;
+    border-radius: 50%;
+    z-index: 4;
+    box-shadow: inset 0 0 20px #0003;
+  }
+  .eye.left { left: 75px; }
+  .eye.right { right: 75px; }
+
+  .iris {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #7ed957, #2d8a1e 60%, #1a5c0f);
+    box-shadow: 0 0 12px #7ed95766;
+  }
+
+  .pupil {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 56px;
+    background: #0a0a0a;
+    border-radius: 50%;
+    animation: pupilPulse 3s ease-in-out infinite;
+  }
+
+  .eye-shine {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 5;
+  }
+  .eye-shine.small {
+    top: 42px;
+    left: 52px;
+    width: 8px;
+    height: 8px;
+  }
+
+  @keyframes pupilPulse {
+    0%, 100% { width: 28px; }
+    50% { width: 22px; }
+  }
+
+  /* --- Nose --- */
+  .nose {
+    position: absolute;
+    top: 235px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 28px;
+    background: #ff8fab;
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+    border-radius: 0;
+    z-index: 5;
+  }
+  .nose::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 16px;
+    background: #ff8fab;
+    border-radius: 50%;
+  }
+
+  /* --- Mouth --- */
+  .mouth {
+    position: absolute;
+    top: 262px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+  .mouth::before,
+  .mouth::after {
+    content: '';
+    position: absolute;
+    width: 36px;
+    height: 24px;
+    border-bottom: 4px solid #1a1005;
+    border-radius: 0 0 50% 50%;
+  }
+  .mouth::before { left: -36px; }
+  .mouth::after { left: 0; }
+
+  /* --- Whiskers --- */
+  .whisker {
+    position: absolute;
+    top: 248px;
+    height: 3px;
+    width: 100px;
+    background: #fffbe644;
+    border-radius: 2px;
+    z-index: 5;
+  }
+  .wl1 { left: -20px; transform: rotate(-5deg); }
+  .wl2 { left: -25px; top: 265px; transform: rotate(5deg); }
+  .wl3 { left: -15px; top: 280px; transform: rotate(12deg); }
+  .wr1 { right: -20px; transform: rotate(5deg); }
+  .wr2 { right: -25px; top: 265px; transform: rotate(-5deg); }
+  .wr3 { right: -15px; top: 280px; transform: rotate(-12deg); }
+
+  /* --- Cheek dots --- */
+  .cheek-dots {
+    position: absolute;
+    z-index: 5;
+  }
+  .cheek-dots.left { top: 250px; left: 55px; }
+  .cheek-dots.right { top: 250px; right: 55px; }
+  .cheek-dots span {
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: #1a1005;
+    border-radius: 50%;
+    margin: 5px 0;
+  }
+
+  /* ====== TEXT BANNER ====== */
+  .banner {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    text-align: center;
+  }
+
+  .banner-text {
+    font-family: 'Lilita One', cursive;
+    font-size: 72px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    line-height: 1;
+    text-shadow:
+      0 4px 0 #c43e00,
+      0 6px 0 #9e3200,
+      0 8px 20px #0006;
+    -webkit-text-stroke: 2px #c43e00;
+    paint-order: stroke fill;
+  }
+
+  .banner-sub {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 28px;
+    color: #ffde59;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-top: 2px;
+    text-shadow: 0 2px 8px #0004;
+  }
+
+  /* ====== PAW PRINTS (decorative) ====== */
+  .paw {
+    position: absolute;
+    z-index: 15;
+    opacity: 0.2;
+    font-size: 48px;
+  }
+  .paw.p1 { top: 80px; left: 60px; transform: rotate(-30deg); }
+  .paw.p2 { top: 60px; right: 80px; transform: rotate(25deg); }
+  .paw.p3 { bottom: 160px; left: 50px; transform: rotate(-15deg); font-size: 36px; }
+  .paw.p4 { bottom: 180px; right: 60px; transform: rotate(20deg); font-size: 36px; }
+
+  /* ====== Sparkle accents ====== */
+  .sparkle {
+    position: absolute;
+    z-index: 15;
+    color: #ffde59;
+    font-size: 32px;
+    animation: twinkle 2s ease-in-out infinite;
+  }
+  .sparkle.s1 { top: 100px; right: 100px; animation-delay: 0s; }
+  .sparkle.s2 { top: 200px; left: 80px; animation-delay: 0.7s; font-size: 24px; }
+  .sparkle.s3 { bottom: 200px; right: 90px; animation-delay: 1.3s; font-size: 20px; }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* ====== RING ACCENT ====== */
+  .ring {
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 3px dashed #ffde5933;
+    z-index: 15;
+    pointer-events: none;
+  }
+
+  /* ====== Size previews ====== */
+  .previews {
+    display: flex;
+    gap: 30px;
+    align-items: end;
+  }
+
+  .preview-item {
+    text-align: center;
+    color: #fff6;
+    font-size: 13px;
+  }
+
+  .preview-item .mini-logo {
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 20px #0006;
+  }
+
+  .preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+</head>
+<body>
+
+<div class="hint">Right-click the logo → "Save image" or screenshot at 800x800</div>
+
+<div class="logo-wrap">
+  <div class="logo">
+    <!-- Decorative ring -->
+    <div class="ring"></div>
+
+    <!-- Paw prints -->
+    <div class="paw p1">🐾</div>
+    <div class="paw p2">🐾</div>
+    <div class="paw p3">🐾</div>
+    <div class="paw p4">🐾</div>
+
+    <!-- Sparkles -->
+    <div class="sparkle s1">✦</div>
+    <div class="sparkle s2">✦</div>
+    <div class="sparkle s3">✦</div>
+
+    <!-- Cat face -->
+    <div class="cat">
+      <!-- Ears -->
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+
+      <!-- Head -->
+      <div class="head">
+        <!-- Forehead stripes -->
+        <div class="stripe m"></div>
+        <div class="stripe ml"></div>
+        <div class="stripe mr"></div>
+
+        <!-- Eyes -->
+        <div class="eye left">
+          <div class="iris">
+            <div class="pupil"></div>
+          </div>
+          <div class="eye-shine"></div>
+          <div class="eye-shine small"></div>
+        </div>
+        <div class="eye right">
+          <div class="iris">
+            <div class="pupil"></div>
+          </div>
+          <div class="eye-shine"></div>
+          <div class="eye-shine small"></div>
+        </div>
+
+        <!-- Nose -->
+        <div class="nose"></div>
+
+        <!-- Mouth -->
+        <div class="mouth"></div>
+
+        <!-- Whiskers -->
+        <div class="whisker wl1"></div>
+        <div class="whisker wl2"></div>
+        <div class="whisker wl3"></div>
+        <div class="whisker wr1"></div>
+        <div class="whisker wr2"></div>
+        <div class="whisker wr3"></div>
+
+        <!-- Cheek dots -->
+        <div class="cheek-dots left">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="cheek-dots right">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text banner -->
+    <div class="banner">
+      <div class="banner-text">Purrfect</div>
+      <div class="banner-sub">Facts</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

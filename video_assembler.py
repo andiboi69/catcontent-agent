@@ -6,11 +6,22 @@ No boring hook frames — start with action immediately.
 
 import os
 import sys
+import shutil
 import subprocess
 import random
-import imageio_ffmpeg
 
-FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
+# Find FFmpeg — prefer system install, fall back to imageio_ffmpeg
+def _find_ffmpeg():
+    system_ffmpeg = shutil.which("ffmpeg")
+    if system_ffmpeg:
+        return system_ffmpeg
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return "ffmpeg"
+
+FFMPEG = _find_ffmpeg()
 
 
 def _find_font():
@@ -28,8 +39,10 @@ def _find_font():
     ]
     for font in candidates:
         if os.path.exists(font):
-            # FFmpeg drawtext uses colon as separator — escape Windows paths
-            path = font.replace("\\", "/").replace(":", "\\\\:")
+            path = font.replace("\\", "/")
+            # FFmpeg drawtext uses colon as separator — escape on Windows only
+            if sys.platform == "win32":
+                path = path.replace(":", "\\\\:")
             return path
     return None
 
@@ -232,9 +245,9 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     if result.returncode != 0:
-        # Debug: check for malloc/memory errors
-        if "malloc" in result.stderr:
-            print(f"    Memory error — trying without text overlay")
+        # Print last few lines of FFmpeg error for debugging
+        err_lines = result.stderr.strip().split("\n")
+        print(f"    FFmpeg error: {err_lines[-1][:120] if err_lines else 'unknown'}")
         # Fallback: simplest possible
         filters_simple = [
             f"scale={TARGET_WIDTH}:{TARGET_HEIGHT}:force_original_aspect_ratio=increase",

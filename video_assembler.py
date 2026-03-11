@@ -213,17 +213,29 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         f"fps={TARGET_FPS}",
     ]
 
-    # Caption overlay — clean centered text
+    # Caption overlay — clean centered text, auto-sized to fit
     if caption:
         safe_text = escape_text(caption)
+        # Scale font based on text length to prevent overflow
+        text_len = len(caption)
+        if text_len <= 15:
+            fontsize = 52
+        elif text_len <= 20:
+            fontsize = 46
+        elif text_len <= 25:
+            fontsize = 40
+        else:
+            fontsize = 34
+        bar_h = fontsize + 80
+        text_y = 40 + (bar_h - fontsize) // 2
         # Semi-transparent dark bar
-        filters.append(f"drawbox=x=0:y=40:w=iw:h=180:color=black@0.6:t=fill")
+        filters.append(f"drawbox=x=0:y=40:w=iw:h={bar_h}:color=black@0.6:t=fill")
         # Main text — large, white, clean
         filters.append(
             f"drawtext=text='{safe_text}'"
             f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
-            f":fontsize=52:fontcolor=white:borderw=3:bordercolor=black"
-            f":x=(w-text_w)/2:y=85"
+            f":fontsize={fontsize}:fontcolor=white:borderw=3:bordercolor=black"
+            f":x=(w-text_w)/2:y={text_y}"
         )
 
     vf = ",".join(filters)
@@ -256,11 +268,12 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         ]
         if caption:
             safe_text = escape_text(caption)
-            filters_simple.append(f"drawbox=x=0:y=50:w=iw:h=160:color=black@0.7:t=fill")
+            fb_fontsize = 40 if len(caption) > 20 else 48
+            filters_simple.append(f"drawbox=x=0:y=50:w=iw:h=140:color=black@0.7:t=fill")
             filters_simple.append(
                 f"drawtext=text='{safe_text}'"
                 f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
-                f":fontsize=58:fontcolor=white:borderw=4:bordercolor=black"
+                f":fontsize={fb_fontsize}:fontcolor=white:borderw=4:bordercolor=black"
                 f":x=(w-text_w)/2:y=80"
             )
 
@@ -328,13 +341,25 @@ def concat_clips(clip_paths, output_path):
 
 
 def add_background_music(video_path, music_path, output_path):
-    """Mix background music behind the video."""
+    """Mix background music behind the video with random tempo variation."""
+    # Random tempo shift so the same track sounds slightly different each time
+    tempo = round(random.uniform(0.9, 1.12), 2)
+
+    # Normalize music to -14dB first (loudnorm), then set as background level
+    # This ensures all tracks play at a consistent, audible volume regardless of source levels
+    norm_filter = "loudnorm=I=-14:TP=-1:LRA=11"
+    tempo_filter = f",atempo={tempo}" if tempo != 1.0 else ""
+
+    audio_chain = (
+        f"[1:a]{norm_filter}{tempo_filter},aloop=loop=-1:size=2e+09[music];"
+        f"[music]atrim=duration=120,volume=0.5[trimmed]"
+    )
+
     cmd = [
         FFMPEG, "-y",
         "-i", video_path,
         "-i", music_path,
-        "-filter_complex",
-        "[1:a]volume=0.35,aloop=loop=-1:size=2e+09[music];[music]atrim=duration=120[trimmed]",
+        "-filter_complex", audio_chain,
         "-map", "0:v",
         "-map", "[trimmed]",
         "-c:v", "copy",
@@ -347,10 +372,28 @@ def add_background_music(video_path, music_path, output_path):
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     if result.returncode != 0:
-        print(f"    Music mixing failed, using video without music")
-        if os.path.exists(video_path) and video_path != output_path:
-            import shutil
-            shutil.copy2(video_path, output_path)
+        # Fallback: simple volume boost without loudnorm
+        cmd_simple = [
+            FFMPEG, "-y",
+            "-i", video_path,
+            "-i", music_path,
+            "-filter_complex",
+            "[1:a]volume=5,aloop=loop=-1:size=2e+09[music];[music]atrim=duration=120[trimmed]",
+            "-map", "0:v",
+            "-map", "[trimmed]",
+            "-c:v", "copy",
+            "-c:a", "aac",
+            "-b:a", "128k",
+            "-shortest",
+            "-movflags", "+faststart",
+            output_path
+        ]
+        result2 = subprocess.run(cmd_simple, capture_output=True, text=True)
+        if result2.returncode != 0:
+            print(f"    Music mixing failed, using video without music")
+            if os.path.exists(video_path) and video_path != output_path:
+                import shutil
+                shutil.copy2(video_path, output_path)
 
     return output_path
 
@@ -430,7 +473,7 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
     if not concat_result:
         return None
 
-    # Add background music
+    # Add background music — pick based on content mood
     music_dir = os.path.join(os.path.dirname(__file__), "music")
     music_files = []
     if os.path.exists(music_dir):
@@ -439,11 +482,28 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
             if f.endswith((".mp3", ".wav", ".m4a"))
         ]
 
+    # Mood-based music preference (filename keyword matching)
+    content_format = script.get("content_format", "")
+    upbeat_formats = {"cat_vs_dog", "reasons_to_get_cat", "cat_myths"}
+    chill_formats = {"signs_cat_loves_you", "cat_psychology", "cat_tips"}
+
+    def pick_music(files, content_fmt):
+        """Pick music that matches the content mood."""
+        if not files:
+            return None
+        upbeat = [f for f in files if any(k in os.path.basename(f).lower() for k in ["upbeat", "fun", "funny"])]
+        chill = [f for f in files if any(k in os.path.basename(f).lower() for k in ["chill", "calm", "soft"])]
+        if content_fmt in upbeat_formats and upbeat:
+            return random.choice(upbeat)
+        if content_fmt in chill_formats and chill:
+            return random.choice(chill)
+        return random.choice(files)
+
     final_path = os.path.join(output_dir, f"{title_slug}.mp4")
 
     if music_files:
-        music = random.choice(music_files)
-        print(f"  Adding music: {os.path.basename(music)}")
+        music = pick_music(music_files, content_format)
+        print(f"  Adding music: {os.path.basename(music)} (pitch/tempo varied)")
         add_background_music(no_music_path, music, final_path)
     else:
         os.replace(no_music_path, final_path)

@@ -224,7 +224,7 @@ FORMAT: {content_format} — {guide["desc"]}
 STYLE:
 - Each scene = one SHORT interesting fact/tip as text on screen + beautiful cat footage
 - Facts should make viewers go "I didn't know that!" or "Aww that's so cute!"
-- Keep captions SHORT (under 8 words is ideal, max 10 words)
+- Keep captions VERY SHORT — 3 to 5 words MAXIMUM. Never exceed 5 words or 25 characters.
 - Mix surprising facts with cute/heartwarming ones
 - The video should feel satisfying to watch — beautiful cats + interesting text
 

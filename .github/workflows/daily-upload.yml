@@ -46,10 +46,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add used_footage.json used_scripts.json youtube_token.json -f
+          git add used_footage.json used_scripts.json used_music.json youtube_token.json -f
           git stash
           git pull --rebase
           git stash pop || true
-          git add used_footage.json used_scripts.json youtube_token.json -f
+          git add used_footage.json used_scripts.json used_music.json youtube_token.json -f
           git diff --cached --quiet || git commit -m "Update history and token [skip ci]"
           git push

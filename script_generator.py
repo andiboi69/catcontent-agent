@@ -138,11 +138,23 @@ def _call_llm(prompt):
 
 
 def _parse_json(text):
-    """Parse JSON from LLM response, handling code blocks."""
+    """Parse JSON from LLM response, handling code blocks and control chars."""
     if text.startswith("```"):
         text = text.split("\n", 1)[1]
         text = text.rsplit("```", 1)[0]
-    return json.loads(text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        # LLM sometimes puts literal newlines/tabs inside JSON strings — fix them
+        import re
+        text = re.sub(r'(?<!\\)\n', '\\n', text)
+        text = re.sub(r'(?<!\\)\t', '\\t', text)
+        # Also try stripping any non-JSON prefix/suffix
+        start = text.find('{')
+        end = text.rfind('}')
+        if start >= 0 and end > start:
+            text = text[start:end+1]
+        return json.loads(text)
 
 
 def generate_script(content_format=None, video_type="short"):
@@ -300,7 +312,7 @@ RULES:
 Return ONLY valid JSON:
 {{
     "title": "Catchy YouTube title under 60 chars (use CAPS for 1-2 words)",
-    "description": "YouTube description: Start with a hook question or statement (e.g., 'Did you know cats can rotate their ears 180°?'). Then 1-2 sentences about what the video covers. End with a line break and these EXACT hashtags on separate lines:\\n\\n#shorts #cats #catfacts #catlover #catlovers #cute #cutecat #kitten #catlife #cattok #funnycats #catmom #catdad #pets #animals",
+    "description": "YouTube description: Start with a hook question or statement. Then 1-2 sentences about what the video covers. Then add hashtags at the end: #shorts #cats #catfacts #catlover #catlovers #cute #cutecat #kitten #catlife #cattok #funnycats #catmom #catdad #pets #animals",
     "tags": ["cat facts", "cats", "cute cats", "cat lovers", "shorts", "kitten", "cat tips", "funny cats", "cat behavior", "cat breeds", "cat life", "pets", "animals", "cat mom", "cat dad"],
     "scenes": [
         {{

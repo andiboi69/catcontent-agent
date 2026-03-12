@@ -300,8 +300,8 @@ RULES:
 Return ONLY valid JSON:
 {{
     "title": "Catchy YouTube title under 60 chars (use CAPS for 1-2 words)",
-    "description": "YouTube description (2-3 sentences, informative tone, include hashtags like #catfacts #cats #shorts)",
-    "tags": ["cat facts", "cats", "cat breeds", "cute cats", "cat lovers", "shorts", "cat tips"],
+    "description": "YouTube description: Start with a hook question or statement (e.g., 'Did you know cats can rotate their ears 180°?'). Then 1-2 sentences about what the video covers. End with a line break and these EXACT hashtags on separate lines:\\n\\n#shorts #cats #catfacts #catlover #catlovers #cute #cutecat #kitten #catlife #cattok #funnycats #catmom #catdad #pets #animals",
+    "tags": ["cat facts", "cats", "cute cats", "cat lovers", "shorts", "kitten", "cat tips", "funny cats", "cat behavior", "cat breeds", "cat life", "pets", "animals", "cat mom", "cat dad"],
     "scenes": [
         {{
             "scene_number": 1,

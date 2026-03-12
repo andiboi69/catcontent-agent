@@ -92,10 +92,15 @@ def create_video(video_type="short", content_format=None, upload=False, privacy=
     print(f"\n[4/4] Generating thumbnail...")
     thumb_path = generate_thumbnail(script, video_dir)
 
+    # Add engagement CTA to description
+    description = script["description"].rstrip()
+    if "subscribe" not in description.lower():
+        description += "\n\nFollow for daily cat content! 🐱"
+
     # Save metadata for YouTube upload
     metadata = {
         "title": script["title"],
-        "description": script["description"],
+        "description": description,
         "tags": script["tags"],
         "video_type": video_type,
         "content_format": script["content_format"],

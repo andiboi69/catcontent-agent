@@ -77,9 +77,12 @@ def upload_video(video_path, title, description, tags, category_id="22", privacy
     if not youtube:
         return None
 
-    # Ensure #Shorts is in description for YouTube to recognize it
-    if "#Shorts" not in description and "#shorts" not in description:
-        description = description.rstrip() + "\n\n#Shorts"
+    # Ensure key hashtags are in description for YouTube discovery
+    required_hashtags = ["#shorts", "#cats", "#catfacts", "#catlover", "#cutecat"]
+    desc_lower = description.lower()
+    missing = [h for h in required_hashtags if h not in desc_lower]
+    if missing:
+        description = description.rstrip() + "\n\n" + " ".join(missing)
 
     body = {
         "snippet": {

@@ -38,6 +38,59 @@ def _save_script_history(history):
         pass
 
 
+def _normalize(text):
+    """Normalize text for fuzzy comparison — lowercase, strip punctuation/spaces."""
+    return "".join(c for c in text.lower() if c.isalnum())
+
+
+def _is_too_similar(new_text, existing_list, threshold=0.7):
+    """Check if new_text is too similar to any existing entry."""
+    new_norm = _normalize(new_text)
+    if not new_norm:
+        return False
+    for existing in existing_list:
+        existing_norm = _normalize(existing)
+        if not existing_norm:
+            continue
+        # Exact normalized match
+        if new_norm == existing_norm:
+            return True
+        # One contains the other
+        if new_norm in existing_norm or existing_norm in new_norm:
+            return True
+        # Word overlap check
+        new_words = set(new_text.lower().split())
+        existing_words = set(existing.lower().split())
+        if len(new_words) >= 2 and len(existing_words) >= 2:
+            overlap = len(new_words & existing_words)
+            max_len = max(len(new_words), len(existing_words))
+            if overlap / max_len >= threshold:
+                return True
+    return False
+
+
+def _deduplicate_script(script):
+    """Remove duplicate/similar captions and regenerate title if too similar."""
+    history = _load_script_history()
+
+    # Check captions — remove ones too similar to history or each other
+    seen_captions = []
+    unique_scenes = []
+    for scene in script.get("scenes", []):
+        caption = scene.get("caption", "")
+        if not caption:
+            continue
+        if _is_too_similar(caption, history.get("captions", [])):
+            continue
+        if _is_too_similar(caption, seen_captions):
+            continue
+        seen_captions.append(caption)
+        unique_scenes.append(scene)
+
+    script["scenes"] = unique_scenes
+    return script
+
+
 def _record_script(script):
     """Record a generated script's title and captions to history."""
     history = _load_script_history()
@@ -48,9 +101,9 @@ def _record_script(script):
         caption = scene.get("caption", "")
         if caption and caption not in history["captions"]:
             history["captions"].append(caption)
-    # Keep last 200 captions and 50 titles to avoid unbounded growth
-    history["titles"] = history["titles"][-50:]
-    history["captions"] = history["captions"][-200:]
+    # Keep last 500 captions and 100 titles to avoid unbounded growth
+    history["titles"] = history["titles"][-100:]
+    history["captions"] = history["captions"][-500:]
     _save_script_history(history)
 
 # Stock footage keywords that return GOOD-LOOKING clips on Pexels
@@ -206,14 +259,14 @@ def generate_script(content_format=None, video_type="short"):
         avoid_titles = "\n".join(f'  - "{t}"' for t in history["titles"][-20:])
         avoid_captions = "\n".join(f'  - "{c}"' for c in history["captions"][-60:])
         avoid_section = f"""
-ALREADY USED — DO NOT repeat or closely rephrase these:
-Previous titles:
+ALREADY USED — DO NOT repeat, rephrase, or use similar words/structure:
+Previous titles (DO NOT use the same key words like "SECRETS", "EXPOSED", "REVEALED", "DEBUNKED" etc.):
 {avoid_titles}
 
-Previous captions:
+Previous captions (DO NOT reuse the same topics — no more purring, whiskers, kneading, eyes, paws unless you have a genuinely NEW angle):
 {avoid_captions}
 
-You MUST come up with completely FRESH and ORIGINAL facts/captions that are different from the above.
+CRITICAL: Every caption and title must be COMPLETELY DIFFERENT from the above — not just reworded. Use different TOPICS and ANGLES, not just different words for the same idea. If the above mentions "purrs heal", do NOT write "purring heals" or "purrfect healers".
 """
 
     prompt = f"""You are creating a VIRAL educational cat YouTube Short.
@@ -264,6 +317,9 @@ Return ONLY valid JSON:
     script = _parse_json(text)
     script["content_format"] = content_format
     script["video_type"] = video_type
+
+    # Deduplicate — remove captions too similar to past videos
+    script = _deduplicate_script(script)
 
     # Record this script to history so future videos avoid these captions
     _record_script(script)

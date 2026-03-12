@@ -6,6 +6,7 @@ No boring hook frames — start with action immediately.
 
 import os
 import sys
+import json
 import shutil
 import subprocess
 import random
@@ -482,22 +483,53 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
             if f.endswith((".mp3", ".wav", ".m4a"))
         ]
 
+    # Music history tracking — avoid repeating the same track
+    history_path = os.path.join(os.path.dirname(__file__), "used_music.json")
+    used_music = []
+    if os.path.exists(history_path):
+        try:
+            with open(history_path, "r") as f:
+                used_music = json.load(f)
+        except (json.JSONDecodeError, IOError):
+            used_music = []
+
     # Mood-based music preference (filename keyword matching)
     content_format = script.get("content_format", "")
-    upbeat_formats = {"cat_vs_dog", "reasons_to_get_cat", "cat_myths"}
-    chill_formats = {"signs_cat_loves_you", "cat_psychology", "cat_tips"}
+    upbeat_formats = {"cat_vs_dog", "reasons_to_get_cat", "cat_myths",
+                      "ranking_funniest", "funny_compilation", "cat_fails", "cat_logic"}
+    chill_formats = {"signs_cat_loves_you", "cat_psychology", "cat_tips",
+                     "ranking_moods", "relatable_cat_owner"}
 
     def pick_music(files, content_fmt):
-        """Pick music that matches the content mood."""
+        """Pick music that matches the content mood, avoiding recently used tracks."""
         if not files:
             return None
-        upbeat = [f for f in files if any(k in os.path.basename(f).lower() for k in ["upbeat", "fun", "funny"])]
-        chill = [f for f in files if any(k in os.path.basename(f).lower() for k in ["chill", "calm", "soft"])]
+
+        # Filter out recently used tracks (reset when all have been used)
+        unused = [f for f in files if os.path.basename(f) not in used_music]
+        if not unused:
+            used_music.clear()
+            unused = files
+
+        upbeat = [f for f in unused if any(k in os.path.basename(f).lower() for k in ["upbeat", "fun", "funny", "bounce", "energy", "happy", "playful"])]
+        chill = [f for f in unused if any(k in os.path.basename(f).lower() for k in ["chill", "calm", "soft", "dreamy", "ambient", "warm", "gentle", "mellow"])]
+
         if content_fmt in upbeat_formats and upbeat:
-            return random.choice(upbeat)
-        if content_fmt in chill_formats and chill:
-            return random.choice(chill)
-        return random.choice(files)
+            pick = random.choice(upbeat)
+        elif content_fmt in chill_formats and chill:
+            pick = random.choice(chill)
+        else:
+            pick = random.choice(unused)
+
+        # Save to history
+        used_music.append(os.path.basename(pick))
+        try:
+            with open(history_path, "w") as f:
+                json.dump(used_music, f)
+        except IOError:
+            pass
+
+        return pick
 
     final_path = os.path.join(output_dir, f"{title_slug}.mp4")
 

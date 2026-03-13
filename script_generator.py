@@ -48,18 +48,23 @@ def _is_too_similar(new_text, existing_list, threshold=0.7):
     new_norm = _normalize(new_text)
     if not new_norm:
         return False
+    # Short captions (3 words or less) — only block exact normalized matches
+    new_words = set(new_text.lower().split())
+    is_short = len(new_words) <= 3
     for existing in existing_list:
         existing_norm = _normalize(existing)
         if not existing_norm:
             continue
-        # Exact normalized match
+        # Exact normalized match — always block
         if new_norm == existing_norm:
             return True
+        # Skip fuzzy checks for short captions — too many false positives
+        if is_short:
+            continue
         # One contains the other
         if new_norm in existing_norm or existing_norm in new_norm:
             return True
         # Word overlap check
-        new_words = set(new_text.lower().split())
         existing_words = set(existing.lower().split())
         if len(new_words) >= 2 and len(existing_words) >= 2:
             overlap = len(new_words & existing_words)

@@ -418,12 +418,28 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
 
     prepared_clips = []
 
-    # Generate hook clip using first available footage
+    # Generate hook clip — use a RELIABLE cat query (not scene footage which can be wrong)
     first_footage = None
-    for item in footage_data:
-        if item["footage_path"] and os.path.exists(item["footage_path"]):
-            first_footage = item["footage_path"]
-            break
+    hook_queries = ["cat close up face", "cute kitten", "cat eyes", "fluffy cat"]
+    random.shuffle(hook_queries)
+    for hq in hook_queries:
+        from footage_finder import search_pexels_videos, download_footage, _load_history
+        used_ids = _load_history()
+        results = search_pexels_videos(hq, per_page=5)
+        fresh = [v for v in results if v["id"] not in used_ids]
+        if fresh:
+            pick = random.choice(fresh)
+            hook_footage_path = download_footage(pick, os.path.join(output_dir, "footage"))
+            if hook_footage_path:
+                first_footage = hook_footage_path
+                print(f"  Hook footage: \"{hq}\"")
+                break
+    # Fallback to first scene footage if hook download fails
+    if not first_footage:
+        for item in footage_data:
+            if item["footage_path"] and os.path.exists(item["footage_path"]):
+                first_footage = item["footage_path"]
+                break
 
     if first_footage:
         hook_text = random.choice(HOOK_TEMPLATES)

@@ -119,15 +119,15 @@ FOOTAGE_KEYWORDS = [
     "orange tabby cat", "black cat", "white cat", "calico cat",
     "grey cat", "fluffy cat", "kitten",
 
-    # Behaviors (cute/interesting, not boring)
+    # Behaviors (cute/interesting — cats only, no humans)
     "cat purring", "cat kneading", "cat stretching", "cat grooming",
-    "cat sleeping", "cat cuddling owner", "cat playing toy",
-    "kitten playing", "cat watching bird", "cat in sunlight",
-    "cat on window", "cat walking", "cat eating", "cat drinking milk",
+    "cat sleeping", "cat playing toy",
+    "kitten playing", "cat in sunlight",
+    "cat on window", "cat walking", "cat eating",
     "cat and kitten", "two cats cuddling", "cat in garden",
     "cat close up face", "cat eyes", "cat whiskers",
     "cat in bed", "cat on couch", "cute kitten", "newborn kitten",
-    "cat being pet", "cat rubbing head", "cat tail moving",
+    "cat tail moving", "cat yawning", "cat sitting", "cat looking",
 ]
 
 
@@ -170,7 +170,7 @@ def generate_script(content_format=None, video_type="short"):
     if content_format is None:
         content_format = random.choice(CONTENT_FORMATS)
 
-    scene_count = "8-12" if video_type == "short" else "20-30"
+    scene_count = "12-15" if video_type == "short" else "20-30"
 
     keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(25, len(FOOTAGE_KEYWORDS)))
     keywords_str = "\n".join(f'- "{k}"' for k in keyword_sample)

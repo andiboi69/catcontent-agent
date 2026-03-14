@@ -58,10 +58,30 @@ def search_pexels_videos(query, per_page=15, orientation="portrait", page=1):
     except Exception:
         return []
 
+    # Words in URL slug that indicate the clip is human-focused, not cat-focused
+    HUMAN_SLUG_WORDS = {
+        "woman", "man", "girl", "boy", "person", "people", "child", "children",
+        "baby", "owner", "holding", "kissing", "hugging", "selfie", "portrait",
+        "dog", "puppy", "bird", "parrot", "fish", "hamster", "rabbit",
+    }
+
     results = []
     for video in data.get("videos", []):
         duration = video.get("duration", 0)
         if duration > 30:
+            continue
+
+        # Filter out human-focused or non-cat clips using URL slug
+        video_url = video.get("url", "")
+        slug = video_url.split("/")[-2] if "/" in video_url else ""
+        slug_words = set(slug.lower().replace("-", " ").split())
+        # Skip if slug has human/animal words AND doesn't mention cat/kitten
+        has_human_words = bool(slug_words & HUMAN_SLUG_WORDS)
+        has_cat_words = bool(slug_words & {"cat", "cats", "kitten", "kittens", "feline"})
+        if has_human_words and not has_cat_words:
+            continue
+        # Even if slug has cat words, skip if the focus is clearly on a human
+        if has_cat_words and any(w in slug for w in ["woman-cuddling", "man-cuddling", "woman-holding", "man-holding", "woman-kissing", "man-kissing"]):
             continue
 
         video_files = sorted(

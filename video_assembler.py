@@ -474,9 +474,13 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
         else:
             print(f"  Skipping scene {i + 1} (no footage)")
 
-    if len(prepared_clips) < 2:
+    # Count actual content clips (exclude flash frames)
+    content_clips = [c for c in prepared_clips if "flash" not in os.path.basename(c)]
+    if len(content_clips) < 2:
         print("  ERROR: Not enough clips to assemble!")
         return None
+    if len(content_clips) < 6:
+        print(f"  WARNING: Only {len(content_clips)} clips — video will be short ({len(content_clips) * 2.5:.0f}s)")
 
     # Concatenate
     title_slug = script["title"][:40].replace(" ", "_")

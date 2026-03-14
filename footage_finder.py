@@ -38,7 +38,12 @@ def _save_history(used_ids):
 
 
 def search_pexels_videos(query, per_page=15, orientation="portrait", page=1):
-    """Search Pexels for cat videos."""
+    """Search Pexels for cat videos. Always forces 'cat' in query."""
+    # Always include "cat" in the query to avoid non-cat results
+    q_lower = query.lower()
+    if "cat" not in q_lower and "kitten" not in q_lower and "feline" not in q_lower:
+        query = f"cat {query}"
+
     params = {
         "query": query,
         "per_page": per_page,
@@ -115,11 +120,11 @@ def find_footage_for_scene(scene, used_ids):
             if fresh:
                 return random.choice(fresh)
 
-    # Fallback: generic queries across pages
+    # Fallback: generic queries across pages (cats only, no dogs)
     fallback_queries = [
         "funny cat", "playful cat", "cat playing", "kitten playing",
         "cat jumping", "cute kitten", "cat behavior", "cat reaction",
-        "cat and dog", "cat funny moment",
+        "fluffy cat", "cat sleeping", "cat stretching", "orange tabby cat",
     ]
     random.shuffle(fallback_queries)
     for q in fallback_queries:

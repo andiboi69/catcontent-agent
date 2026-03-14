@@ -127,7 +127,7 @@ FOOTAGE_KEYWORDS = [
     "cat and kitten", "two cats cuddling", "cat in garden",
     "cat close up face", "cat eyes", "cat whiskers",
     "cat in bed", "cat on couch", "cute kitten", "newborn kitten",
-    "cat and dog together", "cat being pet", "cat rubbing head",
+    "cat being pet", "cat rubbing head", "cat tail moving",
 ]
 
 
@@ -330,13 +330,22 @@ Return ONLY valid JSON:
 }}
 """
 
-    text = _call_llm(prompt)
-    script = _parse_json(text)
-    script["content_format"] = content_format
-    script["video_type"] = video_type
+    # Try up to 3 times to get enough scenes after dedup
+    MIN_SCENES = 8
 
-    # Deduplicate — remove captions too similar to past videos
-    script = _deduplicate_script(script)
+    for attempt in range(3):
+        text = _call_llm(prompt)
+        script = _parse_json(text)
+        script["content_format"] = content_format
+        script["video_type"] = video_type
+
+        # Deduplicate — remove captions too similar to past videos
+        script = _deduplicate_script(script)
+
+        scene_count_actual = len(script.get("scenes", []))
+        if scene_count_actual >= MIN_SCENES:
+            break
+        print(f"  Only {scene_count_actual} scenes after dedup (need {MIN_SCENES}), retrying... ({attempt + 1}/3)")
 
     # Record this script to history so future videos avoid these captions
     _record_script(script)

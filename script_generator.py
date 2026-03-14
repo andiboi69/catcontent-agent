@@ -294,7 +294,7 @@ FORMAT: {content_format} — {guide["desc"]}
 STYLE:
 - Each scene = one SHORT interesting fact/tip as text on screen + beautiful cat footage
 - Facts should make viewers go "I didn't know that!" or "Aww that's so cute!"
-- Keep captions VERY SHORT — 3 to 5 words MAXIMUM. Never exceed 5 words or 25 characters.
+- Captions should be 4 to 7 words — short but specific enough to be interesting.
 - Mix surprising facts with cute/heartwarming ones
 - The video should feel satisfying to watch — beautiful cats + interesting text
 
@@ -331,7 +331,7 @@ Return ONLY valid JSON:
 """
 
     # Try up to 3 times to get enough scenes after dedup
-    MIN_SCENES = 8
+    MIN_SCENES = 10
 
     for attempt in range(3):
         text = _call_llm(prompt)

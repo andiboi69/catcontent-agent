@@ -43,7 +43,7 @@ def _normalize(text):
     return "".join(c for c in text.lower() if c.isalnum())
 
 
-def _is_too_similar(new_text, existing_list, threshold=0.7):
+def _is_too_similar(new_text, existing_list, threshold=0.8):
     """Check if new_text is too similar to any existing entry."""
     new_norm = _normalize(new_text)
     if not new_norm:
@@ -108,7 +108,7 @@ def _record_script(script):
             history["captions"].append(caption)
     # Keep last 500 captions and 100 titles to avoid unbounded growth
     history["titles"] = history["titles"][-100:]
-    history["captions"] = history["captions"][-500:]
+    history["captions"] = history["captions"][-200:]
     _save_script_history(history)
 
 # Stock footage keywords that return GOOD-LOOKING clips on Pexels
@@ -170,7 +170,7 @@ def generate_script(content_format=None, video_type="short"):
     if content_format is None:
         content_format = random.choice(CONTENT_FORMATS)
 
-    scene_count = "12-15" if video_type == "short" else "20-30"
+    scene_count = "8-10" if video_type == "short" else "20-30"
 
     keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(25, len(FOOTAGE_KEYWORDS)))
     keywords_str = "\n".join(f'- "{k}"' for k in keyword_sample)
@@ -274,7 +274,7 @@ def generate_script(content_format=None, video_type="short"):
     avoid_section = ""
     if history["titles"] or history["captions"]:
         avoid_titles = "\n".join(f'  - "{t}"' for t in history["titles"][-20:])
-        avoid_captions = "\n".join(f'  - "{c}"' for c in history["captions"][-60:])
+        avoid_captions = "\n".join(f'  - "{c}"' for c in history["captions"][-30:])
         avoid_section = f"""
 ALREADY USED — DO NOT repeat, rephrase, or use similar words/structure:
 Previous titles (DO NOT use the same key words like "SECRETS", "EXPOSED", "REVEALED", "DEBUNKED" etc.):
@@ -286,16 +286,41 @@ Previous captions (DO NOT reuse the same topics — no more purring, whiskers, k
 CRITICAL: Every caption and title must be COMPLETELY DIFFERENT from the above — not just reworded. Use different TOPICS and ANGLES, not just different words for the same idea. If the above mentions "purrs heal", do NOT write "purring heals" or "purrfect healers".
 """
 
+    # Rotate title formulas — pick one randomly each time
+    title_formulas = [
+        'Curiosity gap: "Nobody Told You THIS About Cats" / "Your Cat Does This BUT You Never Noticed" / "What Happens When Cats..."',
+        'Emotional hook: "This Is Why CATS Are Therapists" / "Cats That Will MELT Your Heart" / "The Reason Cats Choose YOU"',
+        'Challenge: "Only 1% of Cat Owners Know This" / "Bet You Didn\'t Know CATS Can..." / "Name All 5 Cat Breeds"',
+        'Question: "Why Do CATS Do This?" / "Is Your Cat Trying To WARN You?" / "What Does Your Cat SEE At Night?"',
+        'Shock/reaction: "I Can\'t Believe CATS Can Do This" / "When Your Cat Does THIS... Watch Out" / "Scientists STUNNED By Cats"',
+        'POV/relatable: "POV Your Cat At 3AM" / "Every Cat Owner Knows This FEELING" / "Living With a Cat Be Like"',
+        'Number hook: "5 Things Your CAT Wishes You Knew" / "3 Cat Breeds That Act Like DOGS" / "7 Signs Your Cat Is HAPPY"',
+    ]
+    title_formula = random.choice(title_formulas)
+
+    # Rotate narration styles for variety
+    narration_styles = [
+        "conversational and surprised, like telling a friend: 'Did you know that...' or 'Here's the crazy thing...'",
+        "calm and educational, like a nature documentary: 'The domestic cat possesses...' or 'Scientists discovered that...'",
+        "enthusiastic and fun: 'Get this!' or 'You won't believe this but...' or 'Okay this one is wild...'",
+    ]
+    narration_style = random.choice(narration_styles)
+
     prompt = f"""You are creating a VIRAL educational cat YouTube Short.
 These videos get millions of views because people LOVE learning surprising things about cats.
 
 FORMAT: {content_format} — {guide["desc"]}
 
 STYLE:
-- Each scene = one SHORT interesting fact/tip as text on screen + beautiful cat footage
-- Facts should make viewers go "I didn't know that!" or "Aww that's so cute!"
-- Captions should be 4 to 7 words — short but specific enough to be interesting.
-- Mix surprising facts with cute/heartwarming ones
+- Each scene = one SHORT surprising fact as text on screen + beautiful cat footage
+- Each scene has TWO text fields:
+  * "caption": 3-6 words shown ON SCREEN — short, punchy, eye-catching (e.g. "Cats hear ultrasonic")
+  * "narration": 8-15 words read by VOICEOVER — a full interesting sentence expanding the caption (e.g. "Cats can hear ultrasonic frequencies up to 64,000 hertz, way beyond human range")
+- The narration should feel like someone explaining a cool fact to a friend
+- Narration tone: {narration_style}
+- Captions MUST contain a SPECIFIC fact — NOT generic labels like "Sleep Patterns" or "Grooming Habits"
+- Facts MUST be real and accurate — do NOT make up numbers. If unsure, use a qualitative fact instead of a fake number
+- Mix mind-blowing facts with cute/heartwarming ones
 - The video should feel satisfying to watch — beautiful cats + interesting text
 
 EXAMPLE CAPTIONS (match this style):
@@ -310,19 +335,23 @@ RULES:
 - Use DIFFERENT search_query for each scene — variety is key
 - Match the footage to the fact (e.g., fact about purring → "cat purring" footage)
 - Title MUST be completely unique and different from previous titles — use different words, angles, and structures each time
-- Do NOT reuse words like "DEBUNKED", "FACTS", "MYTHS" if they appear in previous titles
-- Title style inspiration: "{guide["title_style"]}" but vary it — try questions, numbers, emotional hooks, "POV:", "Watch till the end", etc.
+- Do NOT reuse words like "DEBUNKED", "FACTS", "MYTHS", "SECRETS", "REVEALED", "EXPOSED", "DOMINATE" if they appear in previous titles
+- TITLE FORMULA — you MUST use this specific formula for this video:
+  {title_formula}
+- AVOID generic titles like "CATS ROCK", "CAT LOVE", "CATS Win", "CATS Have Hidden Talents" — these get the LEAST views
+- The title should make someone STOP scrolling and click
 - Every caption and title MUST be unique — never repeat previous videos
 
 Return ONLY valid JSON:
 {{
-    "title": "Catchy YouTube title under 60 chars (use CAPS for 1-2 words)",
+    "title": "Curiosity-driven title under 60 chars — make them STOP scrolling (use CAPS for 1-2 key words)",
     "description": "YouTube description: Start with a hook question or statement. Then 1-2 sentences about what the video covers. Then add hashtags at the end: #shorts #cats #catfacts #catlover #catlovers #cute #cutecat #kitten #catlife #cattok #funnycats #catmom #catdad #pets #animals",
     "tags": ["cat facts", "cats", "cute cats", "cat lovers", "shorts", "kitten", "cat tips", "funny cats", "cat behavior", "cat breeds", "cat life", "pets", "animals", "cat mom", "cat dad"],
     "scenes": [
         {{
             "scene_number": 1,
-            "caption": "Short interesting fact or tip",
+            "caption": "3-6 word fact for screen",
+            "narration": "Full sentence 8-15 words for voiceover — expand the caption with detail",
             "search_query": "pick ONE from the available footage list"
         }}
     ],
@@ -331,7 +360,7 @@ Return ONLY valid JSON:
 """
 
     # Try up to 3 times to get enough scenes after dedup
-    MIN_SCENES = 10
+    MIN_SCENES = 7
 
     for attempt in range(3):
         text = _call_llm(prompt)

@@ -58,12 +58,23 @@ def search_pexels_videos(query, per_page=15, orientation="portrait", page=1):
     except Exception:
         return []
 
-    # Words in URL slug that indicate the clip is human-focused, not cat-focused
-    HUMAN_SLUG_WORDS = {
+    # Words in URL slug that indicate non-cat content
+    BAD_SLUG_WORDS = {
+        # Humans
         "woman", "man", "girl", "boy", "person", "people", "child", "children",
         "baby", "owner", "holding", "kissing", "hugging", "selfie", "portrait",
+        "couple", "family", "friend", "hand", "hands", "face", "model",
+        # Other animals
         "dog", "puppy", "bird", "parrot", "fish", "hamster", "rabbit",
+        "horse", "snake", "turtle", "lizard", "frog",
+        # Non-cat objects that match cat-related queries
+        "car", "house", "building", "room", "kitchen", "bedroom", "bathroom",
+        "food", "plant", "flower", "tree", "landscape", "city", "street",
+        "ear", "earring", "jewelry", "tattoo", "piercing",
     }
+
+    # Slug MUST contain one of these to confirm it's actually a cat video
+    CAT_SLUG_WORDS = {"cat", "cats", "kitten", "kittens", "feline", "kitty", "tabby", "calico", "persian", "siamese", "bengal", "ragdoll", "sphynx", "maine"}
 
     results = []
     for video in data.get("videos", []):
@@ -71,17 +82,20 @@ def search_pexels_videos(query, per_page=15, orientation="portrait", page=1):
         if duration > 30:
             continue
 
-        # Filter out human-focused or non-cat clips using URL slug
+        # Filter using URL slug — must be about cats
         video_url = video.get("url", "")
         slug = video_url.split("/")[-2] if "/" in video_url else ""
-        slug_words = set(slug.lower().replace("-", " ").split())
-        # Skip if slug has human/animal words AND doesn't mention cat/kitten
-        has_human_words = bool(slug_words & HUMAN_SLUG_WORDS)
-        has_cat_words = bool(slug_words & {"cat", "cats", "kitten", "kittens", "feline"})
-        if has_human_words and not has_cat_words:
+        slug_lower = slug.lower().replace("-", " ")
+        slug_words = set(slug_lower.split())
+
+        has_cat_words = bool(slug_words & CAT_SLUG_WORDS)
+        has_bad_words = bool(slug_words & BAD_SLUG_WORDS)
+
+        # REQUIRE cat words in slug — this is the strongest filter
+        if not has_cat_words:
             continue
-        # Even if slug has cat words, skip if the focus is clearly on a human
-        if has_cat_words and any(w in slug for w in ["woman-cuddling", "man-cuddling", "woman-holding", "man-holding", "woman-kissing", "man-kissing"]):
+        # Skip if bad words present even with cat words
+        if has_bad_words:
             continue
 
         video_files = sorted(

@@ -54,8 +54,12 @@ FONT_PATH = _find_font()
 TARGET_FPS = 30
 TARGET_WIDTH = 720
 TARGET_HEIGHT = 1280
-CLIP_DURATION = 2.5  # fast enough to keep attention, slow enough to read facts
+CLIP_DURATION = 2.5  # fallback if no voiceover
+CLIP_MIN_DURATION = 1.8  # minimum clip length even with short voiceover
+CLIP_PADDING = 0.3  # extra time after voiceover ends
 HOOK_DURATION = 1.5  # hook clip at the start
+AUDIO_RATE = 24000   # must match Edge TTS output (24kHz)
+AUDIO_CHANNELS = 1   # mono
 
 # Hook templates — short, fits on screen (max 20 chars)
 HOOK_TEMPLATES = [
@@ -100,16 +104,19 @@ def escape_text(text):
 
 
 def generate_flash_frame(output_path, duration=0.1):
-    """Generate a quick white flash frame for transitions."""
+    """Generate a quick white flash frame for transitions (with silent audio for concat compat)."""
     cmd = [
         FFMPEG, "-y",
         "-f", "lavfi",
         "-i", f"color=c=white:s={TARGET_WIDTH}x{TARGET_HEIGHT}:d={duration}:r={TARGET_FPS}",
+        "-f", "lavfi",
+        "-i", f"anullsrc=r={AUDIO_RATE}:cl=mono:d={duration}",
         "-c:v", "libx264",
         "-preset", "ultrafast",
         "-pix_fmt", "yuv420p",
         "-r", str(TARGET_FPS),
-        "-an",
+        "-c:a", "aac", "-ar", str(AUDIO_RATE), "-ac", str(AUDIO_CHANNELS),
+        "-shortest",
         output_path
     ]
     subprocess.run(cmd, capture_output=True, text=True)
@@ -166,6 +173,7 @@ def generate_hook_clip(footage_path, output_path, hook_text=None):
 
     vf = ",".join(filters)
 
+    # Simple approach: generate video-only hook, then add silent audio track
     cmd = [
         FFMPEG, "-y",
         *input_args,
@@ -177,18 +185,44 @@ def generate_hook_clip(footage_path, output_path, hook_text=None):
         "-r", str(TARGET_FPS),
         "-an",
         "-movflags", "+faststart",
-        output_path
+        output_path + ".tmp.mp4"
     ]
-
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
+        return None
+
+    # Add silent audio for concat compatibility
+    cmd2 = [
+        FFMPEG, "-y",
+        "-i", output_path + ".tmp.mp4",
+        "-f", "lavfi", "-i", f"anullsrc=r={AUDIO_RATE}:cl=mono",
+        "-c:v", "copy", "-c:a", "aac",
+        "-ar", str(AUDIO_RATE), "-ac", str(AUDIO_CHANNELS),
+        "-map", "0:v", "-map", "1:a",
+        "-shortest",
+        "-movflags", "+faststart",
+        output_path
+    ]
+    result2 = subprocess.run(cmd2, capture_output=True, text=True)
+    if os.path.exists(output_path + ".tmp.mp4"):
+        os.remove(output_path + ".tmp.mp4")
+    if result2.returncode != 0:
         return None
     return output_path
 
 
-def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None):
-    """Normalize a clip: scale to vertical, add caption."""
+def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None, voiceover_path=None):
+    """Normalize a clip: scale to vertical, add caption, optionally add voiceover.
+
+    If voiceover_path is provided, clip duration syncs to voiceover length.
+    """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    # If voiceover exists, sync clip duration to voice length
+    if voiceover_path and os.path.exists(voiceover_path):
+        voice_dur = get_media_duration(voiceover_path)
+        if voice_dur > 0:
+            duration = max(voice_dur + CLIP_PADDING, CLIP_MIN_DURATION)
 
     actual_dur = get_media_duration(input_path)
     if actual_dur <= 0:
@@ -206,6 +240,10 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         input_args = ["-ss", str(round(skip, 1)), "-i", input_path, "-t", str(source_duration)]
     else:
         input_args = ["-i", input_path, "-t", str(source_duration)]
+
+    # Add voiceover as second input if available
+    if voiceover_path and os.path.exists(voiceover_path):
+        input_args += ["-i", voiceover_path]
 
     # Video filter chain — simple and reliable
     filters = [
@@ -241,6 +279,13 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
 
     vf = ",".join(filters)
 
+    # Build output args — include audio mapping if voiceover present
+    has_voice = voiceover_path and os.path.exists(voiceover_path)
+    if has_voice:
+        audio_args = ["-map", "0:v", "-map", "1:a", "-c:a", "aac", "-ar", str(AUDIO_RATE), "-ac", str(AUDIO_CHANNELS), "-b:a", "128k", "-shortest"]
+    else:
+        audio_args = ["-an"]
+
     cmd = [
         FFMPEG, "-y",
         *input_args,
@@ -250,7 +295,7 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         "-preset", "fast",
         "-pix_fmt", "yuv420p",
         "-r", str(TARGET_FPS),
-        "-an",
+        *audio_args,
         "-movflags", "+faststart",
         output_path
     ]
@@ -261,7 +306,7 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         # Print last few lines of FFmpeg error for debugging
         err_lines = result.stderr.strip().split("\n")
         print(f"    FFmpeg error: {err_lines[-1][:120] if err_lines else 'unknown'}")
-        # Fallback: simplest possible
+        # Fallback: simplest possible (no voiceover)
         filters_simple = [
             f"scale={TARGET_WIDTH}:{TARGET_HEIGHT}:force_original_aspect_ratio=increase",
             f"crop={TARGET_WIDTH}:{TARGET_HEIGHT}",
@@ -293,6 +338,24 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         ]
         subprocess.run(cmd_fallback, capture_output=True, text=True)
 
+    # Ensure clip has audio track (silent if no voiceover) — required for concat
+    if not has_voice and os.path.exists(output_path):
+        tmp_path = output_path + ".tmp.mp4"
+        os.replace(output_path, tmp_path)
+        cmd_audio = [
+            FFMPEG, "-y",
+            "-i", tmp_path,
+            "-f", "lavfi", "-i", f"anullsrc=r={AUDIO_RATE}:cl=mono",
+            "-c:v", "copy", "-c:a", "aac",
+            "-ar", str(AUDIO_RATE), "-ac", str(AUDIO_CHANNELS),
+            "-map", "0:v", "-map", "1:a",
+            "-shortest", "-movflags", "+faststart",
+            output_path
+        ]
+        subprocess.run(cmd_audio, capture_output=True, text=True)
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
     return output_path
 
 
@@ -301,60 +364,95 @@ def concat_clips(clip_paths, output_path):
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     temp_dir = os.path.dirname(output_path)
 
-    ts_files = []
-    for i, clip in enumerate(clip_paths):
-        ts_path = os.path.join(temp_dir, f"temp_{i:02d}.ts")
-        cmd = [
-            FFMPEG, "-y", "-i", clip,
-            "-c:v", "copy", "-bsf:v", "h264_mp4toannexb",
-            "-f", "mpegts", ts_path
-        ]
-        subprocess.run(cmd, capture_output=True, text=True)
-        if os.path.exists(ts_path) and os.path.getsize(ts_path) > 0:
-            ts_files.append(ts_path)
+    # Use concat demuxer (file list) instead of TS — preserves audio streams
+    concat_list_path = os.path.join(temp_dir, "concat_list.txt")
+    with open(concat_list_path, "w") as f:
+        for clip in clip_paths:
+            safe_path = clip.replace("\\", "/")
+            f.write(f"file '{safe_path}'\n")
 
-    if not ts_files:
-        return None
-
-    ts_list = "|".join(f.replace("\\", "/") for f in ts_files)
-    concat_output = os.path.join(temp_dir, "concat_no_audio.mp4")
+    concat_output = os.path.join(temp_dir, "concat_with_voice.mp4")
 
     cmd = [
         FFMPEG, "-y",
-        "-i", f"concat:{ts_list}",
+        "-f", "concat", "-safe", "0",
+        "-i", concat_list_path,
         "-c:v", "libx264",
+        "-c:a", "aac", "-ar", str(AUDIO_RATE), "-ac", str(AUDIO_CHANNELS),
+        "-b:a", "128k",
         "-pix_fmt", "yuv420p",
         "-movflags", "+faststart",
         concat_output
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
 
-    for ts in ts_files:
-        if os.path.exists(ts):
-            os.remove(ts)
+    if os.path.exists(concat_list_path):
+        os.remove(concat_list_path)
 
     if result.returncode != 0:
         print(f"    Concat error: {result.stderr[-300:]}")
-        return None
+        # Fallback to old TS method (no audio)
+        ts_files = []
+        for i, clip in enumerate(clip_paths):
+            ts_path = os.path.join(temp_dir, f"temp_{i:02d}.ts")
+            cmd2 = [
+                FFMPEG, "-y", "-i", clip,
+                "-c:v", "copy", "-bsf:v", "h264_mp4toannexb",
+                "-an", "-f", "mpegts", ts_path
+            ]
+            subprocess.run(cmd2, capture_output=True, text=True)
+            if os.path.exists(ts_path) and os.path.getsize(ts_path) > 0:
+                ts_files.append(ts_path)
+        if not ts_files:
+            return None
+        ts_list = "|".join(f.replace("\\", "/") for f in ts_files)
+        cmd3 = [
+            FFMPEG, "-y", "-i", f"concat:{ts_list}",
+            "-c:v", "libx264", "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart", concat_output
+        ]
+        subprocess.run(cmd3, capture_output=True, text=True)
+        for ts in ts_files:
+            if os.path.exists(ts):
+                os.remove(ts)
+        if not os.path.exists(concat_output):
+            return None
 
     os.replace(concat_output, output_path)
     return output_path
 
 
-def add_background_music(video_path, music_path, output_path):
-    """Mix background music behind the video with random tempo variation."""
+def add_background_music(video_path, music_path, output_path, has_voiceover=False):
+    """Mix background music behind the video with random tempo variation.
+
+    If has_voiceover is True, keeps existing audio (voiceover) and mixes music underneath at lower volume.
+    """
     # Random tempo shift so the same track sounds slightly different each time
     tempo = round(random.uniform(0.9, 1.12), 2)
 
     # Normalize music to -14dB first (loudnorm), then set as background level
-    # This ensures all tracks play at a consistent, audible volume regardless of source levels
     norm_filter = "loudnorm=I=-14:TP=-1:LRA=11"
     tempo_filter = f",atempo={tempo}" if tempo != 1.0 else ""
 
-    audio_chain = (
-        f"[1:a]{norm_filter}{tempo_filter},aloop=loop=-1:size=2e+09[music];"
-        f"[music]atrim=duration=120,volume=0.5[trimmed]"
-    )
+    # Lower music volume when voiceover is present so voice stays clear
+    music_vol = "0.25" if has_voiceover else "0.5"
+
+    if has_voiceover:
+        # Mix voiceover (from video) + background music
+        audio_chain = (
+            f"[1:a]{norm_filter}{tempo_filter},aloop=loop=-1:size=2e+09[music];"
+            f"[music]atrim=duration=120,volume={music_vol}[bg];"
+            f"[0:a]volume=1.8[voice];"
+            f"[voice][bg]amix=inputs=2:duration=first:dropout_transition=2[mixed]"
+        )
+        map_audio = "[mixed]"
+    else:
+        # No voiceover — just add music
+        audio_chain = (
+            f"[1:a]{norm_filter}{tempo_filter},aloop=loop=-1:size=2e+09[music];"
+            f"[music]atrim=duration=120,volume={music_vol}[mixed]"
+        )
+        map_audio = "[mixed]"
 
     cmd = [
         FFMPEG, "-y",
@@ -362,7 +460,7 @@ def add_background_music(video_path, music_path, output_path):
         "-i", music_path,
         "-filter_complex", audio_chain,
         "-map", "0:v",
-        "-map", "[trimmed]",
+        "-map", map_audio,
         "-c:v", "copy",
         "-c:a", "aac",
         "-b:a", "128k",
@@ -373,15 +471,24 @@ def add_background_music(video_path, music_path, output_path):
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     if result.returncode != 0:
-        # Fallback: simple volume boost without loudnorm
+        # Fallback: simple mix without loudnorm
+        if has_voiceover:
+            fallback_chain = (
+                f"[1:a]volume=1.5,aloop=loop=-1:size=2e+09[music];"
+                f"[music]atrim=duration=120[bg];"
+                f"[0:a]volume=1.8[voice];"
+                f"[voice][bg]amix=inputs=2:duration=first[mixed]"
+            )
+        else:
+            fallback_chain = "[1:a]volume=5,aloop=loop=-1:size=2e+09[music];[music]atrim=duration=120[mixed]"
+
         cmd_simple = [
             FFMPEG, "-y",
             "-i", video_path,
             "-i", music_path,
-            "-filter_complex",
-            "[1:a]volume=5,aloop=loop=-1:size=2e+09[music];[music]atrim=duration=120[trimmed]",
+            "-filter_complex", fallback_chain,
             "-map", "0:v",
-            "-map", "[trimmed]",
+            "-map", "[mixed]",
             "-c:v", "copy",
             "-c:a", "aac",
             "-b:a", "128k",
@@ -399,12 +506,15 @@ def add_background_music(video_path, music_path, output_path):
     return output_path
 
 
-def assemble_full_video(footage_data, audio_path, script, output_dir):
+def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_paths=None):
     """Rapid-fire compilation assembly:
-    1. Normalize each clip (1.8s, sped up, caption)
+    1. Normalize each clip (duration synced to voiceover if available)
     2. Insert flash frames between clips
     3. Concatenate everything
-    4. Add background music (louder)
+    4. Add background music (mixed with voiceover)
+
+    Args:
+        voiceover_paths: list of per-scene audio paths (same length as footage_data), or None
     """
     clips_dir = os.path.join(output_dir, "clips")
     os.makedirs(clips_dir, exist_ok=True)
@@ -456,12 +566,17 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
         footage_path = item["footage_path"]
         caption = scene.get("caption", "")
 
+        # Get per-scene voiceover if available
+        voice_path = None
+        if voiceover_paths and i < len(voiceover_paths):
+            voice_path = voiceover_paths[i]
+
         clip_path = os.path.join(clips_dir, f"clip_{i + 1:02d}.mp4")
 
         if footage_path and os.path.exists(footage_path):
             print(f"  Clip {i + 1}/{num_scenes}: \"{caption}\"")
             normalize_clip(
-                footage_path, clip_path, CLIP_DURATION, caption
+                footage_path, clip_path, CLIP_DURATION, caption, voice_path
             )
 
             if os.path.exists(clip_path) and os.path.getsize(clip_path) > 1000:
@@ -479,13 +594,17 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
     if len(content_clips) < 2:
         print("  ERROR: Not enough clips to assemble!")
         return None
-    if len(content_clips) < 6:
+    if len(content_clips) < 5:
         print(f"  WARNING: Only {len(content_clips)} clips — video will be short ({len(content_clips) * 2.5:.0f}s)")
 
     # Concatenate
     title_slug = script["title"][:40].replace(" ", "_")
     for ch in "?!'\",:;()[]{}#@&*":
         title_slug = title_slug.replace(ch, "")
+
+    has_voiceover = voiceover_paths is not None and any(
+        v and os.path.exists(v) for v in voiceover_paths
+    ) if voiceover_paths else False
 
     no_music_path = os.path.join(output_dir, "no_music.mp4")
     print(f"  Stitching {len([c for c in prepared_clips if 'flash' not in c])} clips with flash transitions...")
@@ -555,8 +674,9 @@ def assemble_full_video(footage_data, audio_path, script, output_dir):
 
     if music_files:
         music = pick_music(music_files, content_format)
-        print(f"  Adding music: {os.path.basename(music)} (pitch/tempo varied)")
-        add_background_music(no_music_path, music, final_path)
+        vo_label = " + voiceover" if has_voiceover else ""
+        print(f"  Adding music: {os.path.basename(music)}{vo_label}")
+        add_background_music(no_music_path, music, final_path, has_voiceover=has_voiceover)
     else:
         os.replace(no_music_path, final_path)
 

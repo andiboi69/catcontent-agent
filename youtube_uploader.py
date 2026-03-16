@@ -20,6 +20,10 @@ TOKEN_FILE = os.path.join(PROJECT_DIR, "youtube_token.json")
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
     "https://www.googleapis.com/auth/youtube",
+]
+
+# Extended scopes (includes analytics) — used by get_credentials() for local analytics
+SCOPES_WITH_ANALYTICS = SCOPES + [
     "https://www.googleapis.com/auth/yt-analytics.readonly",
 ]
 
@@ -60,17 +64,21 @@ def get_authenticated_service():
 
 
 def get_credentials():
-    """Return authenticated credentials (for use by other APIs like Analytics)."""
+    """Return authenticated credentials with analytics scope (for local use only).
+
+    Uses a separate token file to avoid breaking CI uploads.
+    """
+    analytics_token = os.path.join(PROJECT_DIR, "youtube_token_analytics.json")
     credentials = None
-    if os.path.exists(TOKEN_FILE):
-        credentials = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
+    if os.path.exists(analytics_token):
+        credentials = Credentials.from_authorized_user_file(analytics_token, SCOPES_WITH_ANALYTICS)
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES_WITH_ANALYTICS)
             credentials = flow.run_local_server(port=8090, prompt="consent")
-        with open(TOKEN_FILE, "w") as f:
+        with open(analytics_token, "w") as f:
             f.write(credentials.to_json())
     return credentials
 

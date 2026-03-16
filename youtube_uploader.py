@@ -20,6 +20,7 @@ TOKEN_FILE = os.path.join(PROJECT_DIR, "youtube_token.json")
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
     "https://www.googleapis.com/auth/youtube",
+    "https://www.googleapis.com/auth/yt-analytics.readonly",
 ]
 
 
@@ -56,6 +57,22 @@ def get_authenticated_service():
         print("  Token saved — won't need to login again.")
 
     return build("youtube", "v3", credentials=credentials)
+
+
+def get_credentials():
+    """Return authenticated credentials (for use by other APIs like Analytics)."""
+    credentials = None
+    if os.path.exists(TOKEN_FILE):
+        credentials = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
+    if not credentials or not credentials.valid:
+        if credentials and credentials.expired and credentials.refresh_token:
+            credentials.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
+            credentials = flow.run_local_server(port=8090, prompt="consent")
+        with open(TOKEN_FILE, "w") as f:
+            f.write(credentials.to_json())
+    return credentials
 
 
 def upload_video(video_path, title, description, tags, category_id="22", privacy="public", made_for_kids=False):

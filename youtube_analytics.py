@@ -1,14 +1,15 @@
 """
-YouTube Analytics — Fetch video performance data from the YouTube Data API v3.
+YouTube Analytics — Fetch video performance data from YouTube APIs.
 
-Uses the same OAuth token as the uploader (no extra scopes needed).
-Fetches views, likes, comments, and estimated duration for all uploaded videos.
+Uses YouTube Data API v3 for video stats and YouTube Analytics API for traffic sources.
+Requires scopes: youtube, youtube.upload, yt-analytics.readonly
 """
 
 import os
 import json
-from datetime import datetime, timezone
-from youtube_uploader import get_authenticated_service
+from datetime import datetime, timezone, timedelta
+from googleapiclient.discovery import build
+from youtube_uploader import get_authenticated_service, get_credentials
 
 
 def get_channel_info(youtube):
@@ -103,6 +104,71 @@ def days_ago(iso_date):
     published = datetime.fromisoformat(iso_date.replace("Z", "+00:00"))
     now = datetime.now(timezone.utc)
     return (now - published).days
+
+
+def get_traffic_sources(credentials, channel_id, start_date=None):
+    """Fetch traffic source breakdown from YouTube Analytics API."""
+    analytics = build("youtubeAnalytics", "v2", credentials=credentials)
+
+    if not start_date:
+        start_date = (datetime.now(timezone.utc) - timedelta(days=28)).strftime("%Y-%m-%d")
+    end_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    try:
+        response = analytics.reports().query(
+            ids=f"channel=={channel_id}",
+            startDate=start_date,
+            endDate=end_date,
+            metrics="views,estimatedMinutesWatched",
+            dimensions="insightTrafficSourceType",
+            sort="-views",
+        ).execute()
+
+        sources = []
+        for row in response.get("rows", []):
+            sources.append({
+                "source": row[0],
+                "views": row[1],
+                "watch_minutes": round(row[2], 1),
+            })
+        return sources
+    except Exception as e:
+        print(f"  Traffic sources error: {e}")
+        return None
+
+
+def get_per_video_traffic(credentials, channel_id, video_ids, start_date=None):
+    """Fetch traffic sources per video."""
+    analytics = build("youtubeAnalytics", "v2", credentials=credentials)
+
+    if not start_date:
+        start_date = (datetime.now(timezone.utc) - timedelta(days=28)).strftime("%Y-%m-%d")
+    end_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    try:
+        response = analytics.reports().query(
+            ids=f"channel=={channel_id}",
+            startDate=start_date,
+            endDate=end_date,
+            metrics="views",
+            dimensions="video,insightTrafficSourceType",
+            filters=f"video=={','.join(video_ids[:50])}",
+            sort="-views",
+        ).execute()
+
+        # Group by video
+        video_traffic = {}
+        for row in response.get("rows", []):
+            vid = row[0]
+            source = row[1]
+            views = row[2]
+            if vid not in video_traffic:
+                video_traffic[vid] = {}
+            video_traffic[vid][source] = views
+        return video_traffic
+    except Exception as e:
+        print(f"  Per-video traffic error: {e}")
+        return None
 
 
 def fetch_analytics():
@@ -207,6 +273,27 @@ def fetch_analytics():
         views_per_sub = total_views / channel["subscribers"]
         print(f"    Views per subscriber: {views_per_sub:.1f}")
 
+    # Fetch traffic sources
+    print(f"\n  TRAFFIC SOURCES (last 28 days):")
+    credentials = get_credentials()
+    traffic = get_traffic_sources(credentials, channel["channel_id"])
+    if traffic:
+        total_traffic_views = sum(t["views"] for t in traffic)
+        for t in traffic:
+            pct = (t["views"] / total_traffic_views * 100) if total_traffic_views > 0 else 0
+            source_name = t["source"].replace("_", " ").replace("YT ", "").title()
+            print(f"    {source_name:<30} {t['views']:>7} views ({pct:>5.1f}%)  {t['watch_minutes']:>7} min watched")
+
+        # Highlight Shorts feed specifically
+        shorts_feed = next((t for t in traffic if "SHORTS" in t["source"].upper() or "SHORT" in t["source"].upper()), None)
+        if shorts_feed:
+            shorts_pct = (shorts_feed["views"] / total_traffic_views * 100) if total_traffic_views > 0 else 0
+            print(f"\n    Shorts feed: {shorts_feed['views']} views ({shorts_pct:.1f}% of total)")
+        else:
+            print(f"\n    Shorts feed: 0 views (algorithm hasn't picked up yet)")
+    else:
+        print(f"    Could not fetch traffic data (may need re-authorization)")
+
     print(f"\n{'='*70}")
 
     # Save results to file
@@ -214,6 +301,7 @@ def fetch_analytics():
         "fetched_at": datetime.now().isoformat(),
         "channel": channel,
         "videos": results,
+        "traffic_sources": traffic,
         "summary": {
             "total_views": total_views,
             "total_likes": total_likes,

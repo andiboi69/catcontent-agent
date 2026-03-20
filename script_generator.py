@@ -19,14 +19,18 @@ SCRIPT_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "used_scripts.json
 
 
 def _load_script_history():
-    """Load list of previously generated titles and captions."""
+    """Load list of previously generated titles, captions, and narrations."""
     if os.path.exists(SCRIPT_HISTORY_FILE):
         try:
             with open(SCRIPT_HISTORY_FILE, "r") as f:
-                return json.load(f)
+                data = json.load(f)
+                # Ensure narrations key exists (backward compat)
+                if "narrations" not in data:
+                    data["narrations"] = []
+                return data
         except Exception:
             pass
-    return {"titles": [], "captions": []}
+    return {"titles": [], "captions": [], "narrations": []}
 
 
 def _save_script_history(history):
@@ -78,18 +82,28 @@ def _deduplicate_script(script):
     """Remove duplicate/similar captions and regenerate title if too similar."""
     history = _load_script_history()
 
-    # Check captions — remove ones too similar to history or each other
+    # Check captions AND narrations — remove scenes too similar to history or each other
     seen_captions = []
+    seen_narrations = []
     unique_scenes = []
     for scene in script.get("scenes", []):
         caption = scene.get("caption", "")
+        narration = scene.get("narration", "")
         if not caption:
             continue
+        # Check caption against history and current batch
         if _is_too_similar(caption, history.get("captions", [])):
             continue
         if _is_too_similar(caption, seen_captions):
             continue
+        # Check narration against history and current batch
+        if narration and _is_too_similar(narration, history.get("narrations", []), threshold=0.6):
+            continue
+        if narration and _is_too_similar(narration, seen_narrations, threshold=0.6):
+            continue
         seen_captions.append(caption)
+        if narration:
+            seen_narrations.append(narration)
         unique_scenes.append(scene)
 
     script["scenes"] = unique_scenes
@@ -104,11 +118,15 @@ def _record_script(script):
         history["titles"].append(title)
     for scene in script.get("scenes", []):
         caption = scene.get("caption", "")
+        narration = scene.get("narration", "")
         if caption and caption not in history["captions"]:
             history["captions"].append(caption)
-    # Keep last 500 captions and 100 titles to avoid unbounded growth
+        if narration and narration not in history["narrations"]:
+            history["narrations"].append(narration)
+    # Keep last N entries to avoid unbounded growth
     history["titles"] = history["titles"][-100:]
     history["captions"] = history["captions"][-200:]
+    history["narrations"] = history["narrations"][-200:]
     _save_script_history(history)
 
 # Stock footage keywords that return GOOD-LOOKING clips on Pexels
@@ -272,9 +290,10 @@ def generate_script(content_format=None, video_type="short"):
     # Load past scripts to avoid repetition
     history = _load_script_history()
     avoid_section = ""
-    if history["titles"] or history["captions"]:
+    if history["titles"] or history["captions"] or history.get("narrations"):
         avoid_titles = "\n".join(f'  - "{t}"' for t in history["titles"][-20:])
         avoid_captions = "\n".join(f'  - "{c}"' for c in history["captions"][-30:])
+        avoid_narrations = "\n".join(f'  - "{n}"' for n in history.get("narrations", [])[-30:])
         avoid_section = f"""
 ALREADY USED — DO NOT repeat, rephrase, or use similar words/structure:
 Previous titles (DO NOT use the same key words like "SECRETS", "EXPOSED", "REVEALED", "DEBUNKED" etc.):
@@ -283,7 +302,10 @@ Previous titles (DO NOT use the same key words like "SECRETS", "EXPOSED", "REVEA
 Previous captions (DO NOT reuse the same topics — no more purring, whiskers, kneading, eyes, paws unless you have a genuinely NEW angle):
 {avoid_captions}
 
-CRITICAL: Every caption and title must be COMPLETELY DIFFERENT from the above — not just reworded. Use different TOPICS and ANGLES, not just different words for the same idea. If the above mentions "purrs heal", do NOT write "purring heals" or "purrfect healers".
+Previous narrations (DO NOT repeat these facts or rephrase them — find COMPLETELY NEW information):
+{avoid_narrations}
+
+CRITICAL: Every caption, narration, and title must be COMPLETELY DIFFERENT from the above — not just reworded. Use different TOPICS and ANGLES, not just different words for the same idea. If the above mentions "purrs heal", do NOT write "purring heals" or "purrfect healers". If a narration says "cats can hear 64,000 hertz", do NOT write "cats hear up to 64 kHz" — find a DIFFERENT fact entirely.
 """
 
     # Rotate title formulas — pick one randomly each time

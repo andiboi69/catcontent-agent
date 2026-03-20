@@ -300,9 +300,9 @@ CRITICAL: Every caption and title must be COMPLETELY DIFFERENT from the above �
 
     # Rotate narration styles for variety
     narration_styles = [
-        "conversational and surprised, like telling a friend: 'Did you know that...' or 'Here's the crazy thing...'",
-        "calm and educational, like a nature documentary: 'The domestic cat possesses...' or 'Scientists discovered that...'",
-        "enthusiastic and fun: 'Get this!' or 'You won't believe this but...' or 'Okay this one is wild...'",
+        "conversational, like telling a friend a cool fact. Jump straight into the fact — NO filler phrases like 'did you know' or 'here's the thing'",
+        "calm and educational, like a nature documentary narrator stating facts directly",
+        "enthusiastic and energetic, but lead with the actual fact — NO setup phrases like 'get this' or 'you won't believe this' or 'this one is wild'",
     ]
     narration_style = random.choice(narration_styles)
 
@@ -318,6 +318,7 @@ STYLE:
   * "narration": 8-15 words read by VOICEOVER — a full interesting sentence expanding the caption (e.g. "Cats can hear ultrasonic frequencies up to 64,000 hertz, way beyond human range")
 - The narration should feel like someone explaining a cool fact to a friend
 - Narration tone: {narration_style}
+- NEVER start narration with filler phrases like: "Get this", "You won't believe", "This is interesting", "This one is wild", "Here's the thing", "Did you know", "Fun fact". Just STATE the fact directly. Example: instead of "Get this, cats can rotate their ears 180 degrees" just say "Cats can rotate their ears a full 180 degrees independently"
 - Captions MUST contain a SPECIFIC fact — NOT generic labels like "Sleep Patterns" or "Grooming Habits"
 - Facts MUST be real and accurate — do NOT make up numbers. If unsure, use a qualitative fact instead of a fake number
 - Mix mind-blowing facts with cute/heartwarming ones

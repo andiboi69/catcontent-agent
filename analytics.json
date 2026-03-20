@@ -1,11 +1,11 @@
 {
-  "fetched_at": "2026-03-16T14:04:42.101825",
+  "fetched_at": "2026-03-19T08:43:43.015022",
   "channel": {
     "channel_id": "UCA4dMdopvYH89eBIo3XzG3g",
     "title": "Purrfect Facts",
-    "subscribers": 212,
-    "total_views": 30727,
-    "total_videos": 19,
+    "subscribers": 417,
+    "total_views": 48565,
+    "total_videos": 29,
     "uploads_playlist": "UUA4dMdopvYH89eBIo3XzG3g"
   },
   "videos": [
@@ -13,7 +13,7 @@
       "video_id": "P3_8M0C6opA",
       "title": "CAT SURPRISES",
       "published_at": "2026-03-12T09:48:11Z",
-      "days_ago": 4,
+      "days_ago": 6,
       "views": 4080,
       "likes": 633,
       "comments": 2,
@@ -21,11 +21,22 @@
       "url": "https://youtube.com/shorts/P3_8M0C6opA"
     },
     {
+      "video_id": "4FBhAA1j8R0",
+      "title": "CATS ROCK",
+      "published_at": "2026-03-15T19:50:02Z",
+      "days_ago": 3,
+      "views": 3570,
+      "likes": 1182,
+      "comments": 5,
+      "duration_s": 37,
+      "url": "https://youtube.com/shorts/4FBhAA1j8R0"
+    },
+    {
       "video_id": "t3daG4aYoZo",
       "title": "CATS Are Therapists",
       "published_at": "2026-03-14T11:29:51Z",
-      "days_ago": 2,
-      "views": 2467,
+      "days_ago": 4,
+      "views": 2472,
       "likes": 105,
       "comments": 0,
       "duration_s": 32,
@@ -35,8 +46,8 @@
       "video_id": "A3uYJuI9iRs",
       "title": "CATS REACT",
       "published_at": "2026-03-13T12:24:24Z",
-      "days_ago": 3,
-      "views": 2281,
+      "days_ago": 5,
+      "views": 2283,
       "likes": 48,
       "comments": 0,
       "duration_s": 27,
@@ -46,8 +57,8 @@
       "video_id": "WeNAe2ZWh4Q",
       "title": "CAT Myths DEBUNKED",
       "published_at": "2026-03-11T16:26:50Z",
-      "days_ago": 4,
-      "views": 2040,
+      "days_ago": 7,
+      "views": 2041,
       "likes": 29,
       "comments": 0,
       "duration_s": 23,
@@ -57,8 +68,8 @@
       "video_id": "QqT20Ko_NkI",
       "title": "CAT Facts DEBUNKED",
       "published_at": "2026-03-11T17:01:26Z",
-      "days_ago": 4,
-      "views": 2016,
+      "days_ago": 7,
+      "views": 2017,
       "likes": 71,
       "comments": 0,
       "duration_s": 26,
@@ -68,29 +79,73 @@
       "video_id": "fjXE7gnt5FE",
       "title": "CATS Astonish",
       "published_at": "2026-03-13T20:46:17Z",
-      "days_ago": 2,
-      "views": 1996,
+      "days_ago": 5,
+      "views": 2000,
       "likes": 50,
       "comments": 0,
       "duration_s": 25,
       "url": "https://youtube.com/shorts/fjXE7gnt5FE"
     },
     {
+      "video_id": "SiXb61zEs_o",
+      "title": "CATS Have HIDDEN Talent",
+      "published_at": "2026-03-18T00:00:52Z",
+      "days_ago": 1,
+      "views": 1976,
+      "likes": 33,
+      "comments": 0,
+      "duration_s": 39,
+      "url": "https://youtube.com/shorts/SiXb61zEs_o"
+    },
+    {
       "video_id": "ajPQ7DJ4s-k",
       "title": "MEET Your New Best Friend",
       "published_at": "2026-03-12T00:55:57Z",
-      "days_ago": 4,
-      "views": 1961,
+      "days_ago": 7,
+      "views": 1962,
       "likes": 59,
       "comments": 6,
       "duration_s": 27,
       "url": "https://youtube.com/shorts/ajPQ7DJ4s-k"
     },
     {
+      "video_id": "E8tNFWBsUGQ",
+      "title": "7 Surprising CAT Hacks",
+      "published_at": "2026-03-17T05:59:05Z",
+      "days_ago": 2,
+      "views": 1917,
+      "likes": 221,
+      "comments": 2,
+      "duration_s": 39,
+      "url": "https://youtube.com/shorts/E8tNFWBsUGQ"
+    },
+    {
+      "video_id": "OVajBSTTNtU",
+      "title": "CAT WHISPERER Secrets",
+      "published_at": "2026-03-15T06:06:10Z",
+      "days_ago": 4,
+      "views": 1896,
+      "likes": 232,
+      "comments": 0,
+      "duration_s": 35,
+      "url": "https://youtube.com/shorts/OVajBSTTNtU"
+    },
+    {
+      "video_id": "0xj249j54Ow",
+      "title": "CAT WHISPERS",
+      "published_at": "2026-03-14T11:15:44Z",
+      "days_ago": 4,
+      "views": 1890,
+      "likes": 254,
+      "comments": 0,
+      "duration_s": 25,
+      "url": "https://youtube.com/shorts/0xj249j54Ow"
+    },
+    {
       "video_id": "dyJY2XfH9xg",
       "title": "CAT HACKS",
       "published_at": "2026-03-13T16:29:08Z",
-      "days_ago": 2,
+      "days_ago": 5,
       "views": 1888,
       "likes": 74,
       "comments": 2,
@@ -98,32 +153,32 @@
       "url": "https://youtube.com/shorts/dyJY2XfH9xg"
     },
     {
-      "video_id": "0xj249j54Ow",
-      "title": "CAT WHISPERS",
-      "published_at": "2026-03-14T11:15:44Z",
-      "days_ago": 2,
-      "views": 1865,
-      "likes": 247,
-      "comments": 0,
-      "duration_s": 25,
-      "url": "https://youtube.com/shorts/0xj249j54Ow"
-    },
-    {
       "video_id": "S4sOuCyaGKw",
       "title": "CATS Bring Joy",
       "published_at": "2026-03-15T00:46:03Z",
-      "days_ago": 1,
-      "views": 1835,
+      "days_ago": 4,
+      "views": 1841,
       "likes": 79,
       "comments": 2,
       "duration_s": 30,
       "url": "https://youtube.com/shorts/S4sOuCyaGKw"
     },
     {
+      "video_id": "_NT53luZpHg",
+      "title": "CATS Have Super Senses",
+      "published_at": "2026-03-17T18:27:48Z",
+      "days_ago": 1,
+      "views": 1786,
+      "likes": 224,
+      "comments": 0,
+      "duration_s": 52,
+      "url": "https://youtube.com/shorts/_NT53luZpHg"
+    },
+    {
       "video_id": "P9dU21BHTZE",
       "title": "CAT LOVE Unleashed",
       "published_at": "2026-03-12T16:37:13Z",
-      "days_ago": 3,
+      "days_ago": 6,
       "views": 1768,
       "likes": 27,
       "comments": 0,
@@ -131,45 +186,12 @@
       "url": "https://youtube.com/shorts/P9dU21BHTZE"
     },
     {
-      "video_id": "AqMLoQ3gZfI",
-      "title": "CATS EXPLAINED",
-      "published_at": "2026-03-13T08:22:53Z",
-      "days_ago": 3,
-      "views": 1728,
-      "likes": 49,
-      "comments": 0,
-      "duration_s": 25,
-      "url": "https://youtube.com/shorts/AqMLoQ3gZfI"
-    },
-    {
-      "video_id": "OVajBSTTNtU",
-      "title": "CAT WHISPERER Secrets",
-      "published_at": "2026-03-15T06:06:10Z",
-      "days_ago": 1,
-      "views": 1724,
-      "likes": 178,
-      "comments": 0,
-      "duration_s": 35,
-      "url": "https://youtube.com/shorts/OVajBSTTNtU"
-    },
-    {
-      "video_id": "ZSNTpeJOgWs",
-      "title": "CATS Reign Supreme",
-      "published_at": "2026-03-12T09:06:37Z",
-      "days_ago": 4,
-      "views": 1584,
-      "likes": 46,
-      "comments": 0,
-      "duration_s": 25,
-      "url": "https://youtube.com/shorts/ZSNTpeJOgWs"
-    },
-    {
       "video_id": "xUZYhwa-BB4",
       "title": "CATS Are EMOTIONAL Therapists",
       "published_at": "2026-03-15T21:30:37Z",
-      "days_ago": 0,
-      "views": 1508,
-      "likes": 84,
+      "days_ago": 3,
+      "views": 1762,
+      "likes": 160,
       "comments": 2,
       "duration_s": 68,
       "url": "https://youtube.com/shorts/xUZYhwa-BB4"
@@ -178,82 +200,185 @@
       "video_id": "arLspciYTGk",
       "title": "7 CAT Surprises",
       "published_at": "2026-03-16T06:21:18Z",
-      "days_ago": 0,
-      "views": 1408,
-      "likes": 58,
-      "comments": 0,
+      "days_ago": 3,
+      "views": 1735,
+      "likes": 166,
+      "comments": 4,
       "duration_s": 32,
       "url": "https://youtube.com/shorts/arLspciYTGk"
+    },
+    {
+      "video_id": "AqMLoQ3gZfI",
+      "title": "CATS EXPLAINED",
+      "published_at": "2026-03-13T08:22:53Z",
+      "days_ago": 5,
+      "views": 1726,
+      "likes": 49,
+      "comments": 0,
+      "duration_s": 25,
+      "url": "https://youtube.com/shorts/AqMLoQ3gZfI"
+    },
+    {
+      "video_id": "2AnS8hHNSuE",
+      "title": "CATS Have HIDDEN Languages",
+      "published_at": "2026-03-17T14:24:20Z",
+      "days_ago": 1,
+      "views": 1588,
+      "likes": 35,
+      "comments": 0,
+      "duration_s": 51,
+      "url": "https://youtube.com/shorts/2AnS8hHNSuE"
+    },
+    {
+      "video_id": "ZSNTpeJOgWs",
+      "title": "CATS Reign Supreme",
+      "published_at": "2026-03-12T09:06:37Z",
+      "days_ago": 6,
+      "views": 1585,
+      "likes": 46,
+      "comments": 0,
+      "duration_s": 25,
+      "url": "https://youtube.com/shorts/ZSNTpeJOgWs"
+    },
+    {
+      "video_id": "yhoyy6eAGbc",
+      "title": "CATS STUN Scientists",
+      "published_at": "2026-03-18T06:04:41Z",
+      "days_ago": 1,
+      "views": 1583,
+      "likes": 73,
+      "comments": 0,
+      "duration_s": 55,
+      "url": "https://youtube.com/shorts/yhoyy6eAGbc"
+    },
+    {
+      "video_id": "UQXX4svQ76k",
+      "title": "CATS Can See POLARIZED Light",
+      "published_at": "2026-03-16T14:06:29Z",
+      "days_ago": 2,
+      "views": 1456,
+      "likes": 40,
+      "comments": 0,
+      "duration_s": 47,
+      "url": "https://youtube.com/shorts/UQXX4svQ76k"
     },
     {
       "video_id": "UfEBAODaC6s",
       "title": "CAT LOVE Signs",
       "published_at": "2026-03-15T14:08:32Z",
-      "days_ago": 0,
-      "views": 1379,
+      "days_ago": 3,
+      "views": 1390,
       "likes": 43,
       "comments": 0,
       "duration_s": 35,
       "url": "https://youtube.com/shorts/UfEBAODaC6s"
     },
     {
-      "video_id": "4FBhAA1j8R0",
-      "title": "CATS ROCK",
-      "published_at": "2026-03-15T19:50:02Z",
+      "video_id": "97MpetFYpXk",
+      "title": "4 CAT Quirks EXPLAINED",
+      "published_at": "2026-03-18T14:25:10Z",
       "days_ago": 0,
-      "views": 1375,
-      "likes": 117,
-      "comments": 2,
-      "duration_s": 37,
-      "url": "https://youtube.com/shorts/4FBhAA1j8R0"
+      "views": 494,
+      "likes": 19,
+      "comments": 0,
+      "duration_s": 22,
+      "url": "https://youtube.com/shorts/97MpetFYpXk"
+    },
+    {
+      "video_id": "Bf698M8CVdw",
+      "title": "CATS Can SMELL Emotions",
+      "published_at": "2026-03-16T19:54:06Z",
+      "days_ago": 2,
+      "views": 487,
+      "likes": 4,
+      "comments": 0,
+      "duration_s": 46,
+      "url": "https://youtube.com/shorts/Bf698M8CVdw"
     },
     {
       "video_id": "ZbwXBL7y0mI",
       "title": "CATS Win Always",
       "published_at": "2026-03-11T19:36:33Z",
-      "days_ago": 4,
-      "views": 352,
+      "days_ago": 7,
+      "views": 353,
       "likes": 2,
       "comments": 0,
       "duration_s": 27,
       "url": "https://youtube.com/shorts/ZbwXBL7y0mI"
+    },
+    {
+      "video_id": "1haLY9t2UjQ",
+      "title": "CATS At Night",
+      "published_at": "2026-03-16T14:23:29Z",
+      "days_ago": 2,
+      "views": 327,
+      "likes": 2,
+      "comments": 0,
+      "duration_s": 61,
+      "url": "https://youtube.com/shorts/1haLY9t2UjQ"
+    },
+    {
+      "video_id": "PQ-JjpxUmL0",
+      "title": "Only 1% Know CATS Have",
+      "published_at": "2026-03-19T07:34:49Z",
+      "days_ago": 0,
+      "views": 28,
+      "likes": 1,
+      "comments": 0,
+      "duration_s": 41,
+      "url": "https://youtube.com/shorts/PQ-JjpxUmL0"
     }
   ],
   "traffic_sources": [
     {
       "source": "SHORTS",
-      "views": 20735,
-      "watch_minutes": 1563
+      "views": 37155,
+      "watch_minutes": 3431
     },
     {
       "source": "YT_SEARCH",
-      "views": 361,
-      "watch_minutes": 52
-    },
-    {
-      "source": "YT_CHANNEL",
-      "views": 200,
-      "watch_minutes": 16
+      "views": 661,
+      "watch_minutes": 112
     },
     {
       "source": "YT_OTHER_PAGE",
-      "views": 170,
-      "watch_minutes": 17
+      "views": 376,
+      "watch_minutes": 47
+    },
+    {
+      "source": "YT_CHANNEL",
+      "views": 329,
+      "watch_minutes": 31
     },
     {
       "source": "EXT_URL",
-      "views": 19,
-      "watch_minutes": 5
+      "views": 43,
+      "watch_minutes": 13
     },
     {
       "source": "SOUND_PAGE",
-      "views": 8,
+      "views": 13,
       "watch_minutes": 0
     },
     {
       "source": "NO_LINK_OTHER",
-      "views": 7,
+      "views": 6,
       "watch_minutes": 1
+    },
+    {
+      "source": "SUBSCRIBER",
+      "views": 6,
+      "watch_minutes": 0
+    },
+    {
+      "source": "RELATED_VIDEO",
+      "views": 1,
+      "watch_minutes": 0
+    },
+    {
+      "source": "PLAYLIST",
+      "views": 1,
+      "watch_minutes": 0
     },
     {
       "source": "HASHTAGS",
@@ -262,10 +387,10 @@
     }
   ],
   "summary": {
-    "total_views": 35255,
-    "total_likes": 1999,
-    "total_comments": 16,
-    "avg_views": 1855.5263157894738,
-    "video_count": 19
+    "total_views": 49901,
+    "total_likes": 3961,
+    "total_comments": 25,
+    "avg_views": 1720.7241379310344,
+    "video_count": 29
   }
 }

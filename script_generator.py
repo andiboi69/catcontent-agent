@@ -13,6 +13,7 @@ from config import GROQ_API_KEY, CONTENT_FORMATS
 
 client = Groq(api_key=GROQ_API_KEY)
 MODEL = "llama-3.3-70b-versatile"
+FUNNY_MODEL = "qwen/qwen3-32b"
 
 # Script history file — persists across all generations
 SCRIPT_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "used_scripts.json")
@@ -149,15 +150,27 @@ FOOTAGE_KEYWORDS = [
 ]
 
 
-def _call_llm(prompt):
+def _call_llm(prompt, model=None):
     """Call Groq API and return text response."""
+    import re
+    use_model = model or MODEL
+    # Qwen3 uses tokens for thinking, so give it more room
+    max_tok = 8000 if use_model == FUNNY_MODEL else 2500
     response = client.chat.completions.create(
-        model=MODEL,
+        model=use_model,
         messages=[{"role": "user", "content": prompt}],
         temperature=0.9,
-        max_tokens=2500,
+        max_tokens=max_tok,
     )
-    return response.choices[0].message.content.strip()
+    text = response.choices[0].message.content.strip()
+    # Qwen3 wraps responses in <think>...</think> tags — strip them
+    text = re.sub(r'<think>[\s\S]*?</think>', '', text).strip()
+    # Also handle unclosed think tags
+    if '<think>' in text:
+        text = text.split('</think>')[-1].strip()
+        if not text:
+            text = re.sub(r'<think>.*', '', response.choices[0].message.content, flags=re.DOTALL).strip()
+    return text
 
 
 def _parse_json(text):
@@ -373,22 +386,27 @@ STYLE:
 - Each scene = one FUNNY cat fact as text on screen + cute cat footage
 - Each scene has TWO text fields:
   * "caption": 3-6 words shown ON SCREEN — funny, sarcastic, meme-like. Examples: "Sleeps 16hrs. Judges you 8." / "Knocks stuff off. For science." / "3AM zoomies. Every. Night."
-  * "narration": 8-15 words for VOICEOVER — deliver the fact like a COMEDIAN, not a teacher. Examples:
-    - "Your cat sleeps sixteen hours a day and spends the rest judging your entire existence"
-    - "Cats knock things off tables not by accident, they are running gravity experiments on your patience"
-    - "A cat became mayor of a town for twenty years and honestly did a better job than most"
-    - "Your cat brings you dead mice because it thinks you are a terrible hunter who needs help"
-- Captions must make people LAUGH — write like a viral tweet, not a textbook
-- Narration tone: {narration_style}
-- Add a PUNCHLINE or TWIST to every narration — do not just state the fact, make it FUNNY
-- Think: stand-up comedy about cats, viral tweets, TikTok humor, memes
-- Use sarcasm, roast cats lovingly, relatable cat owner suffering, unexpected punchlines
-- NEVER sound educational or boring. If it sounds like a documentary, rewrite it funnier
-- EVERY SINGLE narration must have a joke, punchline, or sarcastic twist at the end — not just scene 1, ALL of them
-- BAD narration (too educational): "Cats have over 100 vocalizations to communicate with humans and other cats"
-- GOOD narration (funny): "Cats have over a hundred different sounds and every single one means feed me right now"
-- BAD narration: "Cats' paw pads contain scent glands allowing them to mark territory"
-- GOOD narration: "Cats leave their scent everywhere they walk, basically saying this is mine, this is mine, you are also mine"
+  * "narration": 15-25 words for VOICEOVER — conversational, relatable, like complaining about your cat to a friend.
+    Write EXACTLY like these examples — same vibe, same length:
+    - "Cats can wake you up at 4am demanding food, because they know you are a slave to their hunger"
+    - "Cats have a sixth sense for stealing your seat, and they will claim it as their own in under 3 seconds"
+    - "Cats will cuddle with you on their own terms, and they will stop as soon as you try to initiate affection"
+    - "Cats shed their fur to mark their territory, and also to drive you crazy with constant vacuuming"
+    - "Cats can ignore you for hours, but as soon as you are on a phone call, they will demand attention"
+    - "Cats have a natural talent for destroying your favorite things, and they will do it while looking cute"
+    - "Cats rule the internet with their adorable faces, and honestly they know it"
+    RULES for narration:
+    - Write like a cat owner venting to a friend about their ridiculous cat
+    - Talk about REAL annoying, cute, or ridiculous cat behavior every cat owner recognizes
+    - End with WHY it is annoying or funny for the OWNER — make the viewer think "so true!"
+    - BANNED phrases: "like a little", "like a feline", "basically making them", "which is", "allowing them to"
+    - NO forced comparisons to objects. NO dad jokes. NO fake percentages.
+    - Focus on the RELATABLE experience of living with a cat — the chaos, the attitude, the audacity
+    - Good: "Cats can ignore you for hours but the second you get on a phone call they demand attention"
+    - Good: "Cats shed fur on everything you own and somehow it is always on the one black shirt you need"
+    - Bad: "Cats have 530 bones, clearly a superiority complex" — this is a dad joke, do NOT do this
+    - Bad: "Cats have paws covering 30% of their body for grip" — this is a textbook fact, NOT funny
+    - Narration tone: {narration_style}
 - Title must be FUNNY like a meme, not a documentary
 - GOOD titles: "Your Cat Is SCAMMING You", "Cats Are Professional FREELOADERS", "The AUDACITY of Cats", "Your Cat Has ZERO Respect For You"
 - BAD titles (too boring): "CATS Are Little Therapists", "Cat Facts You Should Know", "CATS Are Tiny Dictators", "CATS Are MASTER Manipulators\""""
@@ -452,8 +470,11 @@ Return ONLY valid JSON:
     # Try up to 3 times to get enough scenes after dedup
     MIN_SCENES = 7
 
+    # Use Qwen3 for funny format (Llama can't do humor consistently)
+    llm_model = FUNNY_MODEL if content_format == "funny_cat_facts" else None
+
     for attempt in range(3):
-        text = _call_llm(prompt)
+        text = _call_llm(prompt, model=llm_model)
         script = _parse_json(text)
         script["content_format"] = content_format
         script["video_type"] = video_type

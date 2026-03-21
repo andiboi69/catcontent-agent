@@ -40,7 +40,7 @@ jobs:
           echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
 
       - name: Generate and upload video
-        run: python agent.py generate --upload --privacy public
+        run: python agent.py generate --format funny_cat_facts --upload --privacy public
 
       - name: Save updated token and history
         run: |

@@ -16,6 +16,11 @@ VOICES = [
     "en-GB-RyanNeural",       # British male
 ]
 
+# Funny content gets its own voice
+FUNNY_VOICES = [
+    "en-US-AnaNeural",        # Young/childlike, perfect for comedy
+]
+
 # Content formats — educational, cute, satisfying (works with stock footage)
 CONTENT_FORMATS = [
     "cat_facts",            # "Cat facts you didn't know" — mind-blowing facts
@@ -26,6 +31,7 @@ CONTENT_FORMATS = [
     "cat_vs_dog",           # "Cat vs Dog — who wins?" — fun comparison
     "cat_myths",            # "Cat myths DEBUNKED" — surprising truths
     "cat_tips",             # "Things I wish I knew before getting a cat"
+    "funny_cat_facts",      # "Hilarious cat facts" — funny, meme-like tone
 ]
 
 # Video settings

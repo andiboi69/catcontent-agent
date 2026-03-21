@@ -635,7 +635,8 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
     # Mood-based music preference (filename keyword matching)
     content_format = script.get("content_format", "")
     upbeat_formats = {"cat_vs_dog", "reasons_to_get_cat", "cat_myths",
-                      "ranking_funniest", "funny_compilation", "cat_fails", "cat_logic"}
+                      "ranking_funniest", "funny_compilation", "cat_fails", "cat_logic",
+                      "funny_cat_facts"}
     chill_formats = {"signs_cat_loves_you", "cat_psychology", "cat_tips",
                      "ranking_moods", "relatable_cat_owner"}
 
@@ -650,10 +651,25 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
             used_music.clear()
             unused = files
 
+        funny = [f for f in unused if os.path.basename(f).lower().startswith("fun-")]
         upbeat = [f for f in unused if any(k in os.path.basename(f).lower() for k in ["upbeat", "fun", "funny", "bounce", "energy", "happy", "playful"])]
         chill = [f for f in unused if any(k in os.path.basename(f).lower() for k in ["chill", "calm", "soft", "dreamy", "ambient", "warm", "gentle", "mellow"])]
 
-        if content_fmt in upbeat_formats and upbeat:
+        if content_fmt == "funny_cat_facts":
+            # For funny format, always pick from fun- tracks (reset if all used)
+            all_funny = [f for f in files if os.path.basename(f).lower().startswith("fun-")]
+            if not funny and all_funny:
+                funny = all_funny
+            if funny:
+                pick = random.choice(funny)
+                used_music.append(os.path.basename(pick))
+                try:
+                    with open(history_path, "w") as f:
+                        json.dump(used_music, f)
+                except IOError:
+                    pass
+                return pick
+        elif content_fmt in upbeat_formats and upbeat:
             pick = random.choice(upbeat)
         elif content_fmt in chill_formats and chill:
             pick = random.choice(chill)

@@ -282,6 +282,22 @@ def generate_script(content_format=None, video_type="short"):
             ],
             "title_style": "Things I Wish I Knew Before Getting a Cat",
         },
+        "funny_cat_facts": {
+            "desc": "COMEDY cat facts — deliver real facts in the funniest possible way. Think Twitter memes, TikTok humor, stand-up comedy. The fact is real but the delivery is HILARIOUS.",
+            "example_captions": [
+                "Sleeps 16hrs. Judges you 8.",
+                "Headbutts you. Means MINE.",
+                "Group of cats? A clowder. WHY.",
+                "Cant taste sweet. Explains the attitude.",
+                "Cat was MAYOR. 20 years. Legend.",
+                "Purrs to heal YOU. Still scratches.",
+                "3AM zoomies. Every. Single. Night.",
+                "Brings you dead mouse. Youre welcome.",
+                "Knocks stuff off table. For science.",
+                "Fits in any box. Its the law.",
+            ],
+            "title_style": "Your Cat Is SCAMMING You",
+        },
     }
 
     guide = format_guides.get(content_format, format_guides["cat_facts"])
@@ -309,26 +325,75 @@ CRITICAL: Every caption, narration, and title must be COMPLETELY DIFFERENT from 
 """
 
     # Rotate title formulas — pick one randomly each time
-    title_formulas = [
-        'Curiosity gap: "Nobody Told You THIS About Cats" / "Your Cat Does This BUT You Never Noticed" / "What Happens When Cats..."',
-        'Emotional hook: "This Is Why CATS Are Therapists" / "Cats That Will MELT Your Heart" / "The Reason Cats Choose YOU"',
-        'Challenge: "Only 1% of Cat Owners Know This" / "Bet You Didn\'t Know CATS Can..." / "Name All 5 Cat Breeds"',
-        'Question: "Why Do CATS Do This?" / "Is Your Cat Trying To WARN You?" / "What Does Your Cat SEE At Night?"',
-        'Shock/reaction: "I Can\'t Believe CATS Can Do This" / "When Your Cat Does THIS... Watch Out" / "Scientists STUNNED By Cats"',
-        'POV/relatable: "POV Your Cat At 3AM" / "Every Cat Owner Knows This FEELING" / "Living With a Cat Be Like"',
-        'Number hook: "5 Things Your CAT Wishes You Knew" / "3 Cat Breeds That Act Like DOGS" / "7 Signs Your Cat Is HAPPY"',
-    ]
+    if content_format == "funny_cat_facts":
+        title_formulas = [
+            'Roast: "Your Cat Is SCAMMING You" / "Cats Are Professional FREELOADERS" / "Your Cat Has ZERO Respect For You"',
+            'POV comedy: "POV Your Cat at 3AM" / "POV You Bought a CAT" / "POV Your Cat Runs the House"',
+            'Relatable: "Every Cat Owner FELT This" / "Living With a Cat Be Like..." / "Cat Owners Will CRY Laughing"',
+            'Expose: "EXPOSING Your Cats Secret Life" / "Your Cat Is LYING To You" / "What Your Cat REALLY Thinks"',
+            'Sarcastic: "Cats Are SO Helpful" / "Thanks For Nothing CAT" / "My Cat Does NOTHING And I Love It"',
+            'Dramatic: "The AUDACITY of Cats" / "Cats Have ZERO Shame" / "Your Cat Is a DRAMA Queen"',
+        ]
+    else:
+        title_formulas = [
+            'Curiosity gap: "Nobody Told You THIS About Cats" / "Your Cat Does This BUT You Never Noticed" / "What Happens When Cats..."',
+            'Emotional hook: "This Is Why CATS Are Therapists" / "Cats That Will MELT Your Heart" / "The Reason Cats Choose YOU"',
+            'Challenge: "Only 1% of Cat Owners Know This" / "Bet You Didn\'t Know CATS Can..." / "Name All 5 Cat Breeds"',
+            'Question: "Why Do CATS Do This?" / "Is Your Cat Trying To WARN You?" / "What Does Your Cat SEE At Night?"',
+            'Shock/reaction: "I Can\'t Believe CATS Can Do This" / "When Your Cat Does THIS... Watch Out" / "Scientists STUNNED By Cats"',
+            'POV/relatable: "POV Your Cat At 3AM" / "Every Cat Owner Knows This FEELING" / "Living With a Cat Be Like"',
+            'Number hook: "5 Things Your CAT Wishes You Knew" / "3 Cat Breeds That Act Like DOGS" / "7 Signs Your Cat Is HAPPY"',
+        ]
     title_formula = random.choice(title_formulas)
 
     # Rotate narration styles for variety
-    narration_styles = [
-        "conversational, like telling a friend a cool fact. Jump straight into the fact — NO filler phrases like 'did you know' or 'here's the thing'",
-        "calm and educational, like a nature documentary narrator stating facts directly",
-        "enthusiastic and energetic, but lead with the actual fact — NO setup phrases like 'get this' or 'you won't believe this' or 'this one is wild'",
-    ]
+    if content_format == "funny_cat_facts":
+        narration_styles = [
+            "hilarious, like a comedian roasting cats with love. Short punchy delivery.",
+            "sarcastic and witty, like a cat would talk if it could. Deadpan humor.",
+            "excited and goofy, like you just found out the funniest thing about cats ever",
+        ]
+    else:
+        narration_styles = [
+            "conversational, like telling a friend a cool fact. Jump straight into the fact — NO filler phrases like 'did you know' or 'here's the thing'",
+            "calm and educational, like a nature documentary narrator stating facts directly",
+            "enthusiastic and energetic, but lead with the actual fact — NO setup phrases like 'get this' or 'you won't believe this' or 'this one is wild'",
+        ]
     narration_style = random.choice(narration_styles)
 
-    prompt = f"""You are creating a VIRAL educational cat YouTube Short.
+    # Funny format gets a completely different prompt tone
+    if content_format == "funny_cat_facts":
+        tone_section = f"""You are creating a VIRAL FUNNY cat YouTube Short.
+These videos go viral because they make people LAUGH while learning something real about cats.
+The tone is COMEDY FIRST, facts second. Think memes, not textbooks.
+
+FORMAT: {content_format} — {guide["desc"]}
+
+STYLE:
+- Each scene = one FUNNY cat fact as text on screen + cute cat footage
+- Each scene has TWO text fields:
+  * "caption": 3-6 words shown ON SCREEN — funny, sarcastic, meme-like. Examples: "Sleeps 16hrs. Judges you 8." / "Knocks stuff off. For science." / "3AM zoomies. Every. Night."
+  * "narration": 8-15 words for VOICEOVER — deliver the fact like a COMEDIAN, not a teacher. Examples:
+    - "Your cat sleeps sixteen hours a day and spends the rest judging your entire existence"
+    - "Cats knock things off tables not by accident, they are running gravity experiments on your patience"
+    - "A cat became mayor of a town for twenty years and honestly did a better job than most"
+    - "Your cat brings you dead mice because it thinks you are a terrible hunter who needs help"
+- Captions must make people LAUGH — write like a viral tweet, not a textbook
+- Narration tone: {narration_style}
+- Add a PUNCHLINE or TWIST to every narration — do not just state the fact, make it FUNNY
+- Think: stand-up comedy about cats, viral tweets, TikTok humor, memes
+- Use sarcasm, roast cats lovingly, relatable cat owner suffering, unexpected punchlines
+- NEVER sound educational or boring. If it sounds like a documentary, rewrite it funnier
+- EVERY SINGLE narration must have a joke, punchline, or sarcastic twist at the end — not just scene 1, ALL of them
+- BAD narration (too educational): "Cats have over 100 vocalizations to communicate with humans and other cats"
+- GOOD narration (funny): "Cats have over a hundred different sounds and every single one means feed me right now"
+- BAD narration: "Cats' paw pads contain scent glands allowing them to mark territory"
+- GOOD narration: "Cats leave their scent everywhere they walk, basically saying this is mine, this is mine, you are also mine"
+- Title must be FUNNY like a meme, not a documentary
+- GOOD titles: "Your Cat Is SCAMMING You", "Cats Are Professional FREELOADERS", "The AUDACITY of Cats", "Your Cat Has ZERO Respect For You"
+- BAD titles (too boring): "CATS Are Little Therapists", "Cat Facts You Should Know", "CATS Are Tiny Dictators", "CATS Are MASTER Manipulators\""""
+    else:
+        tone_section = f"""You are creating a VIRAL educational cat YouTube Short.
 These videos get millions of views because people LOVE learning surprising things about cats.
 
 FORMAT: {content_format} — {guide["desc"]}
@@ -339,7 +404,9 @@ STYLE:
   * "caption": 3-6 words shown ON SCREEN — short, punchy, eye-catching (e.g. "Cats hear ultrasonic")
   * "narration": 8-15 words read by VOICEOVER — a full interesting sentence expanding the caption (e.g. "Cats can hear ultrasonic frequencies up to 64,000 hertz, way beyond human range")
 - The narration should feel like someone explaining a cool fact to a friend
-- Narration tone: {narration_style}
+- Narration tone: {narration_style}"""
+
+    prompt = f"""{tone_section}
 - NEVER start narration with filler phrases like: "Get this", "You won't believe", "This is interesting", "This one is wild", "Here's the thing", "Did you know", "Fun fact". Just STATE the fact directly. Example: instead of "Get this, cats can rotate their ears 180 degrees" just say "Cats can rotate their ears a full 180 degrees independently"
 - Captions MUST contain a SPECIFIC fact — NOT generic labels like "Sleep Patterns" or "Grooming Habits"
 - Facts MUST be real and accurate — do NOT make up numbers. If unsure, use a qualitative fact instead of a fake number

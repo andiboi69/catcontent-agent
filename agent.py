@@ -74,7 +74,7 @@ def create_video(video_type="short", content_format=None, upload=False, privacy=
 
     # Step 3: Generate voiceover for each scene
     print(f"\n[3/5] Generating voiceover...")
-    voice = get_random_voice()
+    voice = get_random_voice(content_format=script.get("content_format"))
     print(f"  Voice: {voice}")
     voiceover_paths = []
     audio_dir = os.path.join(video_dir, "audio")
@@ -238,7 +238,7 @@ def main():
     gen_parser.add_argument("--type", choices=["short", "long"], default="short", help="Video type")
     gen_parser.add_argument("--format", choices=[
         "cat_facts", "cat_breeds", "reasons_to_get_cat", "signs_cat_loves_you",
-        "cat_psychology", "cat_vs_dog", "cat_myths", "cat_tips"
+        "cat_psychology", "cat_vs_dog", "cat_myths", "cat_tips", "funny_cat_facts"
     ], default=None, help="Content format")
     gen_parser.add_argument("--upload", action="store_true", help="Upload to YouTube after generating")
     gen_parser.add_argument("--privacy", choices=["public", "unlisted", "private"], default="public", help="YouTube privacy")

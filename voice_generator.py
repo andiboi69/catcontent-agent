@@ -7,12 +7,21 @@ import os
 import asyncio
 import random
 import edge_tts
-from config import VOICES
+from config import VOICES, FUNNY_VOICES
 
 
-def get_random_voice():
-    """Pick a random voice for variety."""
+def get_random_voice(content_format=None):
+    """Pick a random voice. Funny formats get a funny voice."""
+    if content_format == "funny_cat_facts":
+        return random.choice(FUNNY_VOICES)
     return random.choice(VOICES)
+
+
+def _get_rate(voice):
+    """Get speech rate based on voice. Funny voices are faster."""
+    if voice in FUNNY_VOICES:
+        return "+15%"
+    return "-5%"
 
 
 async def _generate_speech(text, output_path, voice=None):
@@ -20,7 +29,8 @@ async def _generate_speech(text, output_path, voice=None):
     if voice is None:
         voice = get_random_voice()
 
-    communicate = edge_tts.Communicate(text, voice, rate="-5%")
+    rate = _get_rate(voice)
+    communicate = edge_tts.Communicate(text, voice, rate=rate)
     await communicate.save(output_path)
     return output_path
 

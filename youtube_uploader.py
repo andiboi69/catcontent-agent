@@ -185,7 +185,7 @@ def upload_from_metadata(metadata_path, privacy="public"):
 
     This is the main function called from agent.py.
     """
-    with open(metadata_path, "r") as f:
+    with open(metadata_path, "r", encoding="utf-8") as f:
         meta = json.load(f)
 
     video_path = meta.get("video_path")
@@ -212,7 +212,7 @@ def upload_from_metadata(metadata_path, privacy="public"):
         meta["youtube_video_id"] = result["video_id"]
         meta["youtube_url"] = result["url"]
         meta["uploaded_at"] = time.strftime("%Y%m%d_%H%M%S")
-        with open(metadata_path, "w") as f:
+        with open(metadata_path, "w", encoding="utf-8") as f:
             json.dump(meta, f, indent=2, ensure_ascii=False)
 
     return result

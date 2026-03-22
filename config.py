@@ -21,16 +21,8 @@ FUNNY_VOICES = [
     "en-US-AnaNeural",        # Young/childlike, perfect for comedy
 ]
 
-# Content formats — educational, cute, satisfying (works with stock footage)
+# Content formats — funny only (best performing style)
 CONTENT_FORMATS = [
-    "cat_facts",            # "Cat facts you didn't know" — mind-blowing facts
-    "cat_breeds",           # "Most beautiful cat breeds" — breed showcase
-    "reasons_to_get_cat",   # "Reasons to get a cat" — persuasive/heartwarming
-    "signs_cat_loves_you",  # "Signs your cat loves you" — cat body language
-    "cat_psychology",       # "What your cat is ACTUALLY thinking" — behavior explained
-    "cat_vs_dog",           # "Cat vs Dog — who wins?" — fun comparison
-    "cat_myths",            # "Cat myths DEBUNKED" — surprising truths
-    "cat_tips",             # "Things I wish I knew before getting a cat"
     "funny_cat_facts",      # "Hilarious cat facts" — funny, meme-like tone
 ]
 

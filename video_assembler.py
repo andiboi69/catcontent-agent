@@ -619,7 +619,7 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
     if os.path.exists(music_dir):
         music_files = [
             os.path.join(music_dir, f) for f in os.listdir(music_dir)
-            if f.endswith((".mp3", ".wav", ".m4a"))
+            if f.endswith((".mp3", ".wav", ".m4a")) and os.path.basename(f).lower().startswith("fun-")
         ]
 
     # Music history tracking — avoid repeating the same track
@@ -632,16 +632,8 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
         except (json.JSONDecodeError, IOError):
             used_music = []
 
-    # Mood-based music preference (filename keyword matching)
-    content_format = script.get("content_format", "")
-    upbeat_formats = {"cat_vs_dog", "reasons_to_get_cat", "cat_myths",
-                      "ranking_funniest", "funny_compilation", "cat_fails", "cat_logic",
-                      "funny_cat_facts"}
-    chill_formats = {"signs_cat_loves_you", "cat_psychology", "cat_tips",
-                     "ranking_moods", "relatable_cat_owner"}
-
-    def pick_music(files, content_fmt):
-        """Pick music that matches the content mood, avoiding recently used tracks."""
+    def pick_music(files):
+        """Pick a random fun- track, avoiding recently used ones."""
         if not files:
             return None
 
@@ -651,30 +643,7 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
             used_music.clear()
             unused = files
 
-        funny = [f for f in unused if os.path.basename(f).lower().startswith("fun-")]
-        upbeat = [f for f in unused if any(k in os.path.basename(f).lower() for k in ["upbeat", "fun", "funny", "bounce", "energy", "happy", "playful"])]
-        chill = [f for f in unused if any(k in os.path.basename(f).lower() for k in ["chill", "calm", "soft", "dreamy", "ambient", "warm", "gentle", "mellow"])]
-
-        if content_fmt == "funny_cat_facts":
-            # For funny format, always pick from fun- tracks (reset if all used)
-            all_funny = [f for f in files if os.path.basename(f).lower().startswith("fun-")]
-            if not funny and all_funny:
-                funny = all_funny
-            if funny:
-                pick = random.choice(funny)
-                used_music.append(os.path.basename(pick))
-                try:
-                    with open(history_path, "w") as f:
-                        json.dump(used_music, f)
-                except IOError:
-                    pass
-                return pick
-        elif content_fmt in upbeat_formats and upbeat:
-            pick = random.choice(upbeat)
-        elif content_fmt in chill_formats and chill:
-            pick = random.choice(chill)
-        else:
-            pick = random.choice(unused)
+        pick = random.choice(unused)
 
         # Save to history
         used_music.append(os.path.basename(pick))
@@ -689,7 +658,7 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
     final_path = os.path.join(output_dir, f"{title_slug}.mp4")
 
     if music_files:
-        music = pick_music(music_files, content_format)
+        music = pick_music(music_files)
         vo_label = " + voiceover" if has_voiceover else ""
         print(f"  Adding music: {os.path.basename(music)}{vo_label}")
         add_background_music(no_music_path, music, final_path, has_voiceover=has_voiceover)

@@ -72,28 +72,35 @@ def create_video(video_type="short", content_format=None, upload=False, privacy=
     found = sum(1 for f in footage_data if f["footage_path"])
     print(f"  Found footage for {found}/{len(script['scenes'])} scenes")
 
-    # Step 3: Generate voiceover for each scene
-    print(f"\n[3/5] Generating voiceover...")
-    voice = get_random_voice(content_format=script.get("content_format"))
-    print(f"  Voice: {voice}")
-    voiceover_paths = []
-    audio_dir = os.path.join(video_dir, "audio")
-    os.makedirs(audio_dir, exist_ok=True)
-    for i, scene in enumerate(script["scenes"]):
-        narration = scene.get("narration", scene.get("caption", ""))
-        if narration:
-            audio_path_i = os.path.join(audio_dir, f"scene_{i+1:02d}.mp3")
-            try:
-                from voice_generator import generate_voiceover
-                generate_voiceover(narration, audio_path_i, voice=voice)
-                voiceover_paths.append(audio_path_i)
-                caption = scene.get("caption", "")
-                print(f"  Scene {i+1}: \"{caption}\" -> \"{narration}\"")
-            except Exception as e:
-                print(f"  Scene {i+1}: voiceover failed ({e})")
+    # Step 3: Generate voiceover (funny formats only — educational stays text-only for speed)
+    is_funny = script.get("content_format") == "funny_cat_facts"
+    voiceover_paths = None
+    voice = None
+
+    if is_funny:
+        print(f"\n[3/5] Generating voiceover...")
+        voice = get_random_voice(content_format=script.get("content_format"))
+        print(f"  Voice: {voice}")
+        voiceover_paths = []
+        audio_dir = os.path.join(video_dir, "audio")
+        os.makedirs(audio_dir, exist_ok=True)
+        for i, scene in enumerate(script["scenes"]):
+            narration = scene.get("narration", scene.get("caption", ""))
+            if narration:
+                audio_path_i = os.path.join(audio_dir, f"scene_{i+1:02d}.mp3")
+                try:
+                    from voice_generator import generate_voiceover
+                    generate_voiceover(narration, audio_path_i, voice=voice)
+                    voiceover_paths.append(audio_path_i)
+                    caption = scene.get("caption", "")
+                    print(f"  Scene {i+1}: \"{caption}\" -> \"{narration}\"")
+                except Exception as e:
+                    print(f"  Scene {i+1}: voiceover failed ({e})")
+                    voiceover_paths.append(None)
+            else:
                 voiceover_paths.append(None)
-        else:
-            voiceover_paths.append(None)
+    else:
+        print(f"\n[3/5] Skipping voiceover (text-only format — keeps video under 25s)")
 
     # Step 4: Assemble video (text-on-screen + voiceover)
     has_ffmpeg = check_ffmpeg()

@@ -386,22 +386,18 @@ STYLE:
 - Each scene = one FUNNY cat fact as text on screen + cute cat footage
 - Each scene has TWO text fields:
   * "caption": 3-6 words shown ON SCREEN — funny, sarcastic, meme-like. Examples: "Sleeps 16hrs. Judges you 8." / "Knocks stuff off. For science." / "3AM zoomies. Every. Night."
-  * "narration": 15-25 words for VOICEOVER — conversational, relatable, like complaining about your cat to a friend.
-    Write EXACTLY like these examples — same vibe, same length:
-    - "Cats can wake you up at 4am demanding food, because they know you are a slave to their hunger"
-    - "Cats have a sixth sense for stealing your seat, and they will claim it as their own in under 3 seconds"
-    - "Cats will cuddle with you on their own terms, and they will stop as soon as you try to initiate affection"
-    - "Cats shed their fur to mark their territory, and also to drive you crazy with constant vacuuming"
-    - "Cats can ignore you for hours, but as soon as you are on a phone call, they will demand attention"
-    - "Cats have a natural talent for destroying your favorite things, and they will do it while looking cute"
-    - "Cats rule the internet with their adorable faces, and honestly they know it"
+  * "narration": MAXIMUM 12 words for VOICEOVER. This is a HARD LIMIT — count your words. One short sentence.
+    EXAMPLES (notice they are all under 12 words):
+    - "Cats steal your seat the second you stand up" (10 words)
+    - "They demand attention only during your phone calls" (8 words)
+    - "Cats shed only on your black clothes somehow" (8 words)
+    - "They knock stuff off tables just to watch it fall" (10 words)
+    - "Your cat judges you and honestly they are right" (9 words)
     RULES for narration:
-    - Write like a cat owner venting to a friend about their ridiculous cat
-    - Talk about REAL annoying, cute, or ridiculous cat behavior every cat owner recognizes
-    - End with WHY it is annoying or funny for the OWNER — make the viewer think "so true!"
+    - STRICT 12 word maximum. If it is longer, CUT IT DOWN
+    - Write like a cat owner venting about their ridiculous cat
     - BANNED phrases: "like a little", "like a feline", "basically making them", "which is", "allowing them to"
-    - NO forced comparisons to objects. NO dad jokes. NO fake percentages.
-    - Focus on the RELATABLE experience of living with a cat — the chaos, the attitude, the audacity
+    - NO forced comparisons. NO dad jokes. NO fake percentages
     - Good: "Cats can ignore you for hours but the second you get on a phone call they demand attention"
     - Good: "Cats shed fur on everything you own and somehow it is always on the one black shirt you need"
     - Bad: "Cats have 530 bones, clearly a superiority complex" — this is a dad joke, do NOT do this
@@ -468,7 +464,7 @@ Return ONLY valid JSON:
 """
 
     # Try up to 3 times to get enough scenes after dedup
-    MIN_SCENES = 5
+    MIN_SCENES = 4
 
     # Use Qwen3 for funny format (Llama can't do humor consistently)
     llm_model = FUNNY_MODEL if content_format == "funny_cat_facts" else None

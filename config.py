@@ -21,9 +21,12 @@ FUNNY_VOICES = [
     "en-US-AnaNeural",        # Young/childlike, perfect for comedy
 ]
 
-# Content formats — funny only (best performing style)
+# Content formats — 50/50 funny + educational rotation
 CONTENT_FORMATS = [
-    "funny_cat_facts",      # "Hilarious cat facts" — funny, meme-like tone
+    "funny_cat_facts",      # Comedy — meme-like tone with voiceover
+    "cat_facts",            # Educational — punchy text-on-screen facts
+    "cat_psychology",       # Educational — what cats are thinking
+    "signs_cat_loves_you",  # Educational — body language decoded
 ]
 
 # Video settings

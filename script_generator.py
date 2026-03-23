@@ -201,7 +201,11 @@ def generate_script(content_format=None, video_type="short"):
     if content_format is None:
         content_format = random.choice(CONTENT_FORMATS)
 
-    scene_count = "6-7" if video_type == "short" else "20-30"
+    # Funny = fewer scenes (voiceover adds time), educational = more scenes (text-only, fast)
+    if content_format == "funny_cat_facts":
+        scene_count = "5" if video_type == "short" else "20-30"
+    else:
+        scene_count = "6-7" if video_type == "short" else "20-30"
 
     keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(25, len(FOOTAGE_KEYWORDS)))
     keywords_str = "\n".join(f'- "{k}"' for k in keyword_sample)
@@ -386,18 +390,20 @@ STYLE:
 - Each scene = one FUNNY cat fact as text on screen + cute cat footage
 - Each scene has TWO text fields:
   * "caption": 3-6 words shown ON SCREEN — funny, sarcastic, meme-like. Examples: "Sleeps 16hrs. Judges you 8." / "Knocks stuff off. For science." / "3AM zoomies. Every. Night."
-  * "narration": MAXIMUM 12 words for VOICEOVER. This is a HARD LIMIT — count your words. One short sentence.
-    EXAMPLES (notice they are all under 12 words):
-    - "Cats steal your seat the second you stand up" (10 words)
-    - "They demand attention only during your phone calls" (8 words)
-    - "Cats shed only on your black clothes somehow" (8 words)
-    - "They knock stuff off tables just to watch it fall" (10 words)
-    - "Your cat judges you and honestly they are right" (9 words)
+  * "narration": 15-18 words for VOICEOVER — setup + punchline in one sentence. Must be FUNNY, not just factual.
+    Every narration needs a PUNCHLINE — the funny part at the end that makes viewers think "so true!"
+    EXAMPLES (notice each has setup + punchline):
+    - "Cats can ignore you for hours but the second you get on a phone call they demand attention"
+    - "Cats shed on everything you own and somehow it is always on the one black shirt you need"
+    - "They steal your warm spot the second you stand up and act like they were always there"
+    - "Cats will stare at a wall for twenty minutes and make you question your own sanity"
+    - "They bring you a dead mouse at 3am like it is a five star gift and expect praise"
     RULES for narration:
-    - STRICT 12 word maximum. If it is longer, CUT IT DOWN
+    - Structure: SETUP (relatable cat behavior) + PUNCHLINE (why it is funny/annoying for the owner)
     - Write like a cat owner venting about their ridiculous cat
+    - The punchline must be RELATABLE — viewers should think "my cat does that too!"
     - BANNED phrases: "like a little", "like a feline", "basically making them", "which is", "allowing them to"
-    - NO forced comparisons. NO dad jokes. NO fake percentages
+    - NO technical facts disguised as jokes. NO dad jokes. NO fake percentages
     - Good: "Cats can ignore you for hours but the second you get on a phone call they demand attention"
     - Good: "Cats shed fur on everything you own and somehow it is always on the one black shirt you need"
     - Bad: "Cats have 530 bones, clearly a superiority complex" — this is a dad joke, do NOT do this
@@ -482,6 +488,15 @@ Return ONLY valid JSON:
         if scene_count_actual >= MIN_SCENES:
             break
         print(f"  Only {scene_count_actual} scenes after dedup (need {MIN_SCENES}), retrying... ({attempt + 1}/3)")
+
+    # Trim narrations — Qwen3 can't count words, so enforce max length in code
+    if content_format == "funny_cat_facts":
+        MAX_NARRATION_WORDS = 18
+        for scene in script.get("scenes", []):
+            narration = scene.get("narration", "")
+            words = narration.split()
+            if len(words) > MAX_NARRATION_WORDS:
+                scene["narration"] = " ".join(words[:MAX_NARRATION_WORDS])
 
     # Record this script to history so future videos avoid these captions
     _record_script(script)

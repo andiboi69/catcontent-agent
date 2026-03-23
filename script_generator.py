@@ -201,7 +201,7 @@ def generate_script(content_format=None, video_type="short"):
     if content_format is None:
         content_format = random.choice(CONTENT_FORMATS)
 
-    scene_count = "8-10" if video_type == "short" else "20-30"
+    scene_count = "6-7" if video_type == "short" else "20-30"
 
     keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(25, len(FOOTAGE_KEYWORDS)))
     keywords_str = "\n".join(f'- "{k}"' for k in keyword_sample)
@@ -468,7 +468,7 @@ Return ONLY valid JSON:
 """
 
     # Try up to 3 times to get enough scenes after dedup
-    MIN_SCENES = 7
+    MIN_SCENES = 5
 
     # Use Qwen3 for funny format (Llama can't do humor consistently)
     llm_model = FUNNY_MODEL if content_format == "funny_cat_facts" else None

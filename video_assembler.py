@@ -52,8 +52,8 @@ FONT_PATH = _find_font()
 
 # Clip settings
 TARGET_FPS = 30
-TARGET_WIDTH = 720
-TARGET_HEIGHT = 1280
+TARGET_WIDTH = 1080
+TARGET_HEIGHT = 1920
 CLIP_DURATION = 2.5  # fallback if no voiceover
 CLIP_MIN_DURATION = 1.8  # minimum clip length even with short voiceover
 CLIP_PADDING = 0.3  # extra time after voiceover ends
@@ -258,22 +258,22 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         # Scale font based on text length to prevent overflow
         text_len = len(caption)
         if text_len <= 15:
-            fontsize = 52
+            fontsize = 78
         elif text_len <= 20:
-            fontsize = 46
+            fontsize = 69
         elif text_len <= 25:
-            fontsize = 40
+            fontsize = 60
         else:
-            fontsize = 34
-        bar_h = fontsize + 80
-        text_y = 40 + (bar_h - fontsize) // 2
+            fontsize = 51
+        bar_h = fontsize + 120
+        text_y = 60 + (bar_h - fontsize) // 2
         # Semi-transparent dark bar
-        filters.append(f"drawbox=x=0:y=40:w=iw:h={bar_h}:color=black@0.6:t=fill")
+        filters.append(f"drawbox=x=0:y=60:w=iw:h={bar_h}:color=black@0.6:t=fill")
         # Main text — large, white, clean
         filters.append(
             f"drawtext=text='{safe_text}'"
             f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
-            f":fontsize={fontsize}:fontcolor=white:borderw=3:bordercolor=black"
+            f":fontsize={fontsize}:fontcolor=white:borderw=5:bordercolor=black"
             f":x=(w-text_w)/2:y={text_y}"
         )
 
@@ -314,13 +314,13 @@ def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None
         ]
         if caption:
             safe_text = escape_text(caption)
-            fb_fontsize = 40 if len(caption) > 20 else 48
-            filters_simple.append(f"drawbox=x=0:y=50:w=iw:h=140:color=black@0.7:t=fill")
+            fb_fontsize = 60 if len(caption) > 20 else 72
+            filters_simple.append(f"drawbox=x=0:y=75:w=iw:h=210:color=black@0.7:t=fill")
             filters_simple.append(
                 f"drawtext=text='{safe_text}'"
                 f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
-                f":fontsize={fb_fontsize}:fontcolor=white:borderw=4:bordercolor=black"
-                f":x=(w-text_w)/2:y=80"
+                f":fontsize={fb_fontsize}:fontcolor=white:borderw=5:bordercolor=black"
+                f":x=(w-text_w)/2:y=120"
             )
 
         cmd_fallback = [
@@ -527,39 +527,6 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
     has_flash = os.path.exists(flash_path) and os.path.getsize(flash_path) > 100
 
     prepared_clips = []
-
-    # Generate hook clip — use a RELIABLE cat query (not scene footage which can be wrong)
-    first_footage = None
-    hook_queries = ["cat close up face", "cute kitten", "cat eyes", "fluffy cat"]
-    random.shuffle(hook_queries)
-    for hq in hook_queries:
-        from footage_finder import search_pexels_videos, download_footage, _load_history
-        used_ids = _load_history()
-        results = search_pexels_videos(hq, per_page=5)
-        fresh = [v for v in results if v["id"] not in used_ids]
-        if fresh:
-            pick = random.choice(fresh)
-            hook_footage_path = download_footage(pick, os.path.join(output_dir, "footage"))
-            if hook_footage_path:
-                first_footage = hook_footage_path
-                print(f"  Hook footage: \"{hq}\"")
-                break
-    # Fallback to first scene footage if hook download fails
-    if not first_footage:
-        for item in footage_data:
-            if item["footage_path"] and os.path.exists(item["footage_path"]):
-                first_footage = item["footage_path"]
-                break
-
-    if first_footage:
-        hook_text = random.choice(HOOK_TEMPLATES)
-        hook_path = os.path.join(clips_dir, "hook.mp4")
-        print(f"  Hook: \"{hook_text}\"")
-        hook_result = generate_hook_clip(first_footage, hook_path, hook_text)
-        if hook_result and os.path.exists(hook_path) and os.path.getsize(hook_path) > 1000:
-            prepared_clips.append(hook_path)
-            if has_flash:
-                prepared_clips.append(flash_path)
 
     for i, item in enumerate(footage_data):
         scene = item["scene"]

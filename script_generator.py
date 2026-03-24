@@ -130,36 +130,24 @@ def _record_script(script):
     history["narrations"] = history["narrations"][-200:]
     _save_script_history(history)
 
-# Stock footage keywords — calm for educational, action for funny
-FOOTAGE_KEYWORDS_CALM = [
-    # Breeds
+# Stock footage keywords that return GOOD-LOOKING clips on Pexels
+FOOTAGE_KEYWORDS = [
+    # Breeds (Pexels has beautiful breed-specific footage)
     "persian cat", "siamese cat", "maine coon cat", "british shorthair cat",
     "bengal cat", "ragdoll cat", "sphynx cat", "scottish fold cat",
     "orange tabby cat", "black cat", "white cat", "calico cat",
     "grey cat", "fluffy cat", "kitten",
-    # Calm behaviors
+
+    # Behaviors (cute/interesting — cats only, no humans)
     "cat purring", "cat kneading", "cat stretching", "cat grooming",
-    "cat sleeping", "cat in sunlight", "cat on window", "cat eating",
+    "cat sleeping", "cat playing toy",
+    "kitten playing", "cat in sunlight",
+    "cat on window", "cat walking", "cat eating",
     "cat and kitten", "two cats cuddling", "cat in garden",
     "cat close up face", "cat eyes", "cat whiskers",
     "cat in bed", "cat on couch", "cute kitten", "newborn kitten",
     "cat tail moving", "cat yawning", "cat sitting", "cat looking",
 ]
-
-FOOTAGE_KEYWORDS_FUNNY = [
-    # Action/funny behaviors
-    "funny cat", "cat jumping", "cat running", "cat chasing",
-    "cat playing toy", "kitten playing", "cat scared", "cat surprised",
-    "crazy cat", "cat zoomies", "cat knocking things", "clumsy cat",
-    "cat falling", "cat box", "cat stuck", "cat vs cucumber",
-    "cat hissing", "cat walking", "cat fail", "cat jump fail",
-    # Still need some cute ones for variety
-    "cat close up face", "cat eyes", "fluffy cat", "kitten",
-    "orange tabby cat", "cat yawning", "cat stretching",
-]
-
-# Default — used in prompt (overridden per format below)
-FOOTAGE_KEYWORDS = FOOTAGE_KEYWORDS_CALM
 
 
 def _call_llm(prompt, model=None):
@@ -219,8 +207,7 @@ def generate_script(content_format=None, video_type="short"):
     else:
         scene_count = "6-7" if video_type == "short" else "20-30"
 
-    keyword_pool = FOOTAGE_KEYWORDS_FUNNY if content_format == "funny_cat_facts" else FOOTAGE_KEYWORDS_CALM
-    keyword_sample = random.sample(keyword_pool, min(25, len(keyword_pool)))
+    keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(25, len(FOOTAGE_KEYWORDS)))
     keywords_str = "\n".join(f'- "{k}"' for k in keyword_sample)
 
     format_guides = {
@@ -509,13 +496,7 @@ Return ONLY valid JSON:
             narration = scene.get("narration", "")
             words = narration.split()
             if len(words) > MAX_NARRATION_WORDS:
-                # Cut at last natural break (comma, period, "then", "and", "but") before limit
-                trimmed = " ".join(words[:MAX_NARRATION_WORDS])
-                for sep in [", then ", ", and ", ", but ", ", ", ". "]:
-                    if sep in trimmed:
-                        trimmed = trimmed[:trimmed.rfind(sep)]
-                        break
-                scene["narration"] = trimmed
+                scene["narration"] = " ".join(words[:MAX_NARRATION_WORDS])
 
     # Record this script to history so future videos avoid these captions
     _record_script(script)

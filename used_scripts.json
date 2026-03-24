@@ -95,14 +95,10 @@
     "Your Cat Has ZERO Filter",
     "CATS ARE LEGAL TERRORISTS",
     "Your Cat\u2019s HIDDEN Agenda",
-    "YOUR CAT IS A POUT MASTER SCAMMER"
+    "YOUR CAT IS A POUT MASTER SCAMMER",
+    "YOUR CAT IS A FURRY SCAM ARTIST"
   ],
   "captions": [
-    "Tails Talk Loud",
-    "Ears Rotate 180",
-    "Whiskers Detect Distance",
-    "Paws Leave Scent",
-    "Kittens Born Blind",
     "Cats Have 3 Eyelids",
     "Fur Sheds Everywhere",
     "Catnip Is A Trip",
@@ -297,14 +293,14 @@
     "Smells 200M. Blames you.",
     "Sees in dark. Trips in light.",
     "Jumps 5x height. Mug drops.",
-    "Twists mid-air. For fun."
+    "Twists mid-air. For fun.",
+    "Claims the couch. Then naps.",
+    "Chases shadows. For a promotion.",
+    "Spots invisible to humans",
+    "Fluff bombs. No refunds.",
+    "Sunbeam spot. Not yours."
   ],
   "narrations": [
-    "Cats can nap for up to 16 hours a day, and they'll still wake you up at 4am demanding food and attention",
-    "Cats will own your heart, and they'll manipulate you into doing their bidding with their cute little paws and whiskers",
-    "Cats eat a quarter cup of food and still manage to look hungry, it's a talent",
-    "Cats shed twice their body weight in fur, and they expect you to clean it up",
-    "Newborn kittens are born blind, but they're still adorable and will steal your heart",
     "Cats can recognize their owner's voice, but they'll still ignore you when you call them",
     "Cats knead to self-soothe, but it's really just a excuse to scratch your furniture",
     "Cats stretch to show off their flexibility, and to remind you who's really in charge",
@@ -499,6 +495,11 @@
     "Cats have 200 million scent receptors but still pretend they didn\u2019t dig through the trash last night.",
     "Cats can see in the dark but spend days tripping over air like it\u2019s a Cirque du Soleil",
     "Cats can leap five times their height but use it to dismantle your fragile heirloom collection.",
-    "Cats twist mid-fall like they\u2019re in a supermodel ad but land on your keyboard like it\u2019s a target."
+    "Cats twist mid-fall like they\u2019re in a supermodel ad but land on your keyboard like it\u2019s a target.",
+    "Cats demand your $500 couch every day but sleep 16 hours and call it 'royalty duties'",
+    "They pounce on invisible prey like it's a job interview for the CEO of the household",
+    "Bengal cats see 3000 pixels per inch but still miss the falling tissue you warned them about",
+    "Fluffy cats are basically fur bombs - they expand to fill spaces but leave 70% shedding",
+    "Cats claim sunbeams like they're solar panel tycoons but never share the warmth"
   ]
 }

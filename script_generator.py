@@ -331,7 +331,6 @@ def generate_script(content_format=None, video_type="short"):
     }
 
     guide = format_guides.get(content_format, format_guides["cat_facts"])
-    examples = "\n".join(f'  - "{c}"' for c in guide["example_captions"])
 
     # Load past scripts to avoid repetition
     history = _load_script_history()
@@ -404,92 +403,57 @@ CRITICAL: Every caption, narration, and title must be COMPLETELY DIFFERENT from 
 
     # Funny format gets a completely different prompt tone
     if content_format == "funny_cat_facts":
-        tone_section = f"""You are creating a VIRAL FUNNY cat YouTube Short.
-These videos go viral because they make people LAUGH while learning something real about cats.
-The tone is COMEDY FIRST, facts second. Think memes, not textbooks.
+        tone_section = f"""Create a VIRAL FUNNY cat YouTube Short. Comedy first, facts second. Think memes, not textbooks.
 
 FORMAT: {content_format} — {guide["desc"]}
 
-STYLE:
-- Each scene = one FUNNY cat fact as text on screen + cute cat footage
-- Each scene has TWO text fields:
-  * "caption": 3-6 words shown ON SCREEN — funny, sarcastic, meme-like. Examples: "Sleeps 16hrs. Judges you 8." / "Knocks stuff off. For science." / "3AM zoomies. Every. Night."
-  * "narration": 15-18 words for VOICEOVER — setup + punchline in one sentence. Must be FUNNY, not just factual.
-    Every narration needs a PUNCHLINE — the funny part at the end that makes viewers think "so true!"
-    EXAMPLES (notice each has setup + punchline):
-    - "Cats can ignore you for hours but the second you get on a phone call they demand attention"
-    - "Cats shed on everything you own and somehow it is always on the one black shirt you need"
-    - "They steal your warm spot the second you stand up and act like they were always there"
-    - "Cats will stare at a wall for twenty minutes and make you question your own sanity"
-    - "They bring you a dead mouse at 3am like it is a five star gift and expect praise"
-    RULES for narration:
-    - Structure: SETUP (relatable cat behavior) + PUNCHLINE (why it is funny/annoying for the owner)
-    - Write like a cat owner venting about their ridiculous cat
-    - The punchline must be RELATABLE — viewers should think "my cat does that too!"
-    - BANNED phrases: "like a little", "like a feline", "basically making them", "which is", "allowing them to"
-    - NO technical facts disguised as jokes. NO dad jokes. NO fake percentages
-    - Good: "Cats can ignore you for hours but the second you get on a phone call they demand attention"
-    - Good: "Cats shed fur on everything you own and somehow it is always on the one black shirt you need"
-    - Bad: "Cats have 530 bones, clearly a superiority complex" — this is a dad joke, do NOT do this
-    - Bad: "Cats have paws covering 30% of their body for grip" — this is a textbook fact, NOT funny
-    - Narration tone: {narration_style}
-- Title must be FUNNY like a meme, not a documentary
-- GOOD titles: "Your Cat Is SCAMMING You", "Cats Are Professional FREELOADERS", "The AUDACITY of Cats", "Your Cat Has ZERO Respect For You"
-- BAD titles (too boring): "CATS Are Little Therapists", "Cat Facts You Should Know", "CATS Are Tiny Dictators", "CATS Are MASTER Manipulators\""""
+Each scene has TWO fields:
+- "caption": 3-6 words on screen — funny, sarcastic, meme-like
+- "narration": 15-18 words VOICEOVER — setup + punchline. Must be FUNNY and RELATABLE.
+  Structure: relatable cat behavior + why it's funny/annoying for the owner
+  Write like a cat owner venting. NO dad jokes, NO fake stats, NO technical facts disguised as jokes.
+  BANNED: "like a little", "like a feline", "basically making them", "which is", "allowing them to"
+- Narration tone: {narration_style}
+- Title: FUNNY like a meme. GOOD: "Your Cat Is SCAMMING You", "The AUDACITY of Cats". BAD: "Cat Facts You Should Know\""""
     else:
-        tone_section = f"""You are creating a VIRAL educational cat YouTube Short.
-These videos get millions of views because people LOVE learning surprising things about cats.
+        tone_section = f"""Create a VIRAL educational cat YouTube Short.
 
 FORMAT: {content_format} — {guide["desc"]}
 
-STYLE:
-- Each scene = one SHORT surprising fact as text on screen + beautiful cat footage
-- Each scene has TWO text fields:
-  * "caption": 3-6 words shown ON SCREEN — short, punchy, eye-catching (e.g. "Cats hear ultrasonic")
-  * "narration": 8-15 words read by VOICEOVER — a full interesting sentence expanding the caption (e.g. "Cats can hear ultrasonic frequencies up to 64,000 hertz, way beyond human range")
-- The narration should feel like someone explaining a cool fact to a friend
+Each scene has TWO fields:
+- "caption": 3-6 words on screen — short, punchy, eye-catching
+- "narration": 8-15 words VOICEOVER — expand the caption with an interesting fact
 - Narration tone: {narration_style}"""
 
     prompt = f"""{tone_section}
-- NEVER start narration with filler phrases like: "Get this", "You won't believe", "This is interesting", "This one is wild", "Here's the thing", "Did you know", "Fun fact". Just STATE the fact directly. Example: instead of "Get this, cats can rotate their ears 180 degrees" just say "Cats can rotate their ears a full 180 degrees independently"
-- Captions MUST contain a SPECIFIC fact — NOT generic labels like "Sleep Patterns" or "Grooming Habits"
-- Facts MUST be real and accurate — do NOT make up numbers. If unsure, use a qualitative fact instead of a fake number
-- Mix mind-blowing facts with cute/heartwarming ones
-- The video should feel satisfying to watch — beautiful cats + interesting text
-
-EXAMPLE CAPTIONS (match this style):
-{examples}
+- NEVER start narration with filler like "Get this", "Did you know", "Fun fact"
+- Captions MUST contain a SPECIFIC fact, NOT generic labels
+- Facts MUST be real and accurate
 {avoid_section}
-AVAILABLE FOOTAGE (you MUST pick search_query from these):
+AVAILABLE FOOTAGE (pick search_query from these):
 {keywords_str}
 
 RULES:
 - Generate exactly {scene_count} scenes
-- search_query MUST be copied exactly from the available footage list above
-- Use DIFFERENT search_query for each scene — variety is key
-- Match the footage to the fact (e.g., fact about purring → "cat purring" footage)
-- Title MUST be completely unique and different from previous titles — use different words, angles, and structures each time
-- Do NOT reuse words like "DEBUNKED", "FACTS", "MYTHS", "SECRETS", "REVEALED", "EXPOSED", "DOMINATE" if they appear in previous titles
-- TITLE FORMULA — you MUST use this specific formula for this video:
-  {title_formula}
-- AVOID generic titles like "CATS ROCK", "CAT LOVE", "CATS Win", "CATS Have Hidden Talents" — these get the LEAST views
-- The title should make someone STOP scrolling and click
-- Every caption and title MUST be unique — never repeat previous videos
+- search_query MUST be from the footage list above, different for each scene
+- Match footage to fact (e.g., purring fact → "cat purring")
+- TITLE FORMULA: {title_formula}
+- Title must be unique, under 60 chars, use CAPS for 1-2 key words
 
 Return ONLY valid JSON:
 {{
-    "title": "Curiosity-driven title under 60 chars — make them STOP scrolling (use CAPS for 1-2 key words)",
-    "description": "YouTube description: Start with a hook question or statement. Then 1-2 sentences about what the video covers. Then add hashtags at the end: #shorts #cats #catfacts #catlover #catlovers #cute #cutecat #kitten #catlife #cattok #funnycats #catmom #catdad #pets #animals",
+    "title": "catchy title",
+    "description": "Hook question + 1-2 sentences + hashtags: #shorts #cats #catfacts #catlover #catlovers #cute #cutecat #kitten #catlife #cattok #funnycats #catmom #catdad #pets #animals",
     "tags": ["cat facts", "cats", "cute cats", "cat lovers", "shorts", "kitten", "cat tips", "funny cats", "cat behavior", "cat breeds", "cat life", "pets", "animals", "cat mom", "cat dad"],
     "scenes": [
         {{
             "scene_number": 1,
-            "caption": "3-6 word fact for screen",
-            "narration": "Full sentence 8-15 words for voiceover — expand the caption with detail",
-            "search_query": "pick ONE from the available footage list"
+            "caption": "3-6 word fact",
+            "narration": "Full sentence for voiceover",
+            "search_query": "from footage list"
         }}
     ],
-    "thumbnail_text": "2-4 words that make people click"
+    "thumbnail_text": "2-4 click-worthy words"
 }}
 """
 

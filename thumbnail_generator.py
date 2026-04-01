@@ -89,13 +89,22 @@ def create_thumbnail(photo_path, text, output_path):
 
     # Try to use a bold font, fall back to default
     font_size = 72
-    try:
-        font = ImageFont.truetype("arial.ttf", font_size)
-    except OSError:
+    font_paths = [
+        "arial.ttf",
+        "C:/Windows/Fonts/arialbd.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+    ]
+    font = None
+    for fp in font_paths:
         try:
-            font = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", font_size)
+            font = ImageFont.truetype(fp, font_size)
+            break
         except OSError:
-            font = ImageFont.load_default()
+            continue
+    if font is None:
+        font = ImageFont.load_default()
 
     # Center text at bottom third
     text_upper = text.upper()

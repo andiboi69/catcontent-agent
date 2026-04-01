@@ -12,8 +12,7 @@ from config import GROQ_API_KEY, CONTENT_FORMATS
 
 
 client = Groq(api_key=GROQ_API_KEY)
-MODEL = "llama-3.3-70b-versatile"
-FUNNY_MODEL = "qwen/qwen3-32b"
+MODEL = "qwen/qwen3-32b"
 
 # Script history file — persists across all generations
 SCRIPT_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "used_scripts.json")
@@ -151,17 +150,31 @@ FOOTAGE_KEYWORDS = [
 
 
 def _call_llm(prompt, model=None):
-    """Call Groq API and return text response."""
+    """Call Groq API and return text response.
+
+    Retries once after a short delay on rate limit / request-too-large errors.
+    """
     import re
+    import time
     use_model = model or MODEL
-    # Qwen3 uses tokens for thinking, so give it more room
-    max_tok = 8000 if use_model == FUNNY_MODEL else 2500
-    response = client.chat.completions.create(
-        model=use_model,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.9,
-        max_tokens=max_tok,
-    )
+    max_tok = 8000
+
+    for attempt in range(2):
+        try:
+            response = client.chat.completions.create(
+                model=use_model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.9,
+                max_tokens=max_tok,
+            )
+            break
+        except Exception as e:
+            if attempt == 0:
+                print(f"  LLM error ({e}), retrying in 10s...")
+                time.sleep(10)
+            else:
+                raise
+
     text = response.choices[0].message.content.strip()
     # Qwen3 wraps responses in <think>...</think> tags — strip them
     text = re.sub(r'<think>[\s\S]*?</think>', '', text).strip()
@@ -207,7 +220,7 @@ def generate_script(content_format=None, video_type="short"):
     else:
         scene_count = "6-7" if video_type == "short" else "20-30"
 
-    keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(25, len(FOOTAGE_KEYWORDS)))
+    keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(15, len(FOOTAGE_KEYWORDS)))
     keywords_str = "\n".join(f'- "{k}"' for k in keyword_sample)
 
     format_guides = {
@@ -323,10 +336,21 @@ def generate_script(content_format=None, video_type="short"):
     # Load past scripts to avoid repetition
     history = _load_script_history()
     avoid_section = ""
+    # Sample from FULL history (not just recent) so the LLM sees different items each run.
+    # The post-generation _deduplicate_script() still checks against the ENTIRE history,
+    # so repeats are always caught — this just helps the LLM avoid them upfront.
+    max_titles = 5
+    max_captions = 10
+    max_narrations = 10
     if history["titles"] or history["captions"] or history.get("narrations"):
-        avoid_titles = "\n".join(f'  - "{t}"' for t in history["titles"][-20:])
-        avoid_captions = "\n".join(f'  - "{c}"' for c in history["captions"][-30:])
-        avoid_narrations = "\n".join(f'  - "{n}"' for n in history.get("narrations", [])[-30:])
+        sample_titles = random.sample(history["titles"], min(max_titles, len(history["titles"])))
+        sample_captions = random.sample(history["captions"], min(max_captions, len(history["captions"])))
+        all_narrations = history.get("narrations", [])
+        sample_narrations = random.sample(all_narrations, min(max_narrations, len(all_narrations)))
+
+        avoid_titles = "\n".join(f'  - "{t}"' for t in sample_titles)
+        avoid_captions = "\n".join(f'  - "{c}"' for c in sample_captions)
+        avoid_narrations = "\n".join(f'  - "{n}"' for n in sample_narrations)
         avoid_section = f"""
 ALREADY USED — DO NOT repeat, rephrase, or use similar words/structure:
 Previous titles (DO NOT use the same key words like "SECRETS", "EXPOSED", "REVEALED", "DEBUNKED" etc.):
@@ -472,11 +496,8 @@ Return ONLY valid JSON:
     # Try up to 3 times to get enough scenes after dedup
     MIN_SCENES = 4
 
-    # Use Qwen3 for funny format (Llama can't do humor consistently)
-    llm_model = FUNNY_MODEL if content_format == "funny_cat_facts" else None
-
     for attempt in range(3):
-        text = _call_llm(prompt, model=llm_model)
+        text = _call_llm(prompt)
         script = _parse_json(text)
         script["content_format"] = content_format
         script["video_type"] = video_type

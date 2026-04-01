@@ -157,7 +157,7 @@ def _call_llm(prompt, model=None):
     import re
     import time
     use_model = model or MODEL
-    max_tok = 8000
+    max_tok = 4000
 
     for attempt in range(2):
         try:

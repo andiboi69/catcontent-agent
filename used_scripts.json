@@ -1,6 +1,5 @@
 {
   "titles": [
-    "CAT WISDOM",
     "CAT HACKS",
     "MEET Adorable Breeds",
     "CATS Astonish",
@@ -99,14 +98,10 @@
     "Cats Are Financial Advisors",
     "Thanks for Nothing, CAT!",
     "Your Cat Is a Professional Liar",
-    "Living With a Cat Be Like..."
+    "Living With a Cat Be Like...",
+    "Thanks For Nothing, CAT!"
   ],
   "captions": [
-    "Kitten learns. Destroys 1st.",
-    "Claims your laptop. Battery DRIPS.",
-    "PREFERS cardboard. Not toys.",
-    "Stares at wall. There's a rabbit.",
-    "Stretching like yoga. Then chaos.",
     "Hairless. Still sheds. You clean.",
     "Yawns = you're annoying them.",
     "Steals your plants. Poops on them.",
@@ -301,14 +296,14 @@
     "Grey cats = professional lint rollers.",
     "Window gazing = plotting escapes.",
     "Eats grass. Blames you.",
-    "Naps 16 hours. Still demands snacks."
+    "Naps 16 hours. Still demands snacks.",
+    "Tail flicks = you're annoying",
+    "Yawns at you. Claims dominance.",
+    "Puffs up. Threatens tiny.",
+    "Sunbeam lounger. Heat thief.",
+    "Claims your bed. Demands upgrades."
   ],
   "narrations": [
-    "Kittens practice survival skills by toppling your vases, then sit on the shards like they\u2019re royalty.",
-    "Cats sit on your laptop like it\u2019s their throne, then knock it off when the battery dies and you shout.",
-    "Cats ignore $50 toys but turn a $0.10 box into a fortress, then demand you buy more boxes.",
-    "Cats fixate on invisible prey like they\u2019re part of a secret squirrel society, then pounce on your ankle.",
-    "Cats stretch like they\u2019re meditating, then knock your coffee over and blame the furniture.",
     "Sphynx cats are hairless but still shed skin clumps, leaving you to clean invisible fur.",
     "Cats yawn when stressed, pretending it\u2019s a nap but really blaming you for their panic.",
     "Cats sit on your garden like property owners, then fertilize it for free.",
@@ -503,6 +498,11 @@
     "They\u2019ll cover your entire house in fur, then vanish without a hair in sight.",
     "They pretend they\u2019re admiring the view, but they\u2019re planning how to abandon you for the birds.",
     "Chews on plants like it\u2019s a gourmet meal, then acts surprised when you yell.",
-    "Sleeps like it\u2019s training for a marathon, then yowls for breakfast at 3 AM."
+    "Sleeps like it\u2019s training for a marathon, then yowls for breakfast at 3 AM.",
+    "Swishes tail like a judgy dance critic\u2014your 3pm snack choice was a disaster.",
+    "Stretches like it owns the couch\u2014then side-eyes your Netflix choices.",
+    "Inflates like a hairless marshmallow\u2014thinking it's a Great Dane in a fur coat.",
+    "Soaks up sunbeams like a human-sized solar panel\u2014stealing your warmth, not sharing.",
+    "Occupies your mattress like a furry landlord\u2014then judges your sleep position."
   ]
 }

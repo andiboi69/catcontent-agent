@@ -214,11 +214,15 @@ def generate_script(content_format=None, video_type="short"):
     if content_format is None:
         content_format = random.choice(CONTENT_FORMATS)
 
-    # Funny = fewer scenes (voiceover adds time), educational = more scenes (text-only, fast)
+    # Scene counts tuned to keep Shorts under 25s (analytics 2026-04-26: <25s avg
+    # 1,199 views vs 25s+ avg 861, +39% lift). Ask LLM for MORE than target_scenes
+    # to give dedup headroom against the 200-caption history, then hard-cap after dedup.
     if content_format == "funny_cat_facts":
-        scene_count = "5" if video_type == "short" else "20-30"
+        scene_count = "6" if video_type == "short" else "20-30"
+        target_scenes = 4
     else:
-        scene_count = "6-7" if video_type == "short" else "20-30"
+        scene_count = "7" if video_type == "short" else "20-30"
+        target_scenes = 5
 
     keyword_sample = random.sample(FOOTAGE_KEYWORDS, min(15, len(FOOTAGE_KEYWORDS)))
     keywords_str = "\n".join(f'- "{k}"' for k in keyword_sample)
@@ -473,6 +477,10 @@ Return ONLY valid JSON:
         if scene_count_actual >= MIN_SCENES:
             break
         print(f"  Only {scene_count_actual} scenes after dedup (need {MIN_SCENES}), retrying... ({attempt + 1}/3)")
+
+    # Hard-cap to target_scenes so duration stays predictable even when dedup leaves a long tail.
+    if len(script.get("scenes", [])) > target_scenes:
+        script["scenes"] = script["scenes"][:target_scenes]
 
     # Trim narrations — Qwen3 can't count words, so enforce max length in code
     if content_format == "funny_cat_facts":

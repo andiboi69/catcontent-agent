@@ -561,7 +561,7 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
     if len(content_clips) < 2:
         print("  ERROR: Not enough clips to assemble!")
         return None
-    if len(content_clips) < 5:
+    if len(content_clips) < 4:
         print(f"  WARNING: Only {len(content_clips)} clips — video will be short ({len(content_clips) * 2.5:.0f}s)")
 
     # Concatenate

@@ -2,11 +2,12 @@ name: Daily Cat Video Upload
 
 on:
   schedule:
-    # 4 uploads/day: 2 educational + 2 funny, spread across peak hours
-    - cron: '0 1 * * *'   # 9:00 AM PHT — educational
-    - cron: '0 6 * * *'   # 2:00 PM PHT — funny
-    - cron: '0 11 * * *'  # 7:00 PM PHT — educational
-    - cron: '0 15 * * *'  # 11:00 PM PHT — funny
+    # 4 uploads/day across peak PHT hours. Format chosen by weighted
+    # rotation in config.py CONTENT_FORMATS (cat_facts 4x, funny_cat_facts 1x).
+    - cron: '0 1 * * *'   # 9:00 AM PHT
+    - cron: '0 6 * * *'   # 2:00 PM PHT
+    - cron: '0 11 * * *'  # 7:00 PM PHT
+    - cron: '0 15 * * *'  # 11:00 PM PHT
   workflow_dispatch:  # Manual trigger button
     inputs:
       format:
@@ -46,21 +47,13 @@ jobs:
           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
           echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
 
-      - name: Pick format based on schedule
+      - name: Pick format (manual override only)
         id: pick-format
         run: |
           if [ -n "${{ github.event.inputs.format }}" ]; then
             echo "format=--format ${{ github.event.inputs.format }}" >> $GITHUB_OUTPUT
           else
-            HOUR=$(date -u +%H)
-            # 01 UTC and 11 UTC = educational, 06 UTC and 15 UTC = funny
-            if [ "$HOUR" = "01" ] || [ "$HOUR" = "11" ]; then
-              FORMATS=("cat_facts" "cat_psychology" "signs_cat_loves_you")
-              FORMAT=${FORMATS[$RANDOM % ${#FORMATS[@]}]}
-              echo "format=--format $FORMAT" >> $GITHUB_OUTPUT
-            else
-              echo "format=--format funny_cat_facts" >> $GITHUB_OUTPUT
-            fi
+            echo "format=" >> $GITHUB_OUTPUT
           fi
 
       - name: Generate and upload video

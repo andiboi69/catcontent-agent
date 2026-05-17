@@ -1,6 +1,5 @@
 {
   "titles": [
-    "YOUR CAT IS A HUMAN IMPOSTER",
     "Your Cat Is a MOB Informant",
     "Cats Are BACKSTABBERS",
     "Thanks For Nothing CAT",
@@ -99,14 +98,10 @@
     "This Is Why Cats Talk TO YOU",
     "What\u2019s Your Cat PLANNING?",
     "Why Do Cats Display Love Like This?",
-    "Your Cat Is A SNEAKY SAVOR"
+    "Your Cat Is A SNEAKY SAVOR",
+    "POV: Your Cat's SECRET WEAPON"
   ],
   "captions": [
-    "FLUFF = THERMAL ARMOR",
-    "FACE RUBS = SCENT CLAIM",
-    "KITTENS MIMIC ADULT MEOWS",
-    "SEE 90% BETTER IN DARK",
-    "YAWN = STRESS WARNING",
     "FUR GROWS BACKWARD?",
     "JUMPS 5X BODY LENGTH",
     "SNEEZES = ALLERGIES?",
@@ -301,14 +296,14 @@
     "SILENT POUNCE ENGINEERS",
     "HAS A SECRET EYE",
     "NO SWEET TOOTH",
-    "TAIL WIGGLE = TEXTS"
+    "TAIL WIGGLE = TEXTS",
+    "HAS A SECRET 3RD EYELID",
+    "TAIL = NINJA BALANCE",
+    "CAN'T TASTE SWEETNESS",
+    "LICKS CHECK TEMPERATURE?",
+    "CLAWS FOR CLIMBING DOWN"
   ],
   "narrations": [
-    "Double-layered fur traps heat in winter, stays cool in summer.",
-    "Rubbing deposits pheromones to mark you as theirs.",
-    "Young cats learn communication by copying adult vocal patterns.",
-    "Their eyes collect 90% more light than ours\u2014nighttime is their vibrant Netflix.",
-    "A sudden yawn isn\u2019t sleepy\u2014it\u2019s their anxiety meter spiking mid-conversation.",
     "Underbelly fur grows down-to-up for warmth\u2014like a built-in thermal blanket.",
     "They leap 5 times their height\u2014your couch is Mt. Everest to a kitten.",
     "Cat sneezes often mean dust mites in your carpet, not a cold.",
@@ -503,6 +498,11 @@
     "They walk like ninjas to sneak up on your ankles, but can\u2019t sneak up on the fact you\u2019re",
     "Their third eyelid isn\u2019t for mysticism\u2014it\u2019s their covert ops squad to pretend they\u2019re not watching you eat takeout.",
     "They\u2019ll ignore your birthday cake, but blame them\u2014cats can\u2019t taste sweetness. Their loss.",
-    "Your cat\u2019s tail isn\u2019t \u2018meowing\u2019\u2014it\u2019s tapping out \u2018Why are you still alive?\u2019 in Morse code."
+    "Your cat\u2019s tail isn\u2019t \u2018meowing\u2019\u2014it\u2019s tapping out \u2018Why are you still alive?\u2019 in Morse code.",
+    "Cats blink a transparent third eyelid to clean and protect their eyes while sleeping.",
+    "Their tail acts as a balance pole, allowing 180\u00b0 mid-air flips to land safely.",
+    "Lacking sweet receptors, cats can\u2019t enjoy sugary treats\u2014only amino acids and meat.",
+    "Cats lick their paws to detect temperature changes in their environment.",
+    "Retractable claws help cats grip and descend trees headfirst safely."
   ]
 }

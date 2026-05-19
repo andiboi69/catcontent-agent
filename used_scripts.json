@@ -1,6 +1,5 @@
 {
   "titles": [
-    "Your Cat Is A TERRIBLE Roommate",
     "Your Cat\u2019s Job is LEGALIZED LAZINESS",
     "Your Cat Is A MASTER SCAMMER",
     "POV Your Cat\u2019s 3AM Stakeout",
@@ -99,14 +98,10 @@
     "Every Cat Owner Knows This FEELING",
     "Only 1% Spot These Feline Signals",
     "Only 1% Know Cats Use THIS to Bond",
-    "THIS Is Why Cats CHOOSE YOU!"
+    "THIS Is Why Cats CHOOSE YOU!",
+    "SCIENTISTS STUNNED: CATS' HIDDEN POWERS"
   ],
   "captions": [
-    "TAIL HUG = AFFECTION",
-    "SLOW BLINK = LOVE",
-    "LEG RUB = CLAIMING",
-    "GROOMING = ACCEPTANCE",
-    "SITTING ON YOU = TRUST",
     "TAIL HORIZONTAL = CURIOSITY",
     "KITTENS MIMIC PARENTS' MOVES",
     "SIAMESE BARK = EXCITEMENT",
@@ -301,14 +296,14 @@
     "WHITE CATS MAY HAVE BLUE EYES",
     "PAWS TEST SOFTNESS",
     "GROOMING = BONDING SIGNAL",
-    "SITTING POSTURE REVEALS HEALTH"
+    "SITTING POSTURE REVEALS HEALTH",
+    "DETECTS SLUG TRAILS",
+    "COUCH = TERRAIN CLAIMED",
+    "CATS CAN\u2019T TASTE SWEET",
+    "90% CALICOS ARE FEMALE",
+    "FOLDED EARS = BALANCE ISSUES"
   ],
   "narrations": [
-    "When a cat exposes their belly, it's a sign of deep vulnerability and trust, not an invitation to scratch.",
-    "A cat wrapping their tail around you is a deliberate gesture of comfort and social bonding.",
-    "Slowly closing their eyes fully while gazing at you means 'I feel safe here'\u2014a feline love language.",
-    "Rubbing their face on your legs transfers pheromones, marking you as part of their social group.",
-    "Cats only groom those they consider part of their family\u2014a feline 'You belong here.'",
     "By choosing you as their perch, cats assert ownership and vulnerability.",
     "A relaxed tail position signals they\u2019re open to interaction.",
     "Young cats learn behaviors by copying their mothers\u2019 postures.",
@@ -503,6 +498,11 @@
     "White coats can block pigment to the eyes, creating striking blue irises.",
     "Cats press paws into surfaces to assess texture and safety before lying down.",
     "Cats groom each other to share scent, signaling trust and group membership.",
-    "A cat\u2019s sitting angle reflects muscle tone\u2014low posture = relaxed, high = alert."
+    "A cat\u2019s sitting angle reflects muscle tone\u2014low posture = relaxed, high = alert.",
+    "Cats follow invisible chemical trails\u2014slugs leave behind a slime roadmap they can smell.",
+    "Cheek rubs deposit scent markers\u2014your furniture becomes their personal property.",
+    "Lack sweet receptors? Candy\u2019s flavorless to them\u2014sugar\u2019s just a texture.",
+    "Females need two X chromosomes to show the calico pattern\u2014males are rare.",
+    "Scottish Folds\u2019 ears twist the cartilage\u2014causes chronic inner ear problems."
   ]
 }

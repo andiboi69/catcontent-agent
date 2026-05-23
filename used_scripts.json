@@ -1,6 +1,5 @@
 {
   "titles": [
-    "5 CAT FACTS YOU\u2019VE NEVER SEEN",
     "YOUR CAT HIJACKS YOUR SPACE",
     "Your Cat Is a CONSPIRATORIAL Genius",
     "CATS ARE RENTAL SCAMMERS \ud83d\udc3e",
@@ -99,14 +98,10 @@
     "Why Do Cats LEAN On YOU?",
     "YOUR CAT'S SECRET LOVE LANGUAGE",
     "SCIENTISTS STUNNED: Cats Do THIS Unbelievable Trick!",
-    "Why Do CATS Do This?"
+    "Why Do CATS Do This?",
+    "What Do Cats Remember When You Leave?"
   ],
   "captions": [
-    "SPHYNX SKIN PRODUCES 3X MORE OIL",
-    "CALICO COAT = FEMALE-DOMINANT GENE",
-    "WHITE CATS WITH BLUE EYES = 20% DEAF RISK",
-    "YAWNS AFTER HUMANS = EMPATHY MIRRORING",
-    "FEET MARK TERRITORY CHEMICALS",
     "EARS FORWARD = FULL ATTENTION",
     "SEE IN 1/6 HUMAN LIGHT",
     "GROOMING YOU = TRUST BOND",
@@ -301,14 +296,14 @@
     "FACE RUB = TERRITORY CLAIM",
     "SCOTTISH FOLD EARS = GENE FLUKE",
     "KITTENS PLAY TO HUNT BETTER",
-    "PAWS SMELL LIKE HOME"
+    "PAWS SMELL LIKE HOME",
+    "NEEDS WARMTH, NOT FUR YET",
+    "FUR FIBERS = INSULATED TUBES",
+    "CATS SEE 500 SHADES OF GRAY",
+    "WHITE CATS MAY BE COLORBLIND",
+    "FUR GLOWS UNDER UV LIGHT"
   ],
   "narrations": [
-    "Cats spend 15% of sleep in REM\u2014half what humans do, so their dreams are shorter and simpler.",
-    "Sphynx cats lack fur, so their skin overproduces oils, requiring baths every 3\u20135 days to prevent acne.",
-    "Calico cats\u2019 coat pattern is tied to X chromosomes\u201499% are female due to X-inactivation in fur color genes.",
-    "White cats with blue eyes have a 17\u201322% chance of being deaf due to a genetic link between coat color and hearing loss.",
-    "Cats yawn after humans to mirror emotions\u2014a sign of social bonding and trust.",
     "Cats have scent glands in their paws to leave chemical markers when they step on you.",
     "Cats rotate ears 180 degrees to focus on sounds you make.",
     "Cats only need 1/6 the light humans do to see clearly.",
@@ -503,6 +498,11 @@
     "Rubbing face on objects marks territory with pheromones to declare 'this is mine.'",
     "Folded ears come from a spontaneous 1961 mutation affecting ear cartilage.",
     "Play-chasing sharpens reflexes needed to pounce on real prey later.",
-    "Paw-patting releases stress-reducing pheromones through scent glands."
+    "Paw-patting releases stress-reducing pheromones through scent glands.",
+    "Kittens under three weeks old rely on external heat sources since their fur lacks insulating properties until they mature.",
+    "Maine coons have hollow hair shafts that act like thermal vacuums, trapping air for extreme cold resistance in snowy climates.",
+    "Their retinas contain 96% rod cells vs. human 90%, allowing 15x greater sensitivity to low-light contrast and motion.",
+    "Albinism or color inheritance patterns in white cats can result in reduced cone cell function for hue differentiation.",
+    "Bengals produce fluorescent proteins in hair keratin that absorb UV light, causing their coats to literally glow in dark conditions."
   ]
 }

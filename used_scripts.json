@@ -1,6 +1,5 @@
 {
   "titles": [
-    "CATS GREET WITH FEET?!",
     "POV You\u2019re the Babysitter",
     "YOUR CAT IS LYING THROUGH THEIR WHISKERS",
     "POV: Your Cat\u2019s Hidden Skills",
@@ -99,14 +98,10 @@
     "POV Your Cat\u2019s SECRET Signals",
     "SCIENTISTS STUNNED: Cats See 6X BETTER AT NIGHT!",
     "7 HIDDEN WAYS YOUR CAT SHOWS LOVE",
-    "7 CAT Quirks That Are Actually GENIUS!"
+    "7 CAT Quirks That Are Actually GENIUS!",
+    "7 Cat Actions That ARE Secret Chats"
   ],
   "captions": [
-    "BITE-THEN-LICK = GROOMING BOND",
-    "EARS BACKWARD = RELAXED CONTENTMENT",
-    "TAIL UP = CONFIDENCE SIGNAL",
-    "SPOTS = PRIDE ID BADGE",
-    "ALPHA\u793a\u8303 HUNTING STANCE",
     "GREY COAT = STEALTH ADVANTAGE",
     "PLAY BITE = SKILL PRACTICE",
     "NO TASTE FOR SWEET THINGS",
@@ -301,14 +296,14 @@
     "KITTENS BLIND FOR 7 DAYS",
     "CATS CUDDLE TO SHARE WARMTH",
     "ORANGE TABBY GETS SUNBURNS",
-    "YAWN = TRUST YOU FULLY"
+    "YAWN = TRUST YOU FULLY",
+    "STRETCHING = HUNTING PREP",
+    "CUDDLING = SCENT SHARING",
+    "BED CHOICE = THERMAL HUNTER",
+    "VERTICAL PUPILS = PREY HUNTER",
+    "NO FUR = SWEAT GLANDS"
   ],
   "narrations": [
-    "Vibrating during stretches warms their muscles, preparing them for sudden movements.",
-    "Cats curl their tongues to \u2018scoop\u2019 water, avoiding contaminants from the surface.",
-    "This behavior mimics how cats show affection during social bonding with family.",
-    "Ears flicking backward while relaxed means they\u2019re comfortable around you.",
-    "An upright tail communicates trust and safety in social interactions with humans and pets.",
     "Bengal cats' distinctive rosettes function as unique identifiers within wildcat populations.",
     "Adult cats teach kittens to stalk with slow, deliberate movements during mock hunts.",
     "Dull coat colors help grey cats blend into low-light environments for ambush hunts.",
@@ -503,6 +498,11 @@
     "Newborn kittens are born blind\u2014their eyes open at 7 days, not because of age, but eye development.",
     "Two cats snuggling isn\u2019t just cute\u2014they\u2019re conserving body heat and building social bonds.",
     "Light-furred orange cats lack UV protection in their skin\u2014shade is their sunscreen!",
-    "When a cat yawns in your face, it\u2019s a vulnerable signal\u2014they trust you\u2019re not a threat."
+    "When a cat yawns in your face, it\u2019s a vulnerable signal\u2014they trust you\u2019re not a threat.",
+    "Stretching before a leap readies muscles for explosive bursts of speed and precision.",
+    "Snuggling exchanges pheromones, creating a communal scent to deter outsiders.",
+    "Choosing warm spots mimics sunning on rocks\u2014cats prioritize heat over comfort.",
+    "Slit pupils maximize night vision and depth perception for ambush strikes.",
+    "Hairless cats like Sphynx rely on skin pores to release excess body heat."
   ]
 }

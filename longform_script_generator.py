@@ -118,7 +118,7 @@ STRUCTURE:
 - Total: {LONGFORM_SCENE_COUNT} scenes
 - Each scene has:
   * "caption": 3-6 words shown ON SCREEN (short, punchy)
-  * "narration": 35-50 words for VOICEOVER — 2-3 complete sentences that explore the fact in depth: state it, explain WHY, add a vivid detail or example. Must sound natural when spoken aloud. (This narration length is what makes the video reach 8+ minutes.)
+  * "narration": 45-60 words for VOICEOVER — 3 complete sentences that explore the fact in depth: state it, explain WHY, add a vivid detail or example. COUNT THE WORDS — narrations under 45 words make the video too short. Must sound natural when spoken aloud. (This narration length is what makes the video reach 8+ minutes.)
   * "search_query": footage keyword from the available list
   * "chapter": which chapter this scene belongs to (string)
 - ONLY the first scene has chapter "intro" and ONLY the last scene has chapter "outro" — every other scene MUST be assigned to one of the content chapters
@@ -171,7 +171,7 @@ Return ONLY valid JSON:
     client = Groq(api_key=GROQ_API_KEY)
     MODEL = "llama-3.3-70b-versatile"
 
-    MIN_SCENES = 20
+    MIN_SCENES = 25
 
     for attempt in range(3):
         response = client.chat.completions.create(

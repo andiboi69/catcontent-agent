@@ -79,64 +79,39 @@ def generate_title_card(output_path, text, duration=CHAPTER_CARD_DURATION, subti
 
 
 def _ken_burns_filter(duration):
-    """Generate a random Ken Burns zoom/pan filter for documentary feel.
+    """Slow pan over MOVING footage via animated crop.
 
-    Returns an FFmpeg filter string that slowly zooms and/or pans across the frame.
+    zoompan is for still images — it holds each input frame for `d` output
+    frames, which freezes video on its first frame. Animated crop x/y keeps
+    the footage playing while the viewing window drifts across the overscan.
     Input must be pre-scaled to KB_SCALE (1.15x) larger than target.
     """
-    # Overscan dimensions (the larger input we crop from)
     ow = int(TARGET_WIDTH * KB_SCALE)
     oh = int(TARGET_HEIGHT * KB_SCALE)
-    # Maximum pan distance in pixels
-    max_pan = ow - TARGET_WIDTH  # ~288px at 1.15x
+    max_x = ow - TARGET_WIDTH
+    max_y = oh - TARGET_HEIGHT
+    d = max(duration, 0.1)
+    # 0 -> 1 over the clip; min() guards against t slightly exceeding duration
+    prog = f"min(t/{d:.2f},1)"
+    cx = str(max_x // 2)
+    cy = str(max_y // 2)
 
-    # Pick a random Ken Burns style
-    style = random.choice(["zoom_in", "zoom_out", "pan_left", "pan_right", "pan_up", "pan_down"])
+    style = random.choice(["pan_left", "pan_right", "pan_up", "pan_down", "diag_dr", "diag_ul"])
 
-    total_frames = int(duration * TARGET_FPS)
-    if total_frames <= 0:
-        total_frames = 1
-
-    if style == "zoom_in":
-        # Start wide, end tight (zoom into center)
-        return (
-            f"zoompan=z='1+0.15*on/{total_frames}'"
-            f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-            f":d={total_frames}:s={TARGET_WIDTH}x{TARGET_HEIGHT}:fps={TARGET_FPS}"
-        )
-    elif style == "zoom_out":
-        # Start tight, end wide
-        return (
-            f"zoompan=z='1.15-0.15*on/{total_frames}'"
-            f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-            f":d={total_frames}:s={TARGET_WIDTH}x{TARGET_HEIGHT}:fps={TARGET_FPS}"
-        )
-    elif style == "pan_left":
-        return (
-            f"zoompan=z='1.08'"
-            f":x='{max_pan}*(1-on/{total_frames})':y='(ih-ih/zoom)/2'"
-            f":d={total_frames}:s={TARGET_WIDTH}x{TARGET_HEIGHT}:fps={TARGET_FPS}"
-        )
+    if style == "pan_left":
+        x, y = f"{max_x}*(1-{prog})", cy
     elif style == "pan_right":
-        return (
-            f"zoompan=z='1.08'"
-            f":x='{max_pan}*on/{total_frames}':y='(ih-ih/zoom)/2'"
-            f":d={total_frames}:s={TARGET_WIDTH}x{TARGET_HEIGHT}:fps={TARGET_FPS}"
-        )
+        x, y = f"{max_x}*{prog}", cy
     elif style == "pan_up":
-        max_pan_v = oh - TARGET_HEIGHT
-        return (
-            f"zoompan=z='1.08'"
-            f":x='(iw-iw/zoom)/2':y='{max_pan_v}*(1-on/{total_frames})'"
-            f":d={total_frames}:s={TARGET_WIDTH}x{TARGET_HEIGHT}:fps={TARGET_FPS}"
-        )
-    else:  # pan_down
-        max_pan_v = oh - TARGET_HEIGHT
-        return (
-            f"zoompan=z='1.08'"
-            f":x='(iw-iw/zoom)/2':y='{max_pan_v}*on/{total_frames}'"
-            f":d={total_frames}:s={TARGET_WIDTH}x{TARGET_HEIGHT}:fps={TARGET_FPS}"
-        )
+        x, y = cx, f"{max_y}*(1-{prog})"
+    elif style == "pan_down":
+        x, y = cx, f"{max_y}*{prog}"
+    elif style == "diag_dr":
+        x, y = f"{max_x}*{prog}", f"{max_y}*{prog}"
+    else:  # diag_ul
+        x, y = f"{max_x}*(1-{prog})", f"{max_y}*(1-{prog})"
+
+    return f"crop={TARGET_WIDTH}:{TARGET_HEIGHT}:x='{x}':y='{y}'"
 
 
 def normalize_clip_landscape(input_path, output_path, duration=CLIP_DURATION,

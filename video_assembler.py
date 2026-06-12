@@ -211,6 +211,75 @@ def generate_hook_clip(footage_path, output_path, hook_text=None):
     return output_path
 
 
+ENDCARD_DURATION = 2.2
+
+
+def generate_endcard_clip(footage_path, output_path, question):
+    """Generate a closing clip: engagement question + comment/follow CTA.
+
+    Comments and sub conversion are the channel's weakest metrics — every
+    video ends asking viewers about their own cat.
+    """
+    safe_question = escape_text(question)
+    q_fontsize = 60 if len(question) <= 22 else 48
+
+    filters = [
+        f"scale={TARGET_WIDTH}:{TARGET_HEIGHT}:force_original_aspect_ratio=increase",
+        f"crop={TARGET_WIDTH}:{TARGET_HEIGHT}",
+        f"fps={TARGET_FPS}",
+        # Darken footage so the CTA text pops
+        "eq=brightness=-0.15:saturation=1.1",
+        f"drawtext=text='{safe_question}'"
+        f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
+        f":fontsize={q_fontsize}:fontcolor=yellow:borderw=4:bordercolor=black"
+        f":x=(w-text_w)/2:y=(h/2)-180",
+        f"drawtext=text='COMMENT below'"
+        f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
+        f":fontsize=50:fontcolor=white:borderw=4:bordercolor=black"
+        f":x=(w-text_w)/2:y=(h/2)-20",
+        f"drawtext=text='FOLLOW for daily cat facts'"
+        f"{':fontfile=' + FONT_PATH if FONT_PATH else ''}"
+        f":fontsize=42:fontcolor=white:borderw=4:bordercolor=black"
+        f":x=(w-text_w)/2:y=(h/2)+80",
+    ]
+
+    cmd = [
+        FFMPEG, "-y",
+        "-i", footage_path,
+        "-vf", ",".join(filters),
+        "-t", str(ENDCARD_DURATION),
+        "-c:v", "libx264",
+        "-preset", "fast",
+        "-pix_fmt", "yuv420p",
+        "-r", str(TARGET_FPS),
+        "-an",
+        "-movflags", "+faststart",
+        output_path + ".tmp.mp4"
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        return None
+
+    # Add silent audio for concat compatibility
+    cmd2 = [
+        FFMPEG, "-y",
+        "-i", output_path + ".tmp.mp4",
+        "-f", "lavfi", "-i", f"anullsrc=r={AUDIO_RATE}:cl=mono",
+        "-c:v", "copy", "-c:a", "aac",
+        "-ar", str(AUDIO_RATE), "-ac", str(AUDIO_CHANNELS),
+        "-map", "0:v", "-map", "1:a",
+        "-shortest",
+        "-movflags", "+faststart",
+        output_path
+    ]
+    result2 = subprocess.run(cmd2, capture_output=True, text=True)
+    if os.path.exists(output_path + ".tmp.mp4"):
+        os.remove(output_path + ".tmp.mp4")
+    if result2.returncode != 0:
+        return None
+    return output_path
+
+
 def normalize_clip(input_path, output_path, duration=CLIP_DURATION, caption=None, voiceover_path=None):
     """Normalize a clip: scale to vertical, add caption, optionally add voiceover.
 
@@ -563,6 +632,22 @@ def assemble_full_video(footage_data, audio_path, script, output_dir, voiceover_
         return None
     if len(content_clips) < 4:
         print(f"  WARNING: Only {len(content_clips)} clips — video will be short ({len(content_clips) * 2.5:.0f}s)")
+
+    # End card — engagement question + follow CTA over the last scene's footage
+    endcard_source = next(
+        (item["footage_path"] for item in reversed(footage_data)
+         if item["footage_path"] and os.path.exists(item["footage_path"])),
+        None,
+    )
+    if endcard_source:
+        endcard_path = os.path.join(clips_dir, "endcard.mp4")
+        question = script.get("comment_question") or "Does YOUR cat do this?"
+        print(f"  End card: \"{question}\"")
+        generate_endcard_clip(endcard_source, endcard_path, question)
+        if os.path.exists(endcard_path) and os.path.getsize(endcard_path) > 1000:
+            if has_flash:
+                prepared_clips.append(flash_path)
+            prepared_clips.append(endcard_path)
 
     # Concatenate
     title_slug = script["title"][:40].replace(" ", "_")

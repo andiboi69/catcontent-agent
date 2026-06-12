@@ -21,12 +21,18 @@ FUNNY_VOICES = [
     "en-US-AnaNeural",        # Young/childlike, perfect for comedy
 ]
 
-# Content formats — 50/50 funny + educational rotation
+# Content formats — weighted by analytics (2026-06-12): "7 ways your cat
+# shows love" listicles hit 8-13% like rates; roast comedy ("scammer/liar/
+# vampire") dominates the bottom 50 videos. Duplicates = higher pick chance.
 CONTENT_FORMATS = [
-    "funny_cat_facts",      # Comedy — meme-like tone with voiceover
-    "cat_facts",            # Educational — punchy text-on-screen facts
-    "cat_psychology",       # Educational — what cats are thinking
-    "signs_cat_loves_you",  # Educational — body language decoded
+    "signs_cat_loves_you",  # Best engagement — body language decoded (3x)
+    "signs_cat_loves_you",
+    "signs_cat_loves_you",
+    "cat_psychology",       # Strong views — what cats are thinking (2x)
+    "cat_psychology",
+    "cat_facts",            # Solid baseline — punchy facts (2x)
+    "cat_facts",
+    "funny_cat_facts",      # Comedy — high views but weak likes, keep 1x
 ]
 
 # Video settings

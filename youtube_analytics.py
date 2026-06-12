@@ -6,8 +6,13 @@ Requires scopes: youtube, youtube.upload, yt-analytics.readonly
 """
 
 import os
+import sys
 import json
 from datetime import datetime, timezone, timedelta
+
+# Windows console defaults to cp1252, which crashes on emoji in video titles
+if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 from googleapiclient.discovery import build
 from youtube_uploader import get_authenticated_service, get_credentials
 

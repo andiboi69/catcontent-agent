@@ -369,24 +369,27 @@ CRITICAL: Every caption, narration, and title must be COMPLETELY DIFFERENT from 
 """
 
     # Rotate title formulas — pick one randomly each time
+    # Formulas weighted by analytics (2026-06-12): number hooks ("7 SILENT WAYS
+    # YOUR CAT SHOWS LOVE") and warm POV lead like-rates; "Only 1% Know" and
+    # absurdist roast titles ("ENERGY VAMPIRE", "LEGAL TERRORISTS") fill the
+    # bottom of the views table — removed. Duplicates = higher pick chance.
     if content_format == "funny_cat_facts":
         title_formulas = [
-            'Roast: "Your Cat Is SCAMMING You" / "Cats Are Professional FREELOADERS" / "Your Cat Has ZERO Respect For You"',
-            'POV comedy: "POV Your Cat at 3AM" / "POV You Bought a CAT" / "POV Your Cat Runs the House"',
+            'POV comedy: "POV Your Cat at 3AM" / "POV You Bought a CAT" / "POV Your Cat Has a Side Hustle"',
+            'POV comedy: "POV Your Cat Runs the House" / "POV Your Cat\'s Midnight Mission"',
             'Relatable: "Every Cat Owner FELT This" / "Living With a Cat Be Like..." / "Cat Owners Will CRY Laughing"',
-            'Expose: "EXPOSING Your Cats Secret Life" / "Your Cat Is LYING To You" / "What Your Cat REALLY Thinks"',
-            'Sarcastic: "Cats Are SO Helpful" / "Thanks For Nothing CAT" / "My Cat Does NOTHING And I Love It"',
-            'Dramatic: "The AUDACITY of Cats" / "Cats Have ZERO Shame" / "Your Cat Is a DRAMA Queen"',
+            'Relatable: "Cats: Professional Inconveniencers" / "Your Cat Thinks Rent\'s Optional"',
+            'Mild roast (loving, not insulting): "Your Cat Is a Master Manipulator" / "Cats Are Professional FREELOADERS"',
         ]
     else:
         title_formulas = [
-            'Curiosity gap: "Nobody Told You THIS About Cats" / "Your Cat Does This BUT You Never Noticed" / "What Happens When Cats..."',
-            'Emotional hook: "This Is Why CATS Are Therapists" / "Cats That Will MELT Your Heart" / "The Reason Cats Choose YOU"',
-            'Challenge: "Only 1% of Cat Owners Know This" / "Bet You Didn\'t Know CATS Can..." / "Name All 5 Cat Breeds"',
-            'Question: "Why Do CATS Do This?" / "Is Your Cat Trying To WARN You?" / "What Does Your Cat SEE At Night?"',
-            'Shock/reaction: "I Can\'t Believe CATS Can Do This" / "When Your Cat Does THIS... Watch Out" / "Scientists STUNNED By Cats"',
-            'POV/relatable: "POV Your Cat At 3AM" / "Every Cat Owner Knows This FEELING" / "Living With a Cat Be Like"',
-            'Number hook: "5 Things Your CAT Wishes You Knew" / "3 Cat Breeds That Act Like DOGS" / "7 Signs Your Cat Is HAPPY"',
+            'Number hook: "7 SILENT WAYS Your Cat Shows Love" / "7 Cat Quirks That Are Actually GENIUS" / "5 Things Your CAT Wishes You Knew"',
+            'Number hook: "7 HIDDEN WAYS Your Cat Shows Love" / "6 Cat Quirks You Misinterpret Every Day"',
+            'Emotional hook: "THIS Is Why Cats CHOOSE YOU" / "When Your Cat Does THIS... They\'re Obsessed" / "7 Cat Signals You\'re FAMILY"',
+            'Emotional hook: "POV Your Cat LOVES YOU (But Won\'t Tell You)" / "The Reason Cats Choose YOU"',
+            'Curiosity gap: "Nobody Told You THIS About Cats" / "Your Cat Does This BUT You Never Noticed"',
+            'Question: "Why Do CATS Do This?" / "Do Cats Have A HIDDEN EYE?" / "What Does Your Cat SEE At Night?"',
+            'Shock/reaction: "I Can\'t Believe CATS Can\'t TASTE Sweet" / "When Your Cat Does THIS... Watch Out"',
         ]
     title_formula = random.choice(title_formulas)
 
@@ -457,7 +460,8 @@ Return ONLY valid JSON:
             "search_query": "from footage list"
         }}
     ],
-    "thumbnail_text": "2-4 click-worthy words"
+    "thumbnail_text": "2-4 click-worthy words",
+    "comment_question": "Short question asking viewers about THEIR cat, tied to this video's topic, max 7 words (e.g. 'Does YOUR cat do this?')"
 }}
 """
 
@@ -490,6 +494,10 @@ Return ONLY valid JSON:
             words = narration.split()
             if len(words) > MAX_NARRATION_WORDS:
                 scene["narration"] = " ".join(words[:MAX_NARRATION_WORDS])
+
+    # Fallback if LLM omits the engagement question
+    if not script.get("comment_question"):
+        script["comment_question"] = "Does YOUR cat do this?"
 
     # Record this script to history so future videos avoid these captions
     _record_script(script)

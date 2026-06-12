@@ -2,12 +2,12 @@ name: Daily Cat Video Upload
 
 on:
   schedule:
-    # 4 uploads/day across peak PHT hours. Format chosen by weighted
-    # rotation in config.py CONTENT_FORMATS (cat_facts 4x, funny_cat_facts 1x).
+    # 2 uploads/day — analytics 2026-06-12: at 4/day avg views halved vs the
+    # 2/day era and ~25% of videos got <300 views (algorithm samples uploads,
+    # over-posting dilutes). Format chosen by weighted rotation in config.py
+    # CONTENT_FORMATS (signs_cat_loves_you 3x ... funny_cat_facts 1x).
     - cron: '0 1 * * *'   # 9:00 AM PHT
-    - cron: '0 6 * * *'   # 2:00 PM PHT
     - cron: '0 11 * * *'  # 7:00 PM PHT
-    - cron: '0 15 * * *'  # 11:00 PM PHT
   workflow_dispatch:  # Manual trigger button
     inputs:
       format:

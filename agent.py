@@ -136,6 +136,7 @@ def create_video(video_type="short", content_format=None, upload=False, privacy=
         "video_type": video_type,
         "content_format": script["content_format"],
         "created_at": timestamp,
+        "comment_question": script.get("comment_question"),
         "voice_used": voice,
         "video_path": final_video,
         "thumbnail_path": thumb_path,

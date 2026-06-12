@@ -27,6 +27,14 @@ SCOPES_WITH_ANALYTICS = SCOPES + [
     "https://www.googleapis.com/auth/yt-analytics.readonly",
 ]
 
+# Commenting requires force-ssl. Requested on NEW logins only — the existing
+# token keeps working for uploads, and post_comment() skips gracefully until
+# the user re-authorizes (delete youtube_token.json, run any upload locally,
+# then update the YOUTUBE_TOKEN_JSON GitHub secret).
+SCOPES_NEW_AUTH = SCOPES + [
+    "https://www.googleapis.com/auth/youtube.force-ssl",
+]
+
 
 def get_authenticated_service():
     """Authenticate and return a YouTube API service object.
@@ -52,7 +60,7 @@ def get_authenticated_service():
 
             print("  Opening browser for YouTube authorization...")
             print("  (Sign in with the Google account that owns your YouTube channel)")
-            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES_NEW_AUTH)
             credentials = flow.run_local_server(port=8090, prompt="consent")
 
         # Save token for next time
@@ -180,6 +188,32 @@ def set_thumbnail(video_id, thumbnail_path):
         return False
 
 
+def post_comment(video_id, text):
+    """Post a top-level comment on a video to seed engagement.
+
+    Requires the youtube.force-ssl scope. With an older token this fails
+    gracefully — uploads are never affected.
+    """
+    youtube = get_authenticated_service()
+    if not youtube:
+        return False
+    try:
+        youtube.commentThreads().insert(
+            part="snippet",
+            body={
+                "snippet": {
+                    "videoId": video_id,
+                    "topLevelComment": {"snippet": {"textOriginal": text}},
+                }
+            },
+        ).execute()
+        print(f"  Engagement comment posted!")
+        return True
+    except Exception as e:
+        print(f"  Comment skip (token may need force-ssl scope, see SCOPES_NEW_AUTH): {e}")
+        return False
+
+
 def upload_from_metadata(metadata_path, privacy="public"):
     """Upload a video using its metadata.json file.
 
@@ -207,6 +241,10 @@ def upload_from_metadata(metadata_path, privacy="public"):
         thumb_path = meta.get("thumbnail_path")
         if thumb_path and os.path.exists(thumb_path):
             set_thumbnail(result["video_id"], thumb_path)
+
+        # Seed engagement with the video's question as a comment
+        question = meta.get("comment_question") or "Does YOUR cat do this? Tell us below!"
+        post_comment(result["video_id"], f"{question} 🐾 Follow for daily cat facts!")
 
         # Save upload info back to metadata
         meta["youtube_video_id"] = result["video_id"]

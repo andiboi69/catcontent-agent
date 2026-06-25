@@ -1,6 +1,5 @@
 {
   "titles": [
-    "Your Cat Is LYING To You",
     "POV Your Cat\u2019s Curfew Is 3AM",
     "Your Cat\u2019s SECRET Headbutts Mean LOVE?",
     "POV Your Cat\u2019s NOSE TOUCHES Mean Love",
@@ -99,14 +98,10 @@
     "When Your Cat Does THIS\u2026 You\u2019re FAMILY",
     "POV Your Cat Is the Real Boss",
     "CAT SECRETS REVEALED",
-    "THIS Is Why Cats STAY With YOU"
+    "THIS Is Why Cats STAY With YOU",
+    "Wait\u2026 Cats Have Blind SPOTS? \ud83d\udc31"
   ],
   "captions": [
-    "Vocalizations",
-    "Social Learning",
-    "Play Behavior",
-    "Domestication History",
-    "Ancient Egyptian Cats",
     "Cat Breeding",
     "Cat Conservation",
     "Feline-Human Bond",
@@ -301,14 +296,14 @@
     "EARS = 12 ANGLES",
     "SPHYNX SKIN: OILY TRUTH",
     "CATS COUNT TO 7",
-    "NOSE PRINT: CAT FINGERPRINT"
+    "NOSE PRINT: CAT FINGERPRINT",
+    "BLIND SPOT UNDER CHIN",
+    "CATS CAN\u2019T TASTE SWEET",
+    "CALICO = FEMALE ONLY",
+    "DREAMING = HUNTING",
+    "TAIL = BODY LENGTH"
   ],
   "narrations": [
-    "Cats use a variety of vocalizations to communicate with humans and other animals, including meows, purrs, and hisses. Each type of vocalization conveys a specific message or emotion, such as hunger, contentment, or fear. By paying attention to these vocalizations, humans can better understand their cat's needs and emotions.",
-    "Cats are capable of social learning, observing and imitating the behavior of other cats and even humans. This ability allows them to learn new skills and adapt to their environment. For example, a cat can learn to open a door or perform a trick by watching a human demonstrate it.",
-    "Cats engage in play behavior to develop their hunting skills and exercise their natural instincts. This play can take many forms, including chasing toys, climbing, and pouncing. By engaging in play, cats can improve their coordination, agility, and problem-solving abilities.",
-    "Cats have a long and complex history of domestication, with evidence suggesting that they were first domesticated in the Middle East around 10,000 years ago. Since then, cats have spread to every corner of the globe, adapting to a wide range of environments and human cultures.",
-    "In ancient Egypt, cats were revered as sacred animals, often mummified and buried with their owners. This unique cultural practice reflects the high esteem in which cats were held, both as pets and as symbols of fertility and protection.",
     "Today, there are over 70 recognized breeds of domestic cat, each with its unique appearance, temperament, and characteristics. From the sleek Siamese to the fluffy Persian, these breeds reflect the incredible diversity of the domestic cat and the efforts of breeders to create new and interesting varieties.",
     "Despite their popularity as pets, many wild cat species are threatened or endangered due to habitat loss, hunting, and other human activities. Conservation efforts are underway to protect these species and their habitats, but more needs to be done to ensure the long-term survival of these magnificent animals.",
     "The bond between cats and humans is built on trust, affection, and mutual respect. By understanding and responding to their needs, humans can strengthen this bond and create a deeper and more meaningful relationship with their feline companions.",
@@ -503,6 +498,11 @@
     "Cats can move their ears 12 different ways independently to pinpoint sounds 1/4 the volume of human hearing.",
     "Hairless Sphynx cats produce 20% more oil than normal cats to protect their skin from sunburn.",
     "Studies show cats can distinguish quantities up to 7 using an animal trait called 'subitizing'.",
-    "Each cat's nose has a unique texture pattern used in some countries for identification instead of microchips."
+    "Each cat's nose has a unique texture pattern used in some countries for identification instead of microchips.",
+    "They can\u2019t see directly beneath their nose, which is why they sniff instead of stare when curious.",
+    "Despite loving treats, cats lack taste buds for sweetness\u2014they don\u2019t even taste sugar.",
+    "Calico cats are almost always female because their coat color genes are tied to their two X chromosomes\u2014males are super rare.",
+    "When cats snooze, they often dream about hunting, with twitching paws acting out imaginary catches.",
+    "Cats\u2019 tails match their body length, providing perfect balance for leaps and mid-air twists."
   ]
 }

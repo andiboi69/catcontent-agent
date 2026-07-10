@@ -102,11 +102,6 @@
     "Can Cats JUMP 5x Their SIZE?"
   ],
   "captions": [
-    "TAIL = BODY LENGTH",
-    "Cheek Rubs = Scent Marking",
-    "Tail Wrap = Safety Net",
-    "Belly Breathing = Zen Mode",
-    "Ears Back, Relaxed = Happy",
     "V-Shaped Ears = Curious Love",
     "EARS ROTATE 180\u00b0 TO EAVESDROP",
     "MORE BONES THAN YOU",
@@ -301,14 +296,14 @@
     "BACKFLIPS ARE EASY",
     "WHISKERS = CHEMICAL DETECTIVES",
     "SKINNY TAILS = GENE MUTATION",
-    "TAIL HAS 200 MUSCLES"
+    "TAIL HAS 200 MUSCLES",
+    "TAIL Flick = Irritation",
+    "Tail BASE Twitch = Curiosity",
+    "Bringing PREY = Honors You",
+    "Follows to Litter Box = Concern",
+    "Sniffs Your Face = Tastes You"
   ],
   "narrations": [
-    "Cats\u2019 tails match their body length, providing perfect balance for leaps and mid-air twists.",
-    "Rubbing cheeks on you coats you in their scent as a comforting, proprietary marker.",
-    "Curling their tail around you or your limb is a vulnerable, trusting cuddle.",
-    "Soft, slow belly breaths next to you mean they\u2019re fully relaxed and safe.",
-    "Bengal cats lay ears back slightly when they\u2019re with you\u2014sign of deep contentment.",
     "Ears perked in a V when approaching you? They\u2019re excited to see you.",
     "They rotate their ears 180\u00b0 to catch your private conversations\u2014then blame you for saying 'no' to chicken.",
     "23 bones vs. your 19\u2026 but they still trip on air. Thanks, gravity.",
@@ -503,6 +498,11 @@
     "They can jump five times their body length\u2014like you leaping three car lengths!",
     "Their whiskers sniff out pheromones from 20 feet away\u2014it\u2019s their super-sense!",
     "Hairless Sphynx cats exist because of a single gene typo in their DNA code!",
-    "Their tail\u2019s 200 muscles let them pivot mid-air\u2014like a built-in safety net!"
+    "Their tail\u2019s 200 muscles let them pivot mid-air\u2014like a built-in safety net!",
+    "A sudden tail flick signals mild annoyance \u2014 not aggression, but a warning to give space.",
+    "A twitch at the base of the tail shows intense focus on something \u2014 like you talking!",
+    "Cats gift dead animals as a primal way to share food and consider humans part of their group.",
+    "If your cat trails you there, they\u2019re protecting you from their vulnerable elimination spot.",
+    "Cats use a specialized 'Jacobson\u2019s organ' to chemically analyze your scent \u2014 their verbal greeting."
   ]
 }

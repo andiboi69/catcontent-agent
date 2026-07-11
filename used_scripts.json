@@ -102,10 +102,6 @@
     "CATS CAN'T SMELL SWEET\u2014Wait, What?"
   ],
   "captions": [
-    "VERTICAL TAIL = GREETING YOU",
-    "SLOW BLINKS = RELAXED WITH YOU",
-    "PAWS MARK YOU WITH SCENT GLANDS",
-    "CHEEK RUBS = OWNSHIP CLAIM",
     "TAIL OVER NOSE = VULNERABLE TRUST",
     "Tails Tucked = Safety",
     "Slow Blinks = Trust",
@@ -301,13 +297,13 @@
     "GROOMING = STRESS RELIEF",
     "TAIL TWITCH = HUNTING",
     "KITTENS FIND YOU BY SOUND",
-    "MAIN COONS CHATTER BACK"
+    "MAIN COONS CHATTER BACK",
+    "Hiding = Stashing Your Credit Cards",
+    "Eyes Track Moving Shadows",
+    "Meows Are Negotiation Tactics",
+    "Pounces at Dots on Walls"
   ],
   "narrations": [
-    "A straight-up tail signals they recognize you as a trusted companion, not prey.",
-    "Languid blinks in your presence prove they\u2019re calm and consider you safe.",
-    "Cats use pads on their paws to invisibly 'tag' you as part of their territory.",
-    "Rubbing their face on you deposits pheromones, declaring you\u2019re 'theirs.'",
     "Curling their tail to cover the nose while sleeping exposes their soft underbelly.",
     "When they curl tails under paws, it\u2019s a sign they feel protected by you.",
     "Those long, lazy eye closures are their love language \u2014 they\u2019re showing they\u2019re defenseless with you.",
@@ -503,6 +499,10 @@
     "Excessive grooming isn\u2019t just clean\u2014it\u2019s a coping mechanism for anxiety, similar to how humans bite nails when stressed.",
     "A flicking tail while sitting still means they\u2019re tracking prey invisible to human eyes\u2014like a fly on the wall.",
     "Newborn kittens can locate their mom by vibration, not smell\u2014a survival trait from wild ancestors.",
-    "Maine Coons \u2018speak\u2019 in complex chirps and trills\u2014they\u2019re the only breed that mimics human speech patterns."
+    "Maine Coons \u2018speak\u2019 in complex chirps and trills\u2014they\u2019re the only breed that mimics human speech patterns.",
+    "They bury treats in your couch not out of guilt\u2026 they\u2019re planning to short-sell your memory foam when",
+    "Your cat\u2019s night-vision is so good, they see 3D holograms of raccoons. Also, your slow clapper moments at",
+    "That sad-meow escalates if ignored\u2014studies show they learn from your reluctance like a poker pro.",
+    "They don\u2019t care about your laser pointer. They\u2019re training for the day they hunt your shadow for CEO"
   ]
 }

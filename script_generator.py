@@ -12,7 +12,7 @@ from config import GROQ_API_KEY, CONTENT_FORMATS
 
 
 client = Groq(api_key=GROQ_API_KEY)
-MODEL = "qwen/qwen3-32b"
+MODEL = "llama-3.3-70b-versatile"
 
 # Script history file — persists across all generations
 SCRIPT_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "used_scripts.json")

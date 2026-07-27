@@ -1,6 +1,5 @@
 {
   "titles": [
-    "CATS ARE 'HELPFUL'? TOTAL SCAM",
     "Your Cat Does THIS But You Never Knew",
     "POV: YOUR CAT'S 3AM HUNT",
     "7 Cat Signals You\u2019re FAMILY",
@@ -99,14 +98,10 @@
     "CATS CHOOSE You",
     "CAT SECRETS Revealed",
     "7 HIDDEN Talents",
-    "CATS PICK You"
+    "CATS PICK You",
+    "CATS Have ACCENTED Meows"
   ],
   "captions": [
-    "TAIL TWITCH = ADORENMENT",
-    "LICKS HAIR TO BOND",
-    "SLOW BLINK MEANS TRUST",
-    "FLEHMEN CURLED LIPS",
-    "BRINGS TOYS AS GIFTS",
     "TAIL HIGH = TRUST SIGNAL",
     "STALKING YOU = SOCIAL BONDING",
     "GIFT BRINGING = PRIDE SHARING",
@@ -301,14 +296,14 @@
     "Fur Grooming",
     "Tail Wrapping",
     "Cheek Rubbing",
-    "Kneading"
+    "Kneading",
+    "Meow Pitch Varies",
+    "Regional Meow Accents",
+    "Vocal Learning",
+    "Meow Volume Control",
+    "Emotional Expression"
   ],
   "narrations": [
-    "Rapid tail movement near your face signals excitement and affection.",
-    "Human hair licking mimics motherly grooming to create social bonds.",
-    "Closing eyes slowly is a gesture of calmness and safety.",
-    "Sniffing with curled lips helps analyze your scent for familiarity.",
-    "Offering 'prey' is ancient instinct showing you're part of their family.",
     "A cat holding their tail upward shows they feel safe and connected to you.",
     "Following your every move means they consider you part of their social group.",
     "Dead bugs or toys in your lap mean they\u2019re treating you as part of their family.",
@@ -503,6 +498,11 @@
     "Cats groom their owners as a way of marking them with their scent, indicating ownership and affection.",
     "When a cat wraps its tail around you, it's a sign of security and attachment, similar to a hug.",
     "Cats rub their cheeks on surfaces to deposit pheromones, claiming ownership and marking their territory.",
-    "Adult cats knead to self-soothe and recall memories of nursing, a comforting behavior often directed towards their owners."
+    "Adult cats knead to self-soothe and recall memories of nursing, a comforting behavior often directed towards their owners.",
+    "Cats can produce a wide range of meow pitches to communicate different needs and wants",
+    "Domesticated cats develop regional meow accents based on their human social interactions and environment",
+    "Cats are capable of vocal learning, allowing them to mimic and adapt to the sounds around them",
+    "Cats can adjust the volume of their meows to suit different situations and get attention from humans",
+    "Cats use meows to express emotions like happiness, fear, and anxiety, and can even manipulate humans with their vocalizations"
   ]
 }

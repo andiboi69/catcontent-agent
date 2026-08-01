@@ -1,6 +1,5 @@
 {
   "titles": [
-    "Your Cat Does THIS But You Never Knew Why",
     "5 Times Cats Lie About Being Tired",
     "Your Cat Is A Master Manipulator",
     "Why Are ORANGE CATS Mostly Male?",
@@ -99,14 +98,10 @@
     "CATS Have Unique Nose Prints",
     "Why Do CATS Blink?",
     "CATS Prefer THIS",
-    "CATS Have Complex Dreams"
+    "CATS Have Complex Dreams",
+    "CATS Have BARBED Tongues"
   ],
   "captions": [
-    "CAT EYES: 6X BETTER Night Vision Than Humans",
-    "PAW PADS: SHOCK ABSORBERS FOR Every Jump",
-    "CAT GROOMING: Enzymes Clean Without Water",
-    "CAT TASTE: Zero Sweet Tooth Gene",
-    "THIRD EYELID = Health Check",
     "Tail BASE Still = Relaxed",
     "SLEEPING Sideways = Vulnerable Trust",
     "No Fur? Still Has Whisker Fatigue",
@@ -301,14 +296,14 @@
     "Acting Out Dreams",
     "Memory Consolidation",
     "Sleep Patterns Vary",
-    "Dreams Reflect Emotions"
+    "Dreams Reflect Emotions",
+    "Tongues Have Barbs",
+    "Grooming Is Key",
+    "Papillae Point Backward",
+    "Tongue Helps Hunt",
+    "Kittens Learn Grooming"
   ],
   "narrations": [
-    "Their tapetum lucidum layer reflects light, letting them see in near-total darkness with razor-sharp clarity.",
-    "Fatty cushions in their paws soften landings, helping them navigate 5x their body height without injury.",
-    "Feline saliva contains enzymes that kill bacteria, keeping fur sanitary even during outdoor adventures.",
-    "Cats lack TAS1R2 receptors, making them incapable of tasting sweetness\u2014explain their love for savory food!",
-    "Cats have a transparent inner eyelid to clean their eyes without blinking\u2014watch for cloudiness as a sign of illness.",
     "A steady tail base shows your cat feels calm, while a puffy tail signals fear or alertness.",
     "When a cat sleeps on their side, they\u2019re exposing their belly\u2014it means they trust you completely.",
     "Hairless Sphynx cats still feel whisker fatigue\u2014too many toys? It can overwhelm their senses.",
@@ -503,6 +498,11 @@
     "Cats can act out their dreams while sleeping, such as chasing or pouncing on imaginary prey",
     "Sleep and dreams help cats consolidate memories and learn new skills",
     "Different cat breeds have varying sleep patterns, with some sleeping more than others",
-    "Cats' dreams can reflect their emotions and experiences, such as stress or excitement"
+    "Cats' dreams can reflect their emotions and experiences, such as stress or excitement",
+    "Cats' tongues have barbed papillae that help them scrape meat from bones",
+    "Cats spend up to a third of their waking hours grooming themselves to stay clean",
+    "The barbed papillae on a cat's tongue point backward to help remove loose hair",
+    "A cat's tongue is also used to help hunt and eat prey, such as small rodents",
+    "Kittens learn how to groom themselves by watching their mothers and practicing"
   ]
 }

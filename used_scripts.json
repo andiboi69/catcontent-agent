@@ -1,6 +1,5 @@
 {
   "titles": [
-    "Why Are ORANGE CATS Mostly Male?",
     "7 CAT TRICKS You've Never Noticed!",
     "Is Your Cat Trying To COMMUNICATE?",
     "POV YOU THOUGHT YOU OWNED A CAT",
@@ -99,19 +98,10 @@
     "CATS Have Complex Dreams",
     "CATS Have BARBED Tongues",
     "CATS Show LOVE",
-    "CATS Are FOOD Thieves"
+    "CATS Are FOOD Thieves",
+    "UNCOVERING CAT PSYCHOLOGY"
   ],
   "captions": [
-    "EARS THAT EAVESDROP",
-    "TWISTING MID-AIR LANDINGS",
-    "VOCABULARY: 25 MEAWS",
-    "EYES THAT HAUNT YOU",
-    "CATS SENSE ELEVATION CHANGES",
-    "GUTTURAL SOUNDS = EXCITEMENT",
-    "STRETCHED PAWS SCENT MARK YOU",
-    "YAWN = TRUST, NOT BOREDOM",
-    "FLUFFY HAIR TRAPS COLD AIR",
-    "Cat Love Signs",
     "Whisker Wonders",
     "Ear Positions",
     "Tail Talks",
@@ -301,19 +291,19 @@
     "Cats Eat 16 Hours",
     "Gut Bacteria Helps",
     "Whiskers Detect Width",
-    "Cats Have 32 Muscles"
+    "Cats Have 32 Muscles",
+    "Cat Hunting Skills",
+    "Playful Pouncing",
+    "Social Structure",
+    "Vocalizations",
+    "Agile Climbers",
+    "Playful Hunting",
+    "Social Bonding",
+    "Grooming Behavior",
+    "Learning and Memory",
+    "Emotional Awareness"
   ],
   "narrations": [
-    "Your cat\u2019s ears rotate 180\u00b0 \u2013 they\u2019ve been recording your secrets for blackmail.",
-    "They flip mid-fall to land on their feet \u2013 you just clean up the broken vase.",
-    "They\u2019ve mastered 25+ meow sounds \u2013 none of them say \u2018I\u2019m sorry\u2019.",
-    "Their eyes glow in the dark \u2013 to judge you while you\u2019re asleep.",
-    "They use their inner ears to detect height shifts\u2014perfect for tree escapes!",
-    "Rumbling during play shows they\u2019re thrilled\u2014not aggressive!",
-    "Stretching paws on you leaves their scent\u2014claiming YOU as family!",
-    "A yawn near you means they feel totally safe and relaxed.",
-    "Their hollow guard hairs insulate better than any sweater!",
-    "Cats display love through unique behaviors, including head butting and kneading, which are often overlooked by their owners. These actions originate from kittenhood, where they stimulate milk production and comfort. As adults, they continue to exhibit these behaviors, showing affection and trust towards their human caregivers.",
     "A cat's whiskers are highly sensitive, containing nerve endings that aid in spatial awareness and detecting subtle changes in air pressure. This sensitivity helps them navigate through tight spaces and detect potential prey, showcasing their remarkable adaptability. In fact, studies have shown that cats use their whiskers to measure the width of openings, ensuring a safe passage.",
     "Cats use their ears to convey emotions and moods, with each position revealing a specific message. For instance, ears pointed forward indicate excitement or interest, while laid-back ears suggest fear or submission. By observing these ear positions, owners can better understand their cat's emotional state and respond accordingly, strengthening their bond.",
     "A cat's tail is a versatile communication tool, conveying emotions and intentions through its movements and positions. A twitching tail may indicate irritation or excitement, while a wrapped tail suggests comfort and security. By recognizing these tail language patterns, owners can decode their cat's mood and adjust their interactions, promoting a more harmonious relationship.",
@@ -503,6 +493,16 @@
     "My cat is always eating, it's like they have a bottomless stomach, why do they eat so much?",
     "Cats have special gut bacteria that helps them digest food, no wonder they can eat everything in sight",
     "My cat's whiskers are like little rulers, helping them detect the width of openings and sneak into tight",
-    "My cat's face is so expressive, it's like they have a million muscles, but really it's just 32"
+    "My cat's face is so expressive, it's like they have a million muscles, but really it's just 32",
+    "Cats are skilled hunters, with a success rate of around 10-20% in the wild. Their hunting abilities are largely due to their exceptional night vision and agility. For example, a domestic cat can jump up to 5 times its own height in a single bound, making them formidable predators.",
+    "Kittens begin to develop their hunting skills through play, pouncing on toys and small objects to practice their technique. This playful behavior helps them develop the necessary skills to become effective hunters later in life. In fact, kittens that are encouraged to play and hunt during their early months are more likely to become skilled hunters as adults.",
+    "Cats are often thought to be solitary animals, but they actually have a complex social structure. In the wild, cats often form small family groups, with females and their kittens living together in a hierarchical society. For example, a study of feral cats found that they formed close-knit groups, with females often grooming and caring for each other's kittens.",
+    "Cats use a range of vocalizations to communicate with their human caregivers and other animals. They can convey a range of emotions and needs, from hunger and attention to affection and comfort. For example, a cat's meow can signal its need for food or attention, while a purr can indicate contentment and relaxation.",
+    "Cats are agile and flexible climbers, with a range of physical adaptations that enable them to scale vertical surfaces with ease. Their retractable claws, flexible spines, and powerful leg muscles all contribute to their climbing abilities, making them well-suited to their arboreal environment. For example, a domestic cat can climb a tree in a matter of seconds, using its claws and agile body to propel itself upward.",
+    "Cats are natural hunters, and they often engage in playful hunting behavior to practice their skills and exercise their instincts. This playful behavior can take many forms, from chasing toys to pouncing on small objects, and it helps to keep cats physically and mentally active. For example, a cat playing with a ball of yarn can be seen as a form of hunting, with the cat using its instincts to stalk and pounce on the toy.",
+    "Cats are capable of forming strong social bonds with their human caregivers and other animals. They can become deeply attached to their owners, and they will often display affectionate behavior such as purring, rubbing, and kneading. For example, a cat that has been separated from its owner for a period of time will often display intense affection and attachment upon reunion, rubbing against its owner's legs and purring contentedly.",
+    "Cats are meticulous about their grooming, spending a significant amount of time each day cleaning themselves and removing parasites. They use a range of techniques, including licking, scratching, and biting, to keep their coats clean and healthy. For example, a cat will often spend hours each day grooming itself, using its tongue to remove dirt and debris from its fur.",
+    "Cats have excellent learning and memory abilities, and they are capable of forming strong associations between stimuli and rewards. They can learn to perform tasks and tricks through positive reinforcement training, and they have been known to remember and recognize individual humans and other animals. For example, a cat can learn to open a door or perform a trick in exchange for a reward, using its problem-solving skills and memory to achieve the desired outcome.",
+    "Cats are highly attuned to their emotions and the emotions of those around them. They can sense their owners' emotional states and respond accordingly, often providing comfort and support when needed. For example, a cat can detect changes in its owner's emotional state, such as stress or anxiety, and will often adjust its behavior to provide reassurance and calmness."
   ]
 }

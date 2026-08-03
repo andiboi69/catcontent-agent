@@ -1,6 +1,5 @@
 {
   "titles": [
-    "7 CAT TRICKS You've Never Noticed!",
     "Is Your Cat Trying To COMMUNICATE?",
     "POV YOU THOUGHT YOU OWNED A CAT",
     "YOUR CAT DOES THIS BUT YOU NEVER NOTICED",
@@ -99,14 +98,10 @@
     "CATS Have BARBED Tongues",
     "CATS Show LOVE",
     "CATS Are FOOD Thieves",
-    "UNCOVERING CAT PSYCHOLOGY"
+    "UNCOVERING CAT PSYCHOLOGY",
+    "What Do CATS See?"
   ],
   "captions": [
-    "Vocal Range",
-    "Meow Meanings",
-    "Purring Secrets",
-    "Grooming Bonding",
-    "Head Butting",
     "Kneading Memories",
     "Subtle Leans",
     "Unique Quirks",
@@ -301,14 +296,14 @@
     "Cats Have 200 Olfactory",
     "Cats Can Hear Ultrasound",
     "Fur Color Determines Taste",
-    "Grooming Reduces Stress"
+    "Grooming Reduces Stress",
+    "Cats See 6 Times",
+    "Retina Reflects Light",
+    "Eye Structure Unique",
+    "Pupil Size Matters",
+    "Color Vision Limited"
   ],
   "narrations": [
-    "Cats possess a wide range of vocalizations, from soft purrs to loud meows, each serving a specific purpose. Researchers have identified over 100 distinct cat sounds, which can be broadly categorized into three types: contact calls, alarm calls, and solicitation calls. By recognizing these vocal patterns, owners can respond to their cat's needs and wants, enhancing their communication.",
-    "Different meow patterns convey distinct messages, such as a series of short meows indicating a need for attention or a low-pitched meow signaling contentment. By paying attention to these vocal cues, owners can decode their cat's language and respond accordingly, strengthening their bond and improving their relationship.",
-    "Cats purr to self-soothe, communicate, and even heal, as the vibrations from purring have been shown to stimulate blood flow and reduce swelling. This unique ability allows cats to recover from injuries and cope with stress, making purring an essential aspect of their behavior and a key indicator of their emotional state.",
-    "Cats groom each other to strengthen social bonds and establish trust, often accompanied by soothing vocalizations. This behavior is essential for their emotional and social development, as it helps them develop important skills like communication, empathy, and cooperation. By observing and participating in grooming activities, owners can deepen their connection with their cat.",
-    "Cats exhibit head butting behavior, also known as bunting, to mark their territory and show affection. This behavior is often accompanied by purring and rubbing, indicating a strong sense of trust and comfort. By recognizing and responding to this behavior, owners can strengthen their bond with their cat and create a more loving environment.",
     "Kneading is a comforting behavior that cats exhibit, often accompanied by purring and relaxation. This behavior is a remnant of their kittenhood, when they used to knead their mother's belly to stimulate milk production. By providing a comfortable and nurturing environment, owners can encourage this behavior and strengthen their bond with their cat.",
     "Cats use subtle body language cues, such as leaning towards their owner, to show affection and trust. This behavior is often accompanied by relaxation and a sense of comfort, indicating a strong bond between the cat and their owner. By recognizing and responding to these cues, owners can deepen their connection with their cat and create a more loving environment.",
     "Each cat has unique quirks and preferences, such as a favorite toy or sleeping spot. By recognizing and respecting these individualities, owners can create a more personalized and loving environment for their cat, strengthening their bond and improving their relationship.",
@@ -503,6 +498,11 @@
     "Cats have 200 million olfactory receptors, compared to only 6 million in humans, making their sense of smell incredibly strong.",
     "Cats can hear sounds at frequencies as high as 79 kHz, which is beyond human range.",
     "Some research suggests that a cat's fur color may determine their taste preferences, with darker cats preferring stronger flavors.",
-    "Cats groom themselves to reduce stress and anxiety, and also to mark their territory with scent."
+    "Cats groom themselves to reduce stress and anxiety, and also to mark their territory with scent.",
+    "Cats see six times better in low light conditions than humans due to their reflective retina",
+    "The reflective layer in the cat's retina helps to reflect light back onto the photoreceptors, enhancing vision",
+    "Cats have a unique eye structure that includes a reflective layer called the tapetum lucidum",
+    "The size of a cat's pupil can change dramatically to let in more or less light, depending on the environment",
+    "Cats have limited color vision, but their eyes are more sensitive to movement and changes in brightness"
   ]
 }

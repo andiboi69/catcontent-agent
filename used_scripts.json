@@ -1,6 +1,5 @@
 {
   "titles": [
-    "I Can't Believe CATS Can't TASTE Sweet",
     "I Can't Believe CATS Can\u2019t TASTE Sweet",
     "7 SURPRISING Signals Your Cat\u2019s Attached to You",
     "5 UNSEEN WAYS Your Cat Communicates",
@@ -99,19 +98,10 @@
     "Why Do CATS Yawn?",
     "POV Your Cat HOARDS",
     "CATS Are THIEVES",
-    "7 HIDDEN Signals"
+    "7 HIDDEN Signals",
+    "CAT LOVE SECRETS Revealed"
   ],
   "captions": [
-    "CATS Have Flexible Spines",
-    "Fur Thickness Varies",
-    "CATS Have Three Eyelids",
-    "Whiskers Detect Air",
-    "CATS Can't See Directly",
-    "Newborn Kittens Develop",
-    "CATS Smell With Nose",
-    "Fur Scent Marking",
-    "CATS Taste With Tongue",
-    "CATS Hear High Frequencies",
     "Social Structure Matters",
     "CATS Communicate With Vocalizations",
     "Grooming Is Essential",
@@ -301,19 +291,19 @@
     "Cats Mark Territory",
     "Pheromones Convey Info",
     "Scent Helps Recognition",
-    "Cats Smell Emotions"
+    "Cats Smell Emotions",
+    "Feline Eye Contact",
+    "Purr Frequency",
+    "Meow Patterns",
+    "Head Butting",
+    "Grooming",
+    "Sleeping Positions",
+    "Food Preferences",
+    "Water Intake",
+    "Litter Box Behavior",
+    "Play Initiation"
   ],
   "narrations": [
-    "Cats have thirty-two muscles in their ears, allowing them to rotate their ears independently. This unique flexibility helps them to pinpoint sounds with ease. For example, a cat can rotate its ear 180 degrees to detect a faint noise.",
-    "The thickness of a cat's fur can vary greatly depending on the breed and climate. For instance, Siberian cats have a thick undercoat to keep warm in cold temperatures, while Sphynx cats have almost no fur. This adaptation helps them to regulate their body temperature.",
-    "Cats have a third eyelid called the nictitating membrane, which helps to keep their eyes clean and protected. This membrane is especially useful when they're hunting or navigating through dense vegetation. It acts as a shield to prevent debris from entering their eyes.",
-    "A cat's whiskers are highly sensitive and can detect even slight changes in air pressure and temperature. This helps them to navigate in the dark and detect potential prey. For example, a cat can use its whiskers to detect the presence of a hidden mouse.",
-    "Cats have limited binocular vision, which means they can't see directly in front of them. However, their wide field of vision and excellent peripheral vision help them to detect movement and potential threats. This unique visual adaptation is beneficial for hunting and self-defense.",
-    "Newborn kittens develop their sense of hearing before their sense of sight. They can detect their mother's voice and respond to it, even when they're still blind. This auditory development helps them to navigate their environment and communicate with their mother.",
-    "Cats have a highly developed sense of smell, which they use to detect pheromones and other scents. They can smell with their nose and also with the vomeronasal organ, also known as the Jacobson's organ, located in the roof of their mouth. This dual smelling ability helps them to detect subtle changes in their environment.",
-    "Cats use scent marking to communicate with other cats and establish their territory. They deposit pheromones on surfaces through their fur, urine, and feces. This scent marking helps them to maintain social bonds and hierarchy within their group.",
-    "Cats have taste receptors on their tongue, which help them to detect different flavors and textures. They can taste sweet, sour, salty, and bitter flavors, but their sense of taste is not as developed as humans. For example, cats prefer meat-based foods and can detect the presence of amino acids.",
-    "Cats can hear high-frequency sounds that are beyond human range, up to 64 kHz. This helps them to detect the presence of small prey, such as mice and birds. For example, a cat can hear the high-pitched sounds of a mouse scurrying through the walls.",
     "Cats are social animals and have a complex social structure. They establish hierarchies and communicate with each other through vocalizations, body language, and scent marking. For example, a dominant cat will often assert its dominance through vocalizations and aggressive posturing.",
     "Cats use vocalizations to communicate with humans and other cats. They can produce a range of sounds, from meows and purrs to hisses and growls. For example, a cat will often meow to initiate interaction or to request food.",
     "Cats spend a significant amount of time grooming themselves, which helps to keep their coat clean and healthy. Grooming also helps to reduce stress and anxiety, and it's a way for cats to self-soothe. For example, a cat will often groom itself after a stressful event.",
@@ -503,6 +493,16 @@
     "Cats use scent marking to establish their territory and communicate with other cats",
     "Pheromones in cat scent convey information about identity, status, and reproductive status",
     "Cats use scent to recognize their owners, other cats, and even their food",
-    "Cats can detect emotions like fear and stress through scent and pheromones"
+    "Cats can detect emotions like fear and stress through scent and pheromones",
+    "Cats maintain eye contact with their owners to establish trust and affection, as studies have shown that cats can recognize human faces and recall emotional experiences. This unique ability allows them to form strong bonds with their human caregivers. For example, a study found that cats that had a strong bond with their owner would often maintain eye contact for longer periods.",
+    "Cats purr at different frequencies to communicate with their owners and other cats, with higher frequencies indicating stress or anxiety and lower frequencies indicating contentment. A study found that cats can purr at frequencies as low as 20 Hz, which can help to stimulate blood flow and reduce swelling. This unique ability has led to the development of purr-therapy, which uses the sound of a cat's purr to help people relax and reduce stress.",
+    "Cats use different meow patterns to convey their needs and wants, from a series of short meows to indicate hunger to a long, drawn-out meow to indicate attention-seeking. Cats also use their meows to communicate with other cats, as they can distinguish between different meow patterns and respond accordingly. For example, a mother cat will often use a specific meow pattern to call her kittens, which they will recognize and respond to.",
+    "Cats head-butt their owners as a sign of affection and marking, depositing their scent on the owner's skin and establishing a sense of ownership. This behavior is often accompanied by a decrease in the cat's heart rate and a release of oxytocin, also known as the 'love hormone'. For example, a study found that cats that head-butt their owners have higher levels of oxytocin in their system, indicating a stronger bond between the cat and owner.",
+    "Cats groom their owners as a sign of affection and social bonding, depositing their scent on the owner's skin and establishing a sense of trust. Grooming also helps to reduce stress and anxiety in cats, as the action stimulates the release of endorphins and promotes relaxation. For example, a study found that cats that groom regularly have lower levels of stress hormones in their system, indicating a sense of calm and well-being.",
+    "Cats choose their sleeping positions carefully, often curling up in a ball or stretching out in a sunbeam. Sleeping positions can reveal a cat's emotional state, with a curled-up position indicating security and a stretched-out position indicating confidence. For example, a study found that cats that sleep in a curled-up position have lower levels of stress hormones in their system, indicating a sense of calm and well-being.",
+    "Cats have unique food preferences, with some cats preferring wet food and others preferring dry food. Food preferences can reveal a cat's personality and lifestyle, with cats that prefer wet food often being more discerning and cats that prefer dry food often being more laid-back. For example, a study found that cats that prefer wet food have higher levels of certain nutrients in their system, indicating a more balanced diet.",
+    "Cats have a unique relationship with water, with some cats drinking frequently and others drinking infrequently. Water intake can reveal a cat's health and well-being, with cats that drink regularly often being more hydrated and cats that drink infrequently often being more prone to dehydration. For example, a study found that cats that drink regularly have lower levels of certain health problems, such as kidney disease.",
+    "Cats exhibit unique litter box behavior, with some cats being meticulous about their litter box habits and others being more relaxed. Litter box behavior can reveal a cat's personality and lifestyle, with cats that are meticulous about their litter box habits often being more fastidious and cats that are more relaxed often being more easy-going. For example, a study found that cats that are meticulous about their litter box habits have lower levels of stress hormones in their system, indicating a sense of calm and well-being.",
+    "Cats initiate play with their owners using unique behaviors, such as pouncing or batting at toys. Play initiation can reveal a cat's personality and lifestyle, with cats that initiate play frequently often being more energetic and cats that initiate play infrequently often being more relaxed. For example, a study found that cats that initiate play frequently have higher levels of certain neurotransmitters in their system, indicating a sense of excitement and engagement."
   ]
 }

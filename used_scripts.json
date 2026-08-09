@@ -102,11 +102,6 @@
     "7 HIDDEN Signals"
   ],
   "captions": [
-    "Vocal Cord Control",
-    "Nose Print Unique",
-    "Ear Muscle Power",
-    "Whisker Sensitivity",
-    "Claw Retraction",
     "CATS Have Flexible Spines",
     "Fur Thickness Varies",
     "CATS Have Three Eyelids",
@@ -301,14 +296,14 @@
     "Cats Sniff 12 Times",
     "Fur Grows 1 Inch",
     "Paws Contain Sweat",
-    "Cats Drink 1 Cup"
+    "Cats Drink 1 Cup",
+    "Cats Rub Faces",
+    "Cats Mark Territory",
+    "Pheromones Convey Info",
+    "Scent Helps Recognition",
+    "Cats Smell Emotions"
   ],
   "narrations": [
-    "Cats can manipulate their vocal cords to produce various sounds",
-    "Each cat's nose print is distinct, like human fingerprints",
-    "Cats have 32 ear muscles, allowing for precise sound location",
-    "Whiskers detect even slight changes in air pressure and temperature",
-    "Cats retract their claws to prevent wear and maintain sharpness",
     "Cats have thirty-two muscles in their ears, allowing them to rotate their ears independently. This unique flexibility helps them to pinpoint sounds with ease. For example, a cat can rotate its ear 180 degrees to detect a faint noise.",
     "The thickness of a cat's fur can vary greatly depending on the breed and climate. For instance, Siberian cats have a thick undercoat to keep warm in cold temperatures, while Sphynx cats have almost no fur. This adaptation helps them to regulate their body temperature.",
     "Cats have a third eyelid called the nictitating membrane, which helps to keep their eyes clean and protected. This membrane is especially useful when they're hunting or navigating through dense vegetation. It acts as a shield to prevent debris from entering their eyes.",
@@ -503,6 +498,11 @@
     "Cats sniff their surroundings up to 12 times per minute to gather information",
     "A cat's fur grows approximately 1 inch every 3 months, requiring regular grooming",
     "Cats' paws contain sweat glands, helping to regulate their body temperature",
-    "Cats typically drink around 1 cup of water per 10 pounds of body weight per day"
+    "Cats typically drink around 1 cup of water per 10 pounds of body weight per day",
+    "Cats rub their faces on surfaces to leave their scent behind",
+    "Cats use scent marking to establish their territory and communicate with other cats",
+    "Pheromones in cat scent convey information about identity, status, and reproductive status",
+    "Cats use scent to recognize their owners, other cats, and even their food",
+    "Cats can detect emotions like fear and stress through scent and pheromones"
   ]
 }

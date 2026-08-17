@@ -1,6 +1,5 @@
 {
   "titles": [
-    "CATS MEOW ONLY TO HUMANS?!",
     "Why Your Cat STAYS Close When You Nap",
     "YOUR CAT DOES THIS BUT YOU MISSED IT",
     "When Your Cat Does THIS\u2026 You\u2019re FAMILY",
@@ -99,14 +98,10 @@
     "CATS Have HIDDEN Talents",
     "CATS Have Hidden Talents",
     "CATS Have Unique Nose",
-    "CATS FEAR Water"
+    "CATS FEAR Water",
+    "CATS Can't Feel PAIN"
   ],
   "captions": [
-    "Agile Climbers",
-    "Playful Hunting",
-    "Social Bonding",
-    "Grooming Behavior",
-    "Learning and Memory",
     "Emotional Awareness",
     "Cats Have 200 Olfactory",
     "Cats Can Hear Ultrasound",
@@ -301,14 +296,14 @@
     "Fur Density Matters",
     "Paws Have Scent Glands",
     "Whiskers Detect Texture",
-    "Fear Of Drowning"
+    "Fear Of Drowning",
+    "Cats Have 32 Muscles",
+    "Olfactory Bulb Large",
+    "Vocal Cords Complex",
+    "Paw Pads Sensitive",
+    "Brain To Body Mass"
   ],
   "narrations": [
-    "Cats are agile and flexible climbers, with a range of physical adaptations that enable them to scale vertical surfaces with ease. Their retractable claws, flexible spines, and powerful leg muscles all contribute to their climbing abilities, making them well-suited to their arboreal environment. For example, a domestic cat can climb a tree in a matter of seconds, using its claws and agile body to propel itself upward.",
-    "Cats are natural hunters, and they often engage in playful hunting behavior to practice their skills and exercise their instincts. This playful behavior can take many forms, from chasing toys to pouncing on small objects, and it helps to keep cats physically and mentally active. For example, a cat playing with a ball of yarn can be seen as a form of hunting, with the cat using its instincts to stalk and pounce on the toy.",
-    "Cats are capable of forming strong social bonds with their human caregivers and other animals. They can become deeply attached to their owners, and they will often display affectionate behavior such as purring, rubbing, and kneading. For example, a cat that has been separated from its owner for a period of time will often display intense affection and attachment upon reunion, rubbing against its owner's legs and purring contentedly.",
-    "Cats are meticulous about their grooming, spending a significant amount of time each day cleaning themselves and removing parasites. They use a range of techniques, including licking, scratching, and biting, to keep their coats clean and healthy. For example, a cat will often spend hours each day grooming itself, using its tongue to remove dirt and debris from its fur.",
-    "Cats have excellent learning and memory abilities, and they are capable of forming strong associations between stimuli and rewards. They can learn to perform tasks and tricks through positive reinforcement training, and they have been known to remember and recognize individual humans and other animals. For example, a cat can learn to open a door or perform a trick in exchange for a reward, using its problem-solving skills and memory to achieve the desired outcome.",
     "Cats are highly attuned to their emotions and the emotions of those around them. They can sense their owners' emotional states and respond accordingly, often providing comfort and support when needed. For example, a cat can detect changes in its owner's emotional state, such as stress or anxiety, and will often adjust its behavior to provide reassurance and calmness.",
     "Cats have 200 million olfactory receptors, compared to only 6 million in humans, making their sense of smell incredibly strong.",
     "Cats can hear sounds at frequencies as high as 79 kHz, which is beyond human range.",
@@ -503,6 +498,11 @@
     "The density of a cat's fur can affect how much water it absorbs, with thicker coats being more water-resistant",
     "Cats have scent glands in their paws that can be affected by water, which may contribute to their dislike of it",
     "Cats use their whiskers to detect texture and width, which can be disrupted by water",
-    "Cats may have an instinctual fear of drowning due to their evolution as land animals"
+    "Cats may have an instinctual fear of drowning due to their evolution as land animals",
+    "Cats have 32 muscles in each ear, allowing for precise sound localization",
+    "A cat's olfactory bulb is relatively large, contributing to their keen sense of smell",
+    "Cats have complex vocal cords, enabling a wide range of sounds and vocalizations",
+    "A cat's paw pads are highly sensitive, helping them navigate and balance",
+    "Cats have a relatively high brain-to-body mass ratio, indicating intelligence and adaptability"
   ]
 }

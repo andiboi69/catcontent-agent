@@ -102,11 +102,6 @@
     "7 HIDDEN CAT BEHAVIORS You Miss"
   ],
   "captions": [
-    "Cheek rubs claim turf",
-    "Slow Blink Shows Trust",
-    "Ears Pointed Forward",
-    "Face Rub Marks You",
-    "Brings You Small Gifts",
     "Soft Chirp Invites You",
     "30 Teeth, Different Shapes",
     "70% Life In Sleep",
@@ -301,14 +296,14 @@
     "Belly up = ultimate trust",
     "Follows you into bathroom",
     "Tail tip flick = content",
-    "Soft trilling greets you"
+    "Soft trilling greets you",
+    "Forehead Bumps Release Trust Pheromones",
+    "Licking Your Hand Shows Social Grooming",
+    "Tail Wrapped Around You Indicates Safety",
+    "Sleeping Beside You Shows Trust",
+    "Follows You Outdoors Shows Attachment"
   ],
   "narrations": [
-    "When my cat bumps leg in the garden, it\u2019s depositing scent to claim the lawn as its kingdom.",
-    "A slow blink means the cat feels safe and trusts you.",
-    "Ears angled slightly forward indicate the cat is relaxed and enjoys your company.",
-    "Rubbing its cheek on you deposits facial pheromones, claiming you as part of its family.",
-    "Bringing a caught bug shows the cat trusts you enough to share its bounty.",
     "When a cat chirps at you, it's inviting you to join its happy moment.",
     "Cats have 30 teeth\u2014sharp canines, slicer premolars, and crushing molars.",
     "Cats sleep roughly 70 percent of their lives, often 16\u201120 hours daily.",
@@ -503,6 +498,11 @@
     "Flopping belly\u2011up beside you shows the cat feels completely safe around you.",
     "Following you into the bathroom shows the cat wants to be present everywhere.",
     "A quick tail\u2011tip flick while they rest indicates quiet excitement and contentment.",
-    "Soft trilling when approaching you is a friendly greeting, not a demand for food."
+    "Soft trilling when approaching you is a friendly greeting, not a demand for food.",
+    "When a cat presses its forehead to you, it shares calming pheromones, signaling deep trust.",
+    "When a cat licks your skin, it treats you as a fellow cat, strengthening bond.",
+    "A cat curling its tail around your arm while resting shares body heat, signaling safety.",
+    "Cats that nap beside you display high trust and deep companionship.",
+    "When a cat follows you outdoors, it wants to stay close and share experiences."
   ]
 }

@@ -1,6 +1,5 @@
 {
   "titles": [
-    "CATS Have Hidden Patterns",
     "CATS Revealed",
     "7 HIDDEN Cat Talents",
     "CATS Are Weirdly PICKY",
@@ -99,14 +98,10 @@
     "When Cats SLOW BLINK... It's a Trust Signal",
     "Your Cat Shows LOVE With THESE Tiny Signals",
     "7 HIDDEN CAT BEHAVIORS You Miss",
-    "The Reason Cats HEAR What Humans Miss"
+    "The Reason Cats HEAR What Humans Miss",
+    "7 UNSEEN SIGNALS Your Cat Shows Love"
   ],
   "captions": [
-    "Fur Senses Weather Shifts",
-    "Cats survive 30\u2011story falls",
-    "Over 100 cat vocal sounds",
-    "Cats lack sweet taste receptors",
-    "Cats sprint up to 30 mph",
     "Cats have a Jacobson\u2019s organ",
     "Cats produce 100+ sounds",
     "Cats' body temp ~101\u00b0F",
@@ -301,14 +296,14 @@
     "Detects sounds up to 90kHz",
     "Spine flexes for righting reflex",
     "Cats cannot taste sweetness",
-    "Thirty\u2011two ear muscles rotate independently"
+    "Thirty\u2011two ear muscles rotate independently",
+    "Slow blink shows trust",
+    "Yawning near you means safety",
+    "Side\u2011to\u2011side tail sway content",
+    "Nose boop greets affection",
+    "Gentle paw tap invites play"
   ],
   "narrations": [
-    "A cat\u2019s fur detects minute pressure changes, often before humans notice approaching storms.",
-    "Their flexible bodies and low terminal velocity allow them to land unharmed.",
-    "Cats can emit more than a hundred distinct noises, far outpacing dogs.",
-    "Feline DNA lacks the gene for sweet detection, so sugars taste bland.",
-    "Domestic cats reach speeds of thirty miles per hour during brief sprint bursts.",
     "The vomeronasal organ lets cats analyze pheromones through a characteristic tongue flick.",
     "Domestic cats can emit over one hundred distinct vocalizations, far surpassing dogs.",
     "Felines maintain an internal temperature around 101 degrees Fahrenheit, hotter than humans.",
@@ -503,6 +498,11 @@
     "Cats hear frequencies up to 90\u202fkilohertz, allowing them to detect ultrasonic rodent cries.",
     "A flexible spine and vestibular system let cats twist mid\u2011air to land feet\u2011first.",
     "Cats lack the gene for sweet taste, so sugar offers no flavor pleasure.",
-    "Thirty\u2011two tiny ear muscles move each ear independently for precise sound localization."
+    "Thirty\u2011two tiny ear muscles move each ear independently for precise sound localization.",
+    "Cats slow\u2011blink at you to signal trust and a deep bond.",
+    "A cat that yawns while you watch is showing it feels safe.",
+    "When a cat sways its tail slowly near you, it\u2019s contented.",
+    "A soft nose bump from a cat is their gentle hello.",
+    "A light tap of a paw on your hand invites interaction."
   ]
 }

@@ -102,11 +102,6 @@
     "What Secret Powers Do CATS Actually Have?"
   ],
   "captions": [
-    "Quiet chirp greets your presence",
-    "Flehmen reveals hidden scents",
-    "Tapetum lucidum boosts night vision",
-    "Cats make 100+ vocal sounds",
-    "Tongue creates water column",
     "Paw pads sweat for scent",
     "Drinks upside-down like a sponge",
     "Tongue feels like sandpaper",
@@ -301,14 +296,14 @@
     "Cats descend trees head\u2011first",
     "Righting reflex matures at three weeks",
     "Cats' tongues are sandpaper\u2011like",
-    "Cats hear up to 64\u202fkHz"
+    "Cats hear up to 64\u202fkHz",
+    "Flehmen: scent\u2011sniff pose",
+    "Chirps signal birdwatch excitement",
+    "Third eyelid protects and cleans",
+    "Cat brain mirrors human reasoning",
+    "Tail flick means hunting focus"
   ],
   "narrations": [
-    "A soft, short chirp directed at you is a friendly greeting, not a demand.",
-    "When a cat curls its lips, the Jacobson organ samples airborne pheromones.",
-    "Behind each retina lies a reflective layer that bounces light, sharpening vision in dimness.",
-    "Domestic felines can emit over a hundred distinct sounds, far surpassing canine vocal range.",
-    "Cats flick tongues rapidly, forming a narrow water stream they swallow in one pull.",
     "Footpads contain sweat glands, leaving faint scent marks each time a cat walks.",
     "Cats curl their tongue backward, pulling water upward in a quick sip.",
     "Tiny hook-shaped papillae scrape meat and clean fur with every lick.",
@@ -503,6 +498,11 @@
     "Flexible spine and rotating hind legs let cats climb down upside down.",
     "Kittens gain the ability to twist mid\u2011air and land safely after three weeks.",
     "Rough, hook\u2011shaped structures help them clean fur and remove loose hair.",
-    "Their ear structure lets them detect sounds far beyond human range."
+    "Their ear structure lets them detect sounds far beyond human range.",
+    "Curled lips draw air to a hidden organ, letting cats sniff pheromones.",
+    "Cats emit high\u2011pitched chirps at windows, mixing excitement and frustration while watching birds.",
+    "A translucent third eyelid slides over the eye, shielding it and spreading tears for cleanliness.",
+    "Cats share more cerebral cortex patterns with humans than many dogs, enabling complex problem solving.",
+    "A sharp tail flick shows the cat is locked on prey and ready."
   ]
 }
